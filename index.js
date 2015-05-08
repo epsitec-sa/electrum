@@ -1,55 +1,46 @@
 'use strict';
-var React      = require ('react');
+
+var React = require ('react');
 
 /*****************************************************************************/
 
 function Electrum () {
+  if (!(this instanceof Electrum)) {
+    return new Electrum ();
+  }
   this.connectors = [];
 }
 
-Electrum.prototype.use = function (connector) {
+/*****************************************************************************/
 
+Electrum.prototype.use = function (connector) {
   if (!connector.hasOwnProperty ('wrap')) {
-    throw 'Your connector must implement a wrap function';
+    throw 'The provided connector does not implement a wrap function.';
   }
 
   if (typeof (connector.wrap) !== 'function') {
-    throw 'You must provide a function';
+    throw 'The provided connector provides wrap, but it is not a function.';
   }
 
   this.connectors.unshift (connector);
   return this;
 };
 
-Electrum.prototype.createClass = function (reactComponent) {
-  this.connectors.forEach (function (connector) {
-    reactComponent = connector.wrap (reactComponent);
+/*****************************************************************************/
+
+var wrap = function (wrappers, obj) {
+  wrappers.forEach (function (wrapper) {
+    obj = wrapper.wrap (obj);
   });
-  return React.createClass (reactComponent);
+  return obj;
+};
+
+Electrum.prototype.createClass = function (reactComponent) {
+  return React.createClass (wrap (this.connectors, reactComponent));
 };
 
 /*****************************************************************************/
-// Generate Electrum API with Auto-instanciation on call
 
-var call = function (call, args) {
-  if (!(this instanceof Electrum) && call !== 'create') {
-    throw 'You must call create before using';
-  }
-  return this[call].apply (this, args);
-};
+module.exports = Electrum;
 
-Object.keys (Electrum.prototype).forEach (function (fct) {
-  console.log (fct);
-  module.exports[fct] = function () {
-    var args = Array.prototype.slice.call (arguments);
-    return call (fct, args);
-  };
-});
-
-// Factory
-module.exports.create = function () {
-  if (!(this instanceof Electrum)) {
-    return new Electrum ();
-  }
-  return this;
-};
+/*****************************************************************************/

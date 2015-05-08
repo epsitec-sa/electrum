@@ -3,10 +3,12 @@
 var should   = require ('should'); /* jshint ignore:line */
 var Electrum = require ('../index.js');
 
+/*****************************************************************************/
+
 describe ('Electrum', function () {
   var E = null;
   beforeEach (function () {
-    E = Electrum.create ();
+    E = new Electrum ();
   });
 
   describe ('API export', function () {
@@ -25,23 +27,32 @@ describe ('Electrum', function () {
   describe ('Wrapping', function () {
 
     it ('should wrap correctly', function () {
+
       var wrapper = {
-        wrap: function (x) {
-          x.test = 42;
-          return x;
+        wrap: function (c) {
+          c.test = 42;
+          return c;
         }
       };
-      var component = {
-        y: 42,
+
+      var componentDefinition = {
+        message: 'hello',
 
         render: function () {
-          this.should.have.ownProperty ('test').equal (42);
           return {};
         }
       };
+
       E.use (wrapper);
-      E.createClass (component);
-      component.render ();
+
+      var component = E.createClass (componentDefinition);
+
+      componentDefinition.should.have.ownProperty ('message').equal ('hello');
+      componentDefinition.should.have.ownProperty ('test').equal (42);
+
+      // TODO: verify that `component` was properly created by React
     });
   });
 });
+
+/*****************************************************************************/
