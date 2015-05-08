@@ -18,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/epsitec-sa/electrum/issues"
   },
-  "homepage": "https://github.com/epsitec-sa/electrum"
+  "homepage": "https://github.com/epsitec-sa/electrum",
+  "dependencies": {
+    "react": "^0.13.2"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.4",
+    "should": "^6.0.1"
+  }
 }
