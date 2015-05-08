@@ -1,6 +1,6 @@
 # Electrum
 
-**Electrum** simplifies a framework agnostic declaration of React components and is used
+**Electrum** simplifies framework-agnostic declaration of React components and is used
 internally by [Epsitec SA](https://github.com/epsitec-sa/) to bridge the gap with its
 _Xcraft toolchain_ and with its _Lydia framework_.
 
@@ -11,9 +11,12 @@ Then:
 
 ```js
 var Electrum = require ('electrum');
+
 var Lydia  = /* ...provide a reference to the Lydia.js library... */
 var Radium = /* ...provide a reference to the Radium library... */
+
 var E = Electrum.create ();
+
 E.use (Lydia);
 E.use (Radium);
 E.createClass ({...});
@@ -27,11 +30,13 @@ Electrum
   .createClass ({...});
 ```
 
-Form then on, create React components with `E.createClass({...})` as you normally would
-with `React.createClass({...})`. Electrum takes care of extending the provided object,
-for instance to include a call to `Radium.wrap()`, etc.
+Create React components with `E.createClass({...})` as you normally would
+with `React.createClass({...})`. Electrum takes care of extending the provided
+object, for instance to include a call to `Radium.wrap()`, etc.
 
-### What does it do, besides `createClass`?
+### What will it do, besides `createClass`?
+
+_This is not yet implemented in version 0.0.x_
 
 Electrum provides an entry point to the style objects used in conjunction with Radium.
 Themes are broken down into distinct axes:
@@ -69,4 +74,3 @@ produce ancient [Lydian](http://en.wikipedia.org/wiki/Lydia) coinage.
 
 > The first metal coins ever made, were of Electrum and date back to the end of the 7th century,
 > beginning of the 6th century BC.
-
