@@ -10,10 +10,21 @@ To include and configure **Electrum** in a JavaScript project, simply `npm insta
 Then:
 
 ```js
-var E = require ('electrum');
-var Lydia = /* ...provide a reference to the Lydia.js library... */
-
+var Electrum = require ('electrum');
+var Lydia  = /* ...provide a reference to the Lydia.js library... */
+var Radium = /* ...provide a reference to the Radium library... */
+var E = Electrum.create ();
 E.use (Lydia);
+E.use (Radium);
+E.createClass ({...});
+
+// or
+
+Electrum
+  .create ()
+  .use (Lydia)
+  .use (Radium)
+  .createClass ({...});
 ```
 
 Form then on, create React components with `E.createClass({...})` as you normally would
