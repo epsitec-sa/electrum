@@ -30,7 +30,7 @@
   "disallowEmptyBlocks":                      true,
   "disallowKeywordsOnNewLine":                ["else", "catch"],
   "disallowNewlineBeforeBlockStatements":     true,
-  "disallowPaddingNewlinesInBlocks":          true,
+  "disallowPaddingNewlinesInBlocks":          false,
   "disallowQuotedKeysInObjects":              true,
   "disallowMixedSpacesAndTabs":               true,
   "disallowTrailingWhitespace":               true,
