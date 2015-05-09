@@ -27,7 +27,6 @@ E.use (Radium);
 
 var Component = E.createClass ({...});
 
-
 // or
 
 var Component = new Electrum ()
