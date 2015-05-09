@@ -12,32 +12,45 @@ Then:
 ```js
 var Electrum = require ('electrum');
 
-var Lydia  = /* ...provide a reference to the Lydia.js library... */
 var Radium = /* ...provide a reference to the Radium library... */
+var Lydia  = /* ...provide a reference to the Lydia.js library... */
 
-var E = new Electrum (Lydia, Radium);
+var E = new Electrum (Radium, Lydia);
 
 var Component = E.createClass ({...});
 
 // or
 
 var E = new Electrum ();
-E.use (Lydia);
 E.use (Radium);
+E.use (Lydia);
 
 var Component = E.createClass ({...});
 
 // or
 
 var Component = new Electrum ()
-  .use (Lydia)
   .use (Radium)
+  .use (Lydia)
   .createClass ({...});
 ```
 
-Create React components with `E.createClass({...})` as you normally would
-with `React.createClass({...})`. Electrum takes care of extending the provided
+Create React components with `E.createClass({...})` instead of
+`React.createClass({...})`. Electrum takes care of extending the provided
 object, for instance to include a call to `Radium.wrap()`, etc.
+
+When several wrappers are applied (as in the example above), then they
+will be applied right to left:
+
+```js
+var E = new Electrum (Radium, Lydia);
+var C = E.createClass ({});
+```
+is thus equivalent to:
+```js
+var C = React.createClass (Radium.wrap (Lydia.wrap ({})));
+```
+
 
 ### What will it do, besides `createClass`?
 
