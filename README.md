@@ -15,16 +15,22 @@ var Electrum = require ('electrum');
 var Lydia  = /* ...provide a reference to the Lydia.js library... */
 var Radium = /* ...provide a reference to the Radium library... */
 
-var E = Electrum.create ();
+var E = new Electrum (Lydia, Radium);
 
-E.use (Lydia);
-E.use (Radium);
-E.createClass ({...});
+var Component = E.createClass ({...});
 
 // or
 
-Electrum
-  .create ()
+var E = new Electrum ();
+E.use (Lydia);
+E.use (Radium);
+
+var Component = E.createClass ({...});
+
+
+// or
+
+var Component = new Electrum ()
   .use (Lydia)
   .use (Radium)
   .createClass ({...});
