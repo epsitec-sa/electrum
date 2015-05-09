@@ -6,9 +6,14 @@ var React = require ('react');
 
 function Electrum () {
   if (!(this instanceof Electrum)) {
-    return new Electrum ();
+    var obj = Object.create (Electrum.prototype);
+    obj.constructor.apply (obj, arguments);
+    return obj;
   }
   this.connectors = [];
+  for (var i = 0; i < arguments.length; i++) {
+    this.use (arguments[i]);
+  }
 }
 
 /*****************************************************************************/
