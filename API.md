@@ -2,11 +2,68 @@
 
 Components using Electrum can rely on the following API.
 
+## Requirements
+
 ### Identifying components
 
 Every component should have a unique `id` property within a given view. The
 `id` is used to bind the component with the store, but also to retrieve its
 ressources.
+
+### Providing a data store
+
+Electrum does not provide any storage mechanism. It will have to be provided
+when configuring `E`.
+
+#### Lydia and the store
+
+Lydia, for instance, provides a _flux_-like system which is teared between
+the viewer layer and the presentation layer. The logic is implemented in the
+presentation layer, which is written on top of .NET. The viewer only has a
+**passive store** which gets updated asynchronously by _pushes_ coming from
+the presentation layer.
+
+Having the store reference in the presentation layer introduces a latency
+issue. We don't want to lock the UI while messages are being sent to the
+presentation layer, processed, and values sent back to the viewer's store.
+However, refreshing the UI before the store has been updated won't display
+the most recent user input.
+
+Therefore, we need to let the viewer temporarily update its store, while
+waiting for the _real_ values to be provided by the presentation layer.
+
+Imagine following sequence of events:
+
+1. The user types `a` into an empty text field.
+2. The local store for the text field gets updated to `'a'`.
+3. The update gets sent to the presentation layer.
+4. The user types `b`.
+5. The local store gets updated to `'ab'`.
+6. The update gets sent to the presentation layer.
+7. The first value comes back from the presentation layer: `'A'`.
+8. The user types `c`.
+9. The second value comes back from the presentaiton layer: `'AB'`.
+10. Etc.
+
+The problem appears after point 7: the field no longer contains `'ab'`,
+but `'A'`, and so the user's input gets mangled to `'Ac'`. Moreover, a
+little bit later, the value gets wiped out and replace with `'AB'`...
+
+We solved this issue in Lydia by attaching a _generation number_ to
+every value which gets modified (point 2 would produce `#1`, point
+5 would produce `#2`). The generation number gets sent back and forth
+between the viewer and the presentation layer, thus allowing the store
+to notice at point 7 that the value should be discarded (remember, at
+this stage, the local store is at generation `#2` but the first value
+is attached to generation `#1`).
+
+#### Other store implementations
+
+Other store implementations would simply be built on top of _reflux_
+or some similar library. As long as the store can communicate with
+Electrum's API, _all will be well_.
+
+## API
 
 ### Resources
 
