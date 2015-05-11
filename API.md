@@ -41,9 +41,11 @@ Imagine following sequence of events:
 5. The local store gets updated to `'ab'`.
 6. The update gets sent to the presentation layer.
 7. The first value comes back from the presentation layer: `'A'`.
+   &rArr; _we have our first problem_
 8. The user types `c`.
-9. The second value comes back from the presentaiton layer: `'AB'`.
-10. Etc.
+9. The second value comes back from the presentation layer: `'AB'`.
+   &rArr; _things get even worse_
+10. etc.
 
 The problem appears after point 7: the field no longer contains `'ab'`,
 but `'A'`, and so the user's input gets mangled to `'Ac'`. Moreover, a
