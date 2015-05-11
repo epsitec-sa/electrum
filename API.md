@@ -68,8 +68,8 @@ the pattern.
 
 Styles provide styling information which is compatible with Radium.
 
-_I am not sure yet if this belongs into the Electrum API or if this
-can be surfaced simply through the theming globals._
+> _I am not sure yet if this belongs into the Electrum API or if this
+> can be surfaced simply through the theming globals._
 
 ### Bus
 
