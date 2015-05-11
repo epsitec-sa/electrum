@@ -84,11 +84,16 @@ Values represent the data manipulated or displayed by a component.
 
 * `E.getValue (obj)` &rarr; value bound to this `obj`.
 * `E.setValue (obj, value)` &rarr; generation id after the update.
+* `E.setValueAndStates (obj, value, [state ...])` &rarr; generation id.
 
 The `value` can either be a `string` (as would be the case for a simple
 `<TextField>` component), a number, an array or an object. Boolean values
 should be avoided in favor of strings (a `<Checkbox>` would specify its
 value as being `'on'` or `'off'`, rather than `true` or `false`).
+
+`E.setValueAndStates` combines `E.setValue` and mutliple calls to
+`E.setState` (one for every state specified in the array), but only
+one _generation id_ will be produced as a result.
 
 ### States
 
@@ -114,7 +119,7 @@ with a component. The pattern is the concatenation of the property keys:
 var selectionState = {
   from: 3,
   to: 21
-}
+};
 
 // The pattern for the selectionState would be:
 var pattern = 'from,to';
@@ -122,6 +127,20 @@ var pattern = 'from,to';
 
 Setting a state does only add or replace the state object which matches
 the pattern.
+
+### Generations
+
+The last generation id is automatically associated with the component.
+It is maintained internally using a generation state object:
+
+```js
+var generationState = {
+  gen: 1
+};
+```
+
+Whenever you set a new value or a new state, this generation state object
+gets updated, as if `E.setState (obj, {gen: n})` were called.
 
 ### Styles
 
