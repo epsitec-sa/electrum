@@ -1,8 +1,8 @@
-'use strict'; /*jshint unused:false*/
+'use strict';
 
 /*****************************************************************************/
 
-module.exports = {
+module.exports = { /*jshint unused:false*/
   getState: function (obj, what) {},
   setState: function (obj, ...states) {},
   getStyle: function (obj) {},
