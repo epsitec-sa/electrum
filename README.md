@@ -64,33 +64,43 @@ var Wrapper = {
 };
 ```
 
+#### Providing external services
+
+Electrum provides access to external services which are useful
+when implementing React components:
+
+* The [Electrum API](API.md) provides:
+   * _Read services_ to get the text, value, style and state
+     associated with a component;
+   * _Write services_ to change the value and state of a component
+     as a result of a direct user action on the component.
+* The [Electrum Bus](Bus.md) provides:
+   * A method to _dispatch_ user actions to the backend.
+   * A method to _notify_ the backend when data changes.
+
 At least one wrapper should provide an implementation of the
 [Electrum API](API.md) and one should provide an implementation
-of the [Electrum Bus](Bus.md):
+of the [Electrum Bus](Bus.md).
 
-#### Interface for the Electrum API
-
-```js
-{
-  getState: function (obj, what) {},
-  setState: function (obj, ...states) {},
-  getStyle: function (obj) {},
-  getText:  function (obj) {},
-  getValue: function (obj) {},
-  setValue: function (obj, value, ...states) {}
-}
-```
-
-#### Interface for the Electrum bus
+**Interface for the Electrum API**
 
 ```js
-{
-  dispatch: function (obj, message) {},
-  notify: function (obj, value, ...states) {}
-}
+getState: function (obj, what) {},
+setState: function (obj, ...states) {},
+getStyle: function (obj) {},
+getText:  function (obj) {},
+getValue: function (obj) {},
+setValue: function (obj, value, ...states) {}
 ```
 
-### What will it do, besides `createClass`?
+**Interface for the Electrum bus**
+
+```js
+dispatch: function (obj, message) {},
+notify: function (obj, value, ...states) {}
+```
+
+### What will Electrum do, besides `createClass`?
 
 _This is not yet implemented in version 0.0.x_
 

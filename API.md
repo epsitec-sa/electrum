@@ -152,9 +152,12 @@ Styles provide styling information which is compatible with Radium.
 
 ### Bus
 
-The bus defines how the components can send messages to the backend.
+The [bus](Bus.md) defines a communication channel for the components to
+send messages to the backend. It has its [own documentation](Bus.md).
 
-* `E.bus.dispatch (obj, message)` dispatches a message.
 
-Currently, components can use the `E.bus.dispatch` method to send
-action messages to the backend.
+## Implementation details
+
+Whenever the data is altered by calling `setValue` or `setState`/`clearState`,
+the implementation should call `E.bus.notify` in order to propagate the
+fact that something happened to the component.
