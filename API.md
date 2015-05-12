@@ -83,17 +83,18 @@ following functions:
 Values represent the data manipulated or displayed by a component.
 
 * `E.getValue (obj)` &rarr; value bound to this `obj`.
-* `E.setValue (obj, value)` &rarr; generation id after the update.
-* `E.setValueAndStates (obj, value, [state ...])` &rarr; generation id.
+* `E.setValue (obj, value, ...states)` &rarr; generation id after update.
 
 The `value` can either be a `string` (as would be the case for a simple
 `<TextField>` component), a number, an array or an object. Boolean values
 should be avoided in favor of strings (a `<Checkbox>` would specify its
 value as being `'on'` or `'off'`, rather than `true` or `false`).
 
-`E.setValueAndStates` combines `E.setValue` and mutliple calls to
-`E.setState` (one for every state specified in the array), but only
-one _generation id_ will be produced as a result.
+`E.setValue` can specify zero, one or multiple states which should be
+set at the same time as the value.
+
+The **generation id** will only be incremented if changes were detected.
+Otherwise, the generation id of the last modification will be returned.
 
 ### States
 
@@ -107,7 +108,7 @@ selection range as a state.
 A component might want to store the fact that it is disabled as a state.
 
 * `E.getState (obj, pattern)` &rarr; state matching the `pattern`.
-* `E.setState (obj, state)` &rarr; generation id after the update.
+* `E.setState (obj, ...states)` &rarr; generation id after the update.
 * `E.clearState (obj, pattern)` &rarr; generation id after the update.
 
 The `state` object contains one or multiple properties.
