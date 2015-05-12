@@ -77,7 +77,6 @@ describe ('Electrum', function () {
   describe ('Wrapping', function () {
 
     it ('should wrap correctly', function () {
-
       var wrapper = {
         wrap: function (c) {
           c.test = 42;
@@ -87,10 +86,7 @@ describe ('Electrum', function () {
 
       var componentDefinition = {
         message: 'hello',
-
-        render: function () {
-          return {};
-        }
+        render: function () {return {};}
       };
 
       E.use (wrapper);
@@ -101,6 +97,51 @@ describe ('Electrum', function () {
       componentDefinition.should.have.ownProperty ('test').equal (42);
 
       // TODO: verify that `component` was properly created by React
+    });
+  });
+
+  describe ('API injection', function () {
+    it ('should inject implementation', function () {
+      var wrapper = {
+        wrap: c => c,
+        getElectrumApi: function () {
+          return { /*jshint unused:false*/
+            getState: function (obj, what) { return 'getState'; },
+            setState: function (obj, ...states) { return 'setState'; },
+            getStyle: function (obj) { return 'getStyle'; },
+            getText:  function (obj) { return 'getText'; },
+            getValue: function (obj) { return 'getValue'; },
+            setValue: function (obj, value, ...states) { return 'setValue'; }
+          };
+        }
+      };
+
+      E.use (wrapper);
+      E.bus.should.be.eql ({});
+      E.getState ().should.be.equal ('getState');
+      E.setState ().should.be.equal ('setState');
+      E.getStyle ().should.be.equal ('getStyle');
+      E.getText  ().should.be.equal ('getText');
+      E.getValue ().should.be.equal ('getValue');
+      E.setValue ().should.be.equal ('setValue');
+    });
+  });
+
+  describe ('Bus injection', function () {
+    it ('should inject implementation', function () {
+      var wrapper = {
+        wrap: c => c,
+        getElectrumBus: function () {
+          return { /*jshint unused:false*/
+            dispatch: function (obj, message) { return 'dispatch'; },
+            notify: function (obj, value, ...states) { return 'notify'; }
+          };
+        }
+      };
+
+      E.use (wrapper);
+      E.bus.dispatch ().should.be.equal ('dispatch');
+      E.bus.notify ().should.be.equal ('notify');
     });
   });
 });
