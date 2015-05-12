@@ -58,9 +58,9 @@ The wrappers must conform to the following interface:
 
 ```js
 var Wrapper = {
-  wrap: obj => obj,       // mandatory wrap function
-  electrumApi: {/*API*/}  // optional Electrum API implementation
-  electrumBus: {/*Bus*/}  // optional Electrum Bus implementation
+  wrap: obj => obj,                // mandatory: wrap function
+  getElectrumApi: () => {/*API*/}  // optional: get Electrum API implementation
+  getElectrumBus: () => {/*Bus*/}  // optional: get Electrum Bus implementation
 };
 ```
 

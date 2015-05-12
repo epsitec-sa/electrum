@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; /*jshint latedef:false*/
 
 /*****************************************************************************/
 
@@ -31,8 +31,29 @@ var verifyMethod = function verifyMethod (obj, method, what) {
 
 /*****************************************************************************/
 
+var verifyMethodOrInterface = function verifyMethodOrInterface (obj, match) {
+  if (typeof match === 'string') {
+    return verifyMethod (obj, match);
+  }
+  if (typeof match === 'object') {
+    var methods = Object.keys (match);
+    methods.forEach (function (m) {
+      if (typeof match[m] !== 'function') {
+        throw 'Invalid interface specified: '+m+' is not a function.';
+      }
+    });
+    return verifyInterface (obj, ...methods);
+  }
+  throw 'Invalid interface specified: no idea what to do with '+match+'.';
+};
+
+/*****************************************************************************/
+
 var verifyInterface = function verifyInterface (obj, ...methods) {
-  methods.forEach (m => verifyMethod (obj, m));
+  if (methods.length === 0) {
+    throw 'Empty interface specified.';
+  }
+  methods.forEach (m => verifyMethodOrInterface (obj, m));
 };
 
 /*****************************************************************************/

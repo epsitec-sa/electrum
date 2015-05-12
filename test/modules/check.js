@@ -43,6 +43,39 @@ describe ('Electrum.check', function () {
       should (check.hasInterface (obj, 'foo', 'bar', 'z')).be.false;
     });
   });
+
+  describe ('verifyInterface', function () {
+
+    it ('should succeed if interface matches', function () {
+      var obj = {foo: function () {}, bar:x => x*2, z: 42};
+      var interface1 = {foo: function () {}};
+      var interface2 = {bar: function () {}};
+      var interface3 = {bar: function () {}, foo: function () {}};
+      should (check.verifyInterface (obj, interface1));
+      should (check.verifyInterface (obj, interface2));
+      should (check.verifyInterface (obj, interface3));
+      should (check.verifyInterface (obj, interface1, interface2));
+    });
+
+    it ('should fail if no interface is specified', function () {
+      var obj = {foo: function () {}, bar:x => x*2, z: 42};
+      should (() => check.verifyInterface (obj)).throw ();
+    });
+
+    it ('should fail if interface does not match', function () {
+      var obj = {foo: function () {}, bar:x => x*2, z: 42};
+      var interface1 = {gork: function () {}};
+      should (() => check.verifyInterface (obj, interface1)).throw ();
+    });
+
+    it ('should fail if interface specification is incorrect', function () {
+      var obj = {foo: function () {}, bar:x => x*2, z: 42};
+      var interface1 = {};
+      var interface2 = {z: 42};
+      should (() => check.verifyInterface (obj, interface1)).throw ();
+      should (() => check.verifyInterface (obj, interface2)).throw ();
+    });
+  });
 });
 
 /*****************************************************************************/
