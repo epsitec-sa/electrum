@@ -20,7 +20,18 @@ module.exports = function (connector) {
     check.verifyInterface (bus, require ('./interfaces/bus.js'));
   }
 
+  // Everything was successfully verified; we can now proceed and alter
+  // this Electrum instance:
+
   this.connectors.unshift (connector);
+
+  if (api) {
+    Object.keys (api).forEach (key => this[key] = api[key]);
+  }
+  if (bus) {
+    Object.keys (bus).forEach (key => this.bus[key] = bus[key]);
+  }
+
   return this;
 };
 
