@@ -6,8 +6,8 @@ _Xcraft toolchain_ and with its _Lydia framework_.
 
 ### How to use Electrum
 
-To include and configure **Electrum** in a JavaScript project, simply `npm install electrum`.
-Then:
+To include and configure **Electrum** in a JavaScript project, simply
+`npm install electrum`. Then:
 
 ```js
 var Electrum = require ('electrum');
@@ -36,11 +36,12 @@ var Component = new Electrum ()
 ```
 
 Create React components with `E.createClass({...})` instead of
-`React.createClass({...})`. Electrum takes care of extending the provided
-object, for instance to include a call to `Radium.wrap()`, etc.
+`React.createClass({...})`. Electrum takes care of extending the
+provided object, for instance to include a call to `Radium.wrap()`,
+etc.
 
-When several wrappers are applied (as in the example above), then they
-will be applied right to left:
+When several wrappers are applied (as in the example above), then
+they will be applied right to left:
 
 ```js
 var E = new Electrum (Radium, Lydia);
@@ -51,6 +52,43 @@ is thus equivalent to:
 var C = React.createClass (Radium.wrap (Lydia.wrap ({})));
 ```
 
+### Wrappers
+
+The wrappers must conform to the following interface:
+
+```js
+var Wrapper = {
+  wrap: obj => obj,       // mandatory wrap function
+  electrumApi: {/*API*/}  // optional Electrum API implementation
+  electrumBus: {/*Bus*/}  // optional Electrum Bus implementation
+};
+```
+
+At least one wrapper should provide an implementation of the
+[Electrum API](API.md) and one should provide an implementation
+of the [Electrum Bus](Bus.md):
+
+#### Interface for the Electrum API
+
+```js
+{
+  getState: function (obj, what) {},
+  setState: function (obj, ...states) {},
+  getStyle: function (obj) {},
+  getText:  function (obj) {},
+  getValue: function (obj) {},
+  setValue: function (obj, value, ...states) {}
+}
+```
+
+#### Interface for the Electrum bus
+
+```js
+{
+  dispatch: function (obj, message) {},
+  notify: function (obj, value, ...states) {}
+}
+```
 
 ### What will it do, besides `createClass`?
 
