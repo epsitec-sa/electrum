@@ -9,6 +9,7 @@ function Electrum () {
     return obj;
   }
   this.connectors = [];
+  this.bus = {};
   for (var i = 0; i < arguments.length; i++) {
     this.use (arguments[i]);
   }
