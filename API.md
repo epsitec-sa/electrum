@@ -175,7 +175,7 @@ to select the appropriate style from the `buttonTheme`. In the context
 of the view, the local theme defines a style named `pepper`.
 
 ```jsx
-<Button kind="accept" style={['pepper', {color: 'red'}]} />
+<Button kind="accept" styles={['pepper', {color: 'red'}]} />
 ```
 
 This will merge following styles, in sequence:
@@ -184,9 +184,6 @@ This will merge following styles, in sequence:
 * `buttonTheme.accept` &rarr; specific style (selected by `kind` property).
 * `context.localTheme.pepper` &rarr; local style taken in the view's context.
 * `{color: 'red'}` &rarr; manual style forced onto the component.
-
-> _For now, we do not yet support the local style taken from the view's
-> context, as this has not yet stabilized enough in Lydia_
 
 ### Bus
 
