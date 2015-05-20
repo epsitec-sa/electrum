@@ -147,8 +147,46 @@ gets updated, as if `E.setState (obj, {gen: n})` were called.
 
 Styles provide styling information which is compatible with Radium.
 
-> _I am not sure yet if this belongs into the Electrum API or if this
-> can be surfaced simply through the theming globals._
+* `E.getStyle (obj, ...styles)` &rarr; array of styles
+
+The function expects that the object provides several properties:
+
+* `obj.theme` (optional) &rarr; a dictionary with multiple styles; each
+  style can be accessed through a key.
+* `obj.props.kind` (optional) &rarr; one or many selectors which will
+  be used to retrieve styles from `obj.theme`.
+* `obj.props.style` (optional) &rarr; one or many styles provided by
+  the user of the component; they take precedence over the styles
+  provided in the call to `E.getStyle`.
+
+Let's imagine that we have this theme injected into every `<Button>`
+component (available as `obj.theme`):
+
+```js
+var buttonTheme = {
+  base:   { /* ... */ },
+  accept: { /* ... */ },
+  cancel: { /* ... */ }
+};
+```
+
+In the view, we use the `<Button>` and set its `kind` property in order
+to select the appropriate style from the `buttonTheme`. In the context
+of the view, the local theme defines a style named `pepper`.
+
+```jsx
+<Button kind="accept" style={['pepper', {color: 'red'}]} />
+```
+
+This will merge following styles, in sequence:
+
+* `buttonTheme.base` &rarr; default style applied to the component.
+* `buttonTheme.accept` &rarr; specific style (selected by `kind` property).
+* `context.localTheme.pepper` &rarr; local style taken in the view's context.
+* `{color: 'red'}` &rarr; manual style forced onto the component.
+
+> _For now, we do not yet support the local style taken from the view's
+> context, as this has not yet stabilized enough in Lydia_
 
 ### Bus
 
