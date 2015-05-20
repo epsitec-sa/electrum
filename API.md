@@ -155,9 +155,12 @@ The function expects that the object provides several properties:
   style can be accessed through a key.
 * `obj.props.kind` (optional) &rarr; one or many selectors which will
   be used to retrieve styles from `obj.theme`.
-* `obj.props.style` (optional) &rarr; one or many styles provided by
+* `obj.props.styles` (optional) &rarr; one or many styles provided by
   the user of the component; they take precedence over the styles
   provided in the call to `E.getStyle`.
+
+> The `obj.props.styles` can either refer to a style **by name** (the style
+> will be read from the view's context) or specify an **inline style**.
 
 Let's imagine that we have this theme injected into every `<Button>`
 component (available as `obj.theme`):
