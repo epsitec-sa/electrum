@@ -13,8 +13,25 @@ var wrap = function (wrappers, obj) {
 
 /*****************************************************************************/
 
-module.exports = function (reactComponent) {
-  return React.createClass (wrap (this.connectors, reactComponent));
+module.exports = function () {
+  var component;
+  switch (arguments.length) {
+    case 1:
+      component = arguments[0];
+      break;
+    case 2:
+      if ((typeof arguments[0] === 'string') &&
+          (typeof arguments[1] === 'object')) {
+        component = arguments[1];
+        component.displayName = arguments[0];
+      }
+      break;
+  }
+  if (component) {
+    return React.createClass (wrap (this.connectors, component));
+  } else {
+    throw 'Invalid arguments provided to Electrum.createClass.';
+  }
 };
 
 /*****************************************************************************/

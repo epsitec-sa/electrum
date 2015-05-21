@@ -76,27 +76,49 @@ describe ('Electrum', function () {
 
   describe ('Wrapping', function () {
 
-    it ('should wrap correctly', function () {
-      var wrapper = {
-        wrap: function (c) {
-          c.test = 42;
-          return c;
-        }
-      };
+    var wrapper = {
+      wrap: function (c) {
+        c.test = 42;
+        return c;
+      }
+    };
 
-      var componentDefinition = {
-        message: 'hello',
-        render: function () {return {};}
-      };
+    var componentDefinition = {
+      message: 'hello',
+      render: function () {return {};}
+    };
 
-      E.use (wrapper);
+    describe ('Should wrap correctly', function () {
+      it ('using createClass (def)', function () {
+        E.use (wrapper);
+        var component = E.createClass (componentDefinition); /* jshint unused:false */
+        componentDefinition.should.have.ownProperty ('message').equal ('hello');
+        componentDefinition.should.have.ownProperty ('test').equal (42);
+        // TODO: verify that `component` was properly created by React
+      });
 
-      var component = E.createClass (componentDefinition); /* jshint unused:false */
+      it ('using createClass (name, def)', function () {
+        E.use (wrapper);
+        E.createClass ('Foo', componentDefinition);
+        componentDefinition.should.have.ownProperty ('displayName').equal ('Foo');
+      });
+    });
 
-      componentDefinition.should.have.ownProperty ('message').equal ('hello');
-      componentDefinition.should.have.ownProperty ('test').equal (42);
+    describe ('Should throw', function () {
 
-      // TODO: verify that `component` was properly created by React
+      it ('using createClass ()', function () {
+        should (function () {
+          E.use (wrapper);
+          E.createClass ();
+        }).throw();
+      });
+
+      it ('using createClass (def, name)', function () {
+        should (function () {
+          E.use (wrapper);
+          E.createClass (componentDefinition, 'Foo');
+        }).throw();
+      });
     });
   });
 
