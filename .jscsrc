@@ -48,11 +48,13 @@
   "safeContextKeyword":                       ["self"],
 
   "validateIndentation":                      2,
-  "validateJSDoc": {
+
+  "jsDoc": {
     "checkParamNames":                        true,
     "checkRedundantParams":                   true,
     "requireParamTypes":                      true
   },
+
   "validateParameterSeparator":               ", ",
   "validateQuoteMarks":                       "'",
 
