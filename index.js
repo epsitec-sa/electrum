@@ -8,8 +8,10 @@ function Electrum () {
     obj.constructor.apply (obj, arguments);
     return obj;
   }
+
   this.connectors = [];
   this.bus = {};
+
   for (var i = 0; i < arguments.length; i++) {
     this.use (arguments[i]);
   }
@@ -17,11 +19,14 @@ function Electrum () {
 
 /*****************************************************************************/
 
-Electrum.prototype.use = require ('./modules/use.js');
-Electrum.prototype.createClass = require ('./modules/create-class.js');
+import use from './modules/use.js';
+import createClass from './modules/create-class.js';
+
+Electrum.prototype.use = use;
+Electrum.prototype.createClass = createClass;
 
 /*****************************************************************************/
 
-module.exports = Electrum;
+export default Electrum;
 
 /*****************************************************************************/

@@ -1,23 +1,27 @@
 'use strict';
 
-var check = require ('./check.js');
+import { verifyMethod, verifyInterface, hasMethod }
+  from './check.js';
+
+import * as IApi from './interfaces/api.js';
+import * as IBus from './interfaces/bus.js';
 
 /*****************************************************************************/
 
-module.exports = function (connector) {
+export default function (connector) {
   var api;
   var bus;
 
-  check.verifyMethod (connector, 'wrap', 'connector');
+  verifyMethod (connector, 'wrap', 'connector');
 
-  if (check.hasMethod (connector, 'getElectrumApi')) {
+  if (hasMethod (connector, 'getElectrumApi')) {
     api = connector.getElectrumApi ();
-    check.verifyInterface (api, require ('./interfaces/api.js'));
+    verifyInterface (api, IApi);
   }
 
-  if (check.hasMethod (connector, 'getElectrumBus')) {
+  if (hasMethod (connector, 'getElectrumBus')) {
     bus = connector.getElectrumBus ();
-    check.verifyInterface (bus, require ('./interfaces/bus.js'));
+    verifyInterface (bus, IBus);
   }
 
   // Everything was successfully verified; we can now proceed and alter
@@ -33,6 +37,6 @@ module.exports = function (connector) {
   }
 
   return this;
-};
+}
 
 /*****************************************************************************/

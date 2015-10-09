@@ -27,8 +27,12 @@ describe ('Electrum', function () {
     });
 
     it ('should use arguments in correct order', function () {
-      var a = { wrap: function (c) { return c; }};
-      var b = { wrap: function (c) { return c; }};
+      var a = {
+        wrap: c => c
+      };
+      var b = {
+        wrap: c => c
+      };
       var E = new Electrum (a, b);
       E.connectors.length.should.be.equal (2);
       E.connectors[1].should.be.equal (a);
@@ -37,16 +41,18 @@ describe ('Electrum', function () {
 
     it ('should throw if argument contains no wrapper', function () {
       should (function () {
-        var a = { };
+        var a = {};
         var E = new Electrum (a); /* jshint unused:false */
-      }).throw();
+      }).throw ();
     });
 
     it ('should throw if wrap is not a wrapper', function () {
       should (function () {
-        var a = { wrap: 42 };
+        var a = {
+          wrap: 42
+        };
         var E = new Electrum (a); /* jshint unused:false */
-      }).throw();
+      }).throw ();
     });
   });
 });
@@ -85,7 +91,7 @@ describe ('Electrum', function () {
 
     var componentDefinition = {
       message: 'hello',
-      render: function () {return {};}
+      render: () => {}
     };
 
     describe ('Should wrap correctly', function () {
@@ -110,14 +116,14 @@ describe ('Electrum', function () {
         should (function () {
           E.use (wrapper);
           E.createClass ();
-        }).throw();
+        }).throw ();
       });
 
       it ('using createClass (def, name)', function () {
         should (function () {
           E.use (wrapper);
           E.createClass (componentDefinition, 'Foo');
-        }).throw();
+        }).throw ();
       });
     });
   });
@@ -128,12 +134,12 @@ describe ('Electrum', function () {
         wrap: c => c,
         getElectrumApi: function () {
           return { /*jshint unused:false*/
-            getState: function (obj, what) { return 'getState'; },
-            setState: function (obj, ...states) { return 'setState'; },
-            getStyle: function (obj) { return 'getStyle'; },
-            getText:  function (obj) { return 'getText'; },
-            getValue: function (obj) { return 'getValue'; },
-            setValue: function (obj, value, ...states) { return 'setValue'; }
+            getState: (obj, what) => 'getState',
+            setState: (obj, ...states) => 'setState',
+            getStyle: (obj) => 'getStyle',
+            getText:  (obj) => 'getText',
+            getValue: (obj) => 'getValue',
+            setValue: (obj, value, ...states) => 'setValue'
           };
         }
       };
@@ -155,8 +161,8 @@ describe ('Electrum', function () {
         wrap: c => c,
         getElectrumBus: function () {
           return { /*jshint unused:false*/
-            dispatch: function (obj, message) { return 'dispatch'; },
-            notify: function (obj, value, ...states) { return 'notify'; }
+            dispatch: (obj, message) => 'dispatch',
+            notify: (obj, value, ...states) => 'notify'
           };
         }
       };

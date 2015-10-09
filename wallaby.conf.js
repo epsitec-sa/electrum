@@ -9,7 +9,8 @@ module.exports = function (wallaby) {
       {pattern: 'index.js'}
     ],
     tests: [
-      {pattern: 'test/*.js'}
+      {pattern: 'test/*.js'},
+      {pattern: 'test/**/*.js'}
     ],
     compilers: {
       '**/*.js': wallaby.compilers.babel ({

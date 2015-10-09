@@ -1,14 +1,12 @@
 'use strict';
 
 /*****************************************************************************/
-
-module.exports = { /*jshint unused:false*/
-  getState: function (obj, what) {},
-  setState: function (obj, ...states) {},
-  getStyle: function (obj) {},
-  getText:  function (obj) {},
-  getValue: function (obj) {},
-  setValue: function (obj, value, ...states) {}
-};
+/*jshint unused:false*/
+export function getState (obj, what) {}
+export function setState (obj, ...states) {}
+export function getStyle (obj) {}
+export function getText (obj) {}
+export function getValue (obj) {}
+export function setValue (obj, value, ...states) {}
 
 /*****************************************************************************/

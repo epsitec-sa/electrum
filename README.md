@@ -13,7 +13,7 @@ To include and configure **Electrum** in a JavaScript project, simply
 `npm install electrum`. Then:
 
 ```js
-var Electrum = require ('electrum');
+import Electrum as 'electrum';
 
 var Radium = /* ...provide a reference to the Radium library... */
 var Lydia  = /* ...provide a reference to the Lydia.js library... */
@@ -100,12 +100,12 @@ setValue: function (obj, value, ...states) {}
 
 ```js
 dispatch: function (obj, message) {},
-notify: function (obj, value, ...states) {}
+notify:   function (obj, value, ...states) {}
 ```
 
 ### What will Electrum do, besides `createClass`?
 
-_This is not yet implemented in version 0.0.x_
+_This is not yet implemented in version 0.3.x_
 
 Electrum provides an entry point to the style objects used in conjunction with Radium.
 Themes are broken down into distinct axes:

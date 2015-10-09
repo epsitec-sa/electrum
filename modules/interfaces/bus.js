@@ -1,10 +1,8 @@
 'use strict';
 
 /*****************************************************************************/
-
-module.exports = { /*jshint unused:false*/
-  dispatch: function (obj, message) {},
-  notify: function (obj, value, ...states) {}
-};
+/*jshint unused:false*/
+export function dispatch (obj, message) {}
+export function notify (obj, value, ...states) {}
 
 /*****************************************************************************/

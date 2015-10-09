@@ -13,7 +13,7 @@ var wrap = function (wrappers, obj) {
 
 /*****************************************************************************/
 
-module.exports = function () {
+export default function () {
   var component;
   switch (arguments.length) {
     case 1:
@@ -32,6 +32,6 @@ module.exports = function () {
   } else {
     throw 'Invalid arguments provided to Electrum.createClass.';
   }
-};
+}
 
 /*****************************************************************************/
