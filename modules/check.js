@@ -2,32 +2,32 @@
 
 /*****************************************************************************/
 
-var hasMethod = function hasMethod (obj, method) {
+export function hasMethod (obj, method) {
   return obj.hasOwnProperty (method) && typeof obj[method] === 'function';
-};
+}
 
 /*****************************************************************************/
 
-var hasInterface = function hasInterface (obj, ...methods) {
+export function hasInterface (obj, ...methods) {
   for (var i = 0; i < methods.length; i++) {
     if (!hasMethod (obj, methods[i])) {
       return false;
     }
   }
   return true;
-};
+}
 
 /*****************************************************************************/
 
-var verifyMethod = function verifyMethod (obj, method, what) {
+export function verifyMethod (obj, method, what) {
   what = what || 'interface';
   if (!obj.hasOwnProperty (method)) {
-    throw 'The provided '+what+' does not implement method '+method+'.';
+    throw 'The provided ' + what + ' does not implement method ' + method + '.';
   }
   if (typeof (obj[method]) !== 'function') {
-    throw 'The provided '+what+' contains '+method+', but it is not a function.';
+    throw 'The provided ' + what + ' contains ' + method + ', but it is not a function.';
   }
-};
+}
 
 /*****************************************************************************/
 
@@ -39,30 +39,21 @@ var verifyMethodOrInterface = function verifyMethodOrInterface (obj, match) {
     var methods = Object.keys (match);
     methods.forEach (function (m) {
       if (typeof match[m] !== 'function') {
-        throw 'Invalid interface specified: '+m+' is not a function.';
+        throw 'Invalid interface specified: ' + m + ' is not a function.';
       }
     });
     return verifyInterface (obj, ...methods);
   }
-  throw 'Invalid interface specified: no idea what to do with '+match+'.';
+  throw 'Invalid interface specified: no idea what to do with ' + match + '.';
 };
 
 /*****************************************************************************/
 
-var verifyInterface = function verifyInterface (obj, ...methods) {
+export function verifyInterface (obj, ...methods) {
   if (methods.length === 0) {
     throw 'Empty interface specified.';
   }
   methods.forEach (m => verifyMethodOrInterface (obj, m));
-};
-
-/*****************************************************************************/
-
-module.exports = {
-  hasMethod: hasMethod,
-  hasInterface: hasInterface,
-  verifyMethod: verifyMethod,
-  verifyInterface: verifyInterface,
-};
+}
 
 /*****************************************************************************/

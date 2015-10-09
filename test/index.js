@@ -1,7 +1,7 @@
 'use strict';
 
-var should   = require ('should'); /* jshint ignore:line */
-var Electrum = require ('../index.js');
+import should from 'should';
+import Electrum from '../index';
 
 /*****************************************************************************/
 
