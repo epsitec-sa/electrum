@@ -3,7 +3,7 @@
   "requireCamelCaseOrUpperCaseIdentifiers":   true,
   "requireCapitalizedConstructors":           true,
   "requireCommaBeforeLineBreak":              true,
-  "requireCurlyBraces":                       true,
+  "requireCurlyBraces":                       ["if", "else", "for", "try", "catch"],
   "requireDotNotation":                       true,
   "requireLineFeedAtFileEnd":                 true,
   "requireOperatorBeforeLineBreak":           true,
