@@ -5,11 +5,11 @@ import Electrum from '../index.js';
 
 /*****************************************************************************/
 
-describe ('Electrum', function () {
+describe ('Electrum', () => {
 
-  describe ('Construction', function () {
+  describe ('Construction', () => {
 
-    it ('should not require new', function () {
+    it ('should not require new', () => {
       /*jshint -W064 */
       var E1 = Electrum ();
       var E2 = Electrum ();
@@ -18,12 +18,12 @@ describe ('Electrum', function () {
       expect (E1 !== E2).to.be.true ();
     });
 
-    it ('should accept empty argument list', function () {
+    it ('should accept empty argument list', () => {
       var E = new Electrum ();
       expect (E.connectors).to.deep.equal ([]);
     });
 
-    it ('should use arguments in correct order', function () {
+    it ('should use arguments in correct order', () => {
       var a = {
         wrap: c => c
       };
@@ -34,11 +34,11 @@ describe ('Electrum', function () {
       expect (E.connectors).to.deep.equal ([b, a]);
     });
 
-    it ('should throw if argument contains no wrapper', function () {
+    it ('should throw if argument contains no wrapper', () => {
       expect (() => new Electrum ({})).to.throw (Error);
     });
 
-    it ('should throw if wrap is not a wrapper', function () {
+    it ('should throw if wrap is not a wrapper', () => {
       expect (() => new Electrum ({wrap: 42})).to.throw (Error);
     });
   });
@@ -46,28 +46,28 @@ describe ('Electrum', function () {
 
 /*****************************************************************************/
 
-describe ('Electrum', function () {
+describe ('Electrum', () => {
 
   var E = null;
 
-  beforeEach (function () {
+  beforeEach (() => {
     E = new Electrum ();
   });
 
-  describe ('API export', function () {
+  describe ('API export', () => {
 
-    it ('should have .use property', function () {
+    it ('should have .use property', () => {
       var prototype = Object.getPrototypeOf (E);
       expect (prototype).to.have.property ('use');
     });
 
-    it ('should have .createClass property', function () {
+    it ('should have .createClass property', () => {
       var prototype = Object.getPrototypeOf (E);
       expect (prototype).to.have.property ('createClass');
     });
   });
 
-  describe ('Wrapping', function () {
+  describe ('Wrapping', () => {
 
     var wrapper = {
       wrap: function (c) {
@@ -81,8 +81,8 @@ describe ('Electrum', function () {
       render: () => {}
     };
 
-    describe ('Should wrap correctly', function () {
-      it ('using createClass (def)', function () {
+    describe ('Should wrap correctly', () => {
+      it ('using createClass (def)', () => {
         E.use (wrapper);
         var component = E.createClass (componentDefinition); /* jshint unused:false */
         expect (componentDefinition).to.have.property ('message', 'hello');
@@ -90,24 +90,24 @@ describe ('Electrum', function () {
         // TODO: verify that `component` was properly created by React
       });
 
-      it ('using createClass (name, def)', function () {
+      it ('using createClass (name, def)', () => {
         E.use (wrapper);
         E.createClass ('Foo', componentDefinition);
         expect (componentDefinition).to.have.property ('displayName', 'Foo');
       });
     });
 
-    describe ('Should throw', function () {
+    describe ('Should throw', () => {
 
-      it ('using createClass ()', function () {
-        expect (function () {
+      it ('using createClass ()', () => {
+        expect (() => {
           E.use (wrapper);
           E.createClass ();
         }).to.throw (Error);
       });
 
-      it ('using createClass (def, name)', function () {
-        expect (function () {
+      it ('using createClass (def, name)', () => {
+        expect (() => {
           E.use (wrapper);
           E.createClass (componentDefinition, 'Foo');
         }).to.throw (Error);
@@ -115,11 +115,11 @@ describe ('Electrum', function () {
     });
   });
 
-  describe ('API injection', function () {
-    it ('should inject implementation', function () {
+  describe ('API injection', () => {
+    it ('should inject implementation', () => {
       var wrapper = {
         wrap: c => c,
-        getElectrumApi: function () {
+        getElectrumApi: () => {
           return { /*jshint unused:false*/
             getState: (obj, what) => 'getState',
             setState: (obj, ...states) => 'setState',
@@ -144,11 +144,11 @@ describe ('Electrum', function () {
     });
   });
 
-  describe ('Bus injection', function () {
-    it ('should inject implementation', function () {
+  describe ('Bus injection', () => {
+    it ('should inject implementation', () => {
       var wrapper = {
         wrap: c => c,
-        getElectrumBus: function () {
+        getElectrumBus: () => {
           return { /*jshint unused:false*/
             dispatch: (obj, message) => 'dispatch',
             notify: (obj, value, ...states) => 'notify'
