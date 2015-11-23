@@ -1,7 +1,7 @@
 'use strict';
 
 import should from 'should';
-import Electrum from '../index';
+import Electrum from '../../index.js';
 
 /*****************************************************************************/
 

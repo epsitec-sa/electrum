@@ -3,7 +3,7 @@
 /*jshint expr: true*/
 
 import should from 'should'; /* jshint ignore:line */
-import * as check from '../../src/check.js';
+import * as check from '../check.js';
 
 /*****************************************************************************/
 
