@@ -1,7 +1,7 @@
 'use strict';
 
 import {expect} from 'mai-chai';
-import Electrum from '../../index.js';
+import Electrum from '../index.js';
 
 /*****************************************************************************/
 

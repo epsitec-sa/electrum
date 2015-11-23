@@ -19,8 +19,8 @@ function Electrum () {
 
 /*****************************************************************************/
 
-import use from './src/use.js';
-import createClass from './src/create-class.js';
+import use from './use.js';
+import createClass from './create-class.js';
 
 Electrum.prototype.use = use;
 Electrum.prototype.createClass = createClass;

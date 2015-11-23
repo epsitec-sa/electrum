@@ -1,12 +1,14 @@
 {
   "name": "electrum",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Electrum simplifies framework-agnostic declaration of React components.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
+    "compile": "babel -d lib/ src/",
+    "prepublish": "npm run compile",
     "test": "mocha src/test/**/*.js"
   },
   "repository": {
@@ -23,12 +25,23 @@
   },
   "homepage": "https://github.com/epsitec-sa/electrum",
   "dependencies": {
-    "react": "^0.13.2"
+    "react": "^0.14.3"
   },
   "devDependencies": {
-    "babel": "^5.8.23",
+    "babel-core": "^6.2.1",
+    "babel-plugin-transform-decorators": "^6.1.18",
+    "babel-plugin-transform-react-display-name": "^6.1.18",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "babel-preset-stage-0": "^6.1.18",
     "chai": "^3.4.1",
+    "jsdom": "^7.0.2",
     "mai-chai": "^1.1.2",
-    "mocha": "^2.3.3"
+    "mocha": "^2.3.4",
+    "path": "^0.12.7",
+    "react": "^0.14.3",
+    "react-addons-shallow-compare": "^0.14.3",
+    "react-addons-test-utils": "^0.14.3",
+    "react-dom": "^0.14.3"
   }
 }
