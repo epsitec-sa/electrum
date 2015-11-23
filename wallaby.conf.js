@@ -5,12 +5,13 @@ var babel = require ('babel');
 module.exports = function (wallaby) {
   return {
     files: [
-      {pattern: 'src/**/*.js'},
+      {pattern: 'src/*.js'},
+      {pattern: 'src/interfaces/*.js'},
       {pattern: 'index.js'}
     ],
     tests: [
       {pattern: 'test/*.js'},
-      {pattern: 'test/**/*.js'}
+      {pattern: 'src/test/**/*.js'}
     ],
     compilers: {
       '**/*.js': wallaby.compilers.babel ({

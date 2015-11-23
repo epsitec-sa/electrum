@@ -1,17 +1,14 @@
 'use strict';
 
-/*jshint expr: true*/
-
-import should from 'should'; /* jshint ignore:line */
+import {expect} from 'mai-chai';
 import * as check from '../check.js';
 
 /*****************************************************************************/
 
-describe ('Electrum.check', function () {
+describe ('Electrum.check', () => {
+  describe ('hasMethod()', () => {
 
-  describe ('hasMethod', function () {
-
-    it ('should identify existing method', function () {
+    it ('identifies existing method', () => {
       var obj1 = {
         foo: () => 'foo'
       };
@@ -21,81 +18,79 @@ describe ('Electrum.check', function () {
         foo: () => 'foo',
         bar: x => x * 2
       };
-      should (check.hasMethod (obj1, 'foo')).be.true;
-      should (check.hasMethod (obj2, 'foo')).be.true;
-      should (check.hasMethod (obj2, 'bar')).be.true;
+      expect (check.hasMethod (obj1, 'foo')).to.be.true ();
+      expect (check.hasMethod (obj2, 'foo')).to.be.true ();
+      expect (check.hasMethod (obj2, 'bar')).to.be.true ();
     });
 
-    it ('should identify missing method', function () {
+    it ('identifies missing method', () => {
       var obj1 = {};
       var obj2 = {foo: 42};
 
-      should (check.hasMethod (obj1, 'foo')).be.false;
-      should (check.hasMethod (obj2, 'foo')).be.false;
+      expect (check.hasMethod (obj1, 'foo')).to.be.false ();
+      expect (check.hasMethod (obj2, 'foo')).to.be.false ();
     });
   });
 
-  describe ('hasInterface', function () {
-
-    it ('should identify presence of interface', function () {
+  describe ('hasInterface()', () => {
+    it ('identifies presence of interface', () => {
       var obj = {
         foo: () => 'foo',
         bar: x => x * 2,
         z: 42
       };
-      should (check.hasInterface (obj, 'foo')).be.true;
-      should (check.hasInterface (obj, 'bar')).be.true;
-      should (check.hasInterface (obj, 'foo', 'bar')).be.true;
+      expect (check.hasInterface (obj, 'foo')).to.be.true ();
+      expect (check.hasInterface (obj, 'bar')).to.be.true ();
+      expect (check.hasInterface (obj, 'foo', 'bar')).to.be.true ();
     });
 
-    it ('should identify absence of interface', function () {
+    it ('identifies absence of interface', () => {
       var obj = {
         foo: () => 'foo',
         bar: x => x * 2,
         z: 42
       };
-      should (check.hasInterface (obj, 'gork')).be.false;
-      should (check.hasInterface (obj, 'foo', 'bar', 'z')).be.false;
+      expect (check.hasInterface (obj, 'gork')).to.be.false ();
+      expect (check.hasInterface (obj, 'foo', 'bar', 'z')).to.be.false ();
     });
   });
 
-  describe ('verifyInterface', function () {
-
-    it ('should succeed if interface matches', function () {
+  describe ('verifyInterface()', () => {
+    it ('succeeds if interface matches', () => {
       var obj = {
         foo: () => 'foo',
         bar: x => x * 2,
         z: 42
       };
-      var interface1 = {foo: function () {}};
-      var interface2 = {bar: function () {}};
-      var interface3 = {bar: function () {}, foo: function () {}};
-      should (check.verifyInterface (obj, interface1));
-      should (check.verifyInterface (obj, interface2));
-      should (check.verifyInterface (obj, interface3));
-      should (check.verifyInterface (obj, interface1, interface2));
+      var interface1 = {foo: () => {}};
+      var interface2 = {bar: () => {}};
+      var interface3 = {bar: () => {}, foo: () => {}};
+      expect (() => check.verifyInterface (obj, interface1)).to.not.throw ();
+      expect (() => check.verifyInterface (obj, interface2)).to.not.throw ();
+      expect (() => check.verifyInterface (obj, interface3)).to.not.throw ();
+      expect (() => check.verifyInterface (obj, interface1, interface2)).to.not.throw ();
     });
 
-    it ('should fail if no interface is specified', function () {
+    it ('fails if no interface is specified', () => {
       var obj = {
         foo: () => 'foo',
         bar: x => x * 2,
         z: 42
       };
-      should (() => check.verifyInterface (obj)).throw ();
+      expect (() => check.verifyInterface (obj)).to.throw (Error);
     });
 
-    it ('should fail if interface does not match', function () {
+    it ('fails if interface does not match', () => {
       var obj = {
         foo: () => 'foo',
         bar: x => x * 2,
         z: 42
       };
-      var interface1 = {gork: function () {}};
-      should (() => check.verifyInterface (obj, interface1)).throw ();
+      var interface1 = {gork: () => {}};
+      expect (() => check.verifyInterface (obj, interface1)).to.throw (Error);
     });
 
-    it ('should fail if interface specification is incorrect', function () {
+    it ('fails if interface specification is incorrect', () => {
       var obj = {
         foo: () => 'foo',
         bar: x => x * 2,
@@ -103,8 +98,8 @@ describe ('Electrum.check', function () {
       };
       var interface1 = {};
       var interface2 = {z: 42};
-      should (() => check.verifyInterface (obj, interface1)).throw ();
-      should (() => check.verifyInterface (obj, interface2)).throw ();
+      expect (() => check.verifyInterface (obj, interface1)).to.throw (Error);
+      expect (() => check.verifyInterface (obj, interface2)).to.throw (Error);
     });
   });
 });

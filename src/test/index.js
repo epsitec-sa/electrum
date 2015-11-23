@@ -1,6 +1,6 @@
 'use strict';
 
-import should from 'should';
+import {expect} from 'mai-chai';
 import Electrum from '../../index.js';
 
 /*****************************************************************************/
@@ -13,17 +13,14 @@ describe ('Electrum', function () {
       /*jshint -W064 */
       var E1 = Electrum ();
       var E2 = Electrum ();
-      E1.should.have.ownProperty ('connectors', E1);
-      E1.connectors.length.should.be.equal (0);
-      E2.should.have.ownProperty ('connectors', E1);
-      E2.connectors.length.should.be.equal (0);
-      E1.should.not.be.equal (E2);
+      expect (E1.connectors).to.deep.equal ([]);
+      expect (E2.connectors).to.deep.equal ([]);
+      expect (E1 !== E2).to.be.true ();
     });
 
     it ('should accept empty argument list', function () {
       var E = new Electrum ();
-      E.should.have.ownProperty ('connectors', E);
-      E.connectors.length.should.be.equal (0);
+      expect (E.connectors).to.deep.equal ([]);
     });
 
     it ('should use arguments in correct order', function () {
@@ -34,25 +31,15 @@ describe ('Electrum', function () {
         wrap: c => c
       };
       var E = new Electrum (a, b);
-      E.connectors.length.should.be.equal (2);
-      E.connectors[1].should.be.equal (a);
-      E.connectors[0].should.be.equal (b);
+      expect (E.connectors).to.deep.equal ([b, a]);
     });
 
     it ('should throw if argument contains no wrapper', function () {
-      should (function () {
-        var a = {};
-        var E = new Electrum (a); /* jshint unused:false */
-      }).throw ();
+      expect (() => new Electrum ({})).to.throw (Error);
     });
 
     it ('should throw if wrap is not a wrapper', function () {
-      should (function () {
-        var a = {
-          wrap: 42
-        };
-        var E = new Electrum (a); /* jshint unused:false */
-      }).throw ();
+      expect (() => new Electrum ({wrap: 42})).to.throw (Error);
     });
   });
 });
@@ -71,12 +58,12 @@ describe ('Electrum', function () {
 
     it ('should have .use property', function () {
       var prototype = Object.getPrototypeOf (E);
-      prototype.should.have.ownProperty ('use', prototype);
+      expect (prototype).to.have.property ('use');
     });
 
     it ('should have .createClass property', function () {
       var prototype = Object.getPrototypeOf (E);
-      prototype.should.have.ownProperty ('createClass', prototype);
+      expect (prototype).to.have.property ('createClass');
     });
   });
 
@@ -98,32 +85,32 @@ describe ('Electrum', function () {
       it ('using createClass (def)', function () {
         E.use (wrapper);
         var component = E.createClass (componentDefinition); /* jshint unused:false */
-        componentDefinition.should.have.ownProperty ('message').equal ('hello');
-        componentDefinition.should.have.ownProperty ('test').equal (42);
+        expect (componentDefinition).to.have.property ('message', 'hello');
+        expect (componentDefinition).to.have.property ('test', 42);
         // TODO: verify that `component` was properly created by React
       });
 
       it ('using createClass (name, def)', function () {
         E.use (wrapper);
         E.createClass ('Foo', componentDefinition);
-        componentDefinition.should.have.ownProperty ('displayName').equal ('Foo');
+        expect (componentDefinition).to.have.property ('displayName', 'Foo');
       });
     });
 
     describe ('Should throw', function () {
 
       it ('using createClass ()', function () {
-        should (function () {
+        expect (function () {
           E.use (wrapper);
           E.createClass ();
-        }).throw ();
+        }).to.throw (Error);
       });
 
       it ('using createClass (def, name)', function () {
-        should (function () {
+        expect (function () {
           E.use (wrapper);
           E.createClass (componentDefinition, 'Foo');
-        }).throw ();
+        }).to.throw (Error);
       });
     });
   });
@@ -145,13 +132,15 @@ describe ('Electrum', function () {
       };
 
       E.use (wrapper);
-      E.bus.should.be.eql ({});
-      E.getState ().should.be.equal ('getState');
-      E.setState ().should.be.equal ('setState');
-      E.getStyle ().should.be.equal ('getStyle');
-      E.getText  ().should.be.equal ('getText');
-      E.getValue ().should.be.equal ('getValue');
-      E.setValue ().should.be.equal ('setValue');
+      expect (E.bus).to.deep.equal ({});
+      expect (E.getState ()).to.equal ('getState');
+      expect (E.setState ()).to.equal ('setState');
+      expect (E.getState ()).to.equal ('getState');
+      expect (E.setState ()).to.equal ('setState');
+      expect (E.getStyle ()).to.equal ('getStyle');
+      expect (E.getText  ()).to.equal ('getText');
+      expect (E.getValue ()).to.equal ('getValue');
+      expect (E.setValue ()).to.equal ('setValue');
     });
   });
 
@@ -168,8 +157,8 @@ describe ('Electrum', function () {
       };
 
       E.use (wrapper);
-      E.bus.dispatch ().should.be.equal ('dispatch');
-      E.bus.notify ().should.be.equal ('notify');
+      expect (E.bus.dispatch ()).to.equal ('dispatch');
+      expect (E.bus.notify ()).to.equal ('notify');
     });
   });
 });
