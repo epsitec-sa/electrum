@@ -5,7 +5,7 @@ var babel = require ('babel');
 module.exports = function (wallaby) {
   return {
     files: [
-      {pattern: 'modules/**/*.js'},
+      {pattern: 'src/**/*.js'},
       {pattern: 'index.js'}
     ],
     tests: [
