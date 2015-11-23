@@ -28,7 +28,7 @@
     "react": "^0.14.3"
   },
   "devDependencies": {
-    "babel": "^6.1.18",
+    "babel-cli": "^6.2.0",
     "babel-core": "^6.2.1",
     "babel-plugin-transform-decorators": "^6.1.18",
     "babel-plugin-transform-react-display-name": "^6.1.18",
