@@ -1,7 +1,7 @@
 # Electrum
 
 [![Build Status](https://travis-ci.org/epsitec-sa/electrum.svg?branch=master)](https://travis-ci.org/epsitec-sa/electrum)
-![Windows CI](https://ci.appveyor.com/api/projects/status/github/epsitec-sa/electrum?svg=true)
+![Windows CI](https://ci.appveyor.com/api/projects/status/rik5ss091uvmcewh?svg=true)
 
 **Electrum** simplifies framework-agnostic declaration of React components and is used
 internally by [Epsitec SA](https://github.com/epsitec-sa/) to bridge the gap with its
