@@ -5,7 +5,6 @@ environment:
     # node.js
     - nodejs_version: "5.0"
     - nodejs_version: "4.1"
-    - nodejs_version: "4.0"
 
 matrix:
   fast_finish: true
