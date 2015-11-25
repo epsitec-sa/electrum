@@ -28,5 +28,6 @@ Electrum.prototype.createClass = createClass;
 /*****************************************************************************/
 
 export default Electrum;
+export const E = new Electrum ();
 
 /*****************************************************************************/
