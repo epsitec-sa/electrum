@@ -72,12 +72,12 @@ var Wrapper = {
 Electrum provides access to external services which are useful
 when implementing React components:
 
-* The [Electrum API](API.md) provides:
+* The [Electrum API](doc/API.md) provides:
    * _Read services_ to get the text, value, style and state
      associated with a component;
    * _Write services_ to change the value and state of a component
      as a result of a direct user action on the component.
-* The [Electrum Bus](Bus.md) provides:
+* The [Electrum Bus](doc/Bus.md) provides:
    * A method to _dispatch_ user actions to the backend.
    * A method to _notify_ the backend when data changes.
 
