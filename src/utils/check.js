@@ -19,13 +19,17 @@ export function hasInterface (obj, ...methods) {
 
 /*****************************************************************************/
 
-export function verifyMethod (obj, method, what) {
+export function verifyMethod (obj, method, what, n) {
   what = what || 'interface';
   if (!obj.hasOwnProperty (method)) {
-    throw new Error ('The provided ' + what + ' does not implement method ' + method + '.');
+    throw new Error ('The provided ' + what + ' does not implement method ' + method);
   }
-  if (typeof (obj[method]) !== 'function') {
-    throw new Error ('The provided ' + what + ' contains ' + method + ', but it is not a function.');
+  if (typeof obj[method] !== 'function') {
+    throw new Error ('The provided ' + what + ' contains ' + method + ', but it is not a function');
+  }
+  if ((n !== undefined) &&
+      (n !== obj[method].length)) {
+    throw new Error ('The provided ' + what + ' contains ' + method + ', but it does not take ' + n + ' arguments');
   }
 }
 
@@ -39,19 +43,19 @@ var verifyMethodOrInterface = function verifyMethodOrInterface (obj, match) {
     var methods = Object.keys (match);
     methods.forEach (function (m) {
       if (typeof match[m] !== 'function') {
-        throw new Error ('Invalid interface specified: ' + m + ' is not a function.');
+        throw new Error ('Invalid interface specified: ' + m + ' is not a function');
       }
     });
     return verifyInterface (obj, ...methods);
   }
-  throw new Error ('Invalid interface specified: no idea what to do with ' + match + '.');
+  throw new Error ('Invalid interface specified: no idea what to do with ' + match);
 };
 
 /*****************************************************************************/
 
 export function verifyInterface (obj, ...methods) {
   if (methods.length === 0) {
-    throw new Error ('Empty interface specified.');
+    throw new Error ('Empty interface specified');
   }
   methods.forEach (m => verifyMethodOrInterface (obj, m));
 }

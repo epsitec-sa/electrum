@@ -2,47 +2,17 @@
 
 import React from 'react';
 import Middleware from './middleware.js';
+import {getApi, getBus, verifyWrap} from './utils/get-interfaces.js';
+import wrap from './utils/wrap.js';
 import shallowCompare from 'react-addons-shallow-compare';
 
-/*****************************************************************************/
-
-function Electrum () {
-  if (!(this instanceof Electrum)) {
-    var obj = Object.create (Electrum.prototype);
-    obj.constructor.apply (obj, arguments);
-    return obj;
-  }
-
-  this.connectors = [];
-  this.bus = {};
-
-  for (var i = 0; i < arguments.length; i++) {
-    this.use (arguments[i]);
-  }
-}
-
-/*****************************************************************************/
-
-import use from './use.js';
-import createClass from './create-class.js';
-
-Electrum.prototype.use = use;
-Electrum.prototype.createClass = createClass;
+/******************************************************************************/
 
 const middleware = new Middleware ();
 middleware.register ('state', (id, prop) => prop.select (id));
 middleware.register ('theme', (id, prop) => prop);
 
-Electrum.middleware = middleware;
-
-/*****************************************************************************/
-
-export default Electrum;
-export const E = new Electrum ();
-
-function link (props, id) {
-  return middleware.link (props, id);
-}
+/******************************************************************************/
 
 function configStatelessFunctionComponent (name, render) {
   return React.createClass ({
@@ -64,11 +34,57 @@ function config (name, component) {
       throw new Error ('Invalid stateless function component; function should take one parameter');
     }
   }
+  if (typeof component === 'object') {
+    component.displayName = name;
+  }
   return component;
 }
 
-E.wrapComponent = config;
-E.link = link;
-E.shallowCompare = shallowCompare;
+/******************************************************************************/
+
+export class Electrum {
+  constructor (...wrappers) {
+    this.connectors = [];
+    this.bus = {};
+    wrappers.forEach (x => this.use (x));
+  }
+
+  use (connector) {
+    verifyWrap (connector);
+
+    const api = getApi (connector);
+    const bus = getBus (connector);
+
+    // Everything was successfully verified; we can now proceed and alter
+    // the Electrum instance:
+    this.connectors.unshift (connector);
+
+    if (api) {
+      Object.keys (api).forEach (key => this[key] = api[key]);
+    }
+
+    if (bus) {
+      Object.keys (bus).forEach (key => this.bus[key] = bus[key]);
+    }
+  }
+
+  link (props, id) {
+    return middleware.link (props, id);
+  }
+
+  get middleware () {
+    return middleware;
+  }
+
+  wrap (name, component) {
+    return wrap (this.connectors, config (name, component));
+  }
+}
+
+/******************************************************************************/
+
+const e = new Electrum ();
+
+export default e;
 
 /*****************************************************************************/

@@ -34,7 +34,7 @@
     "babel-preset-react": "^6.1.18",
     "babel-preset-stage-0": "^6.1.18",
     "chai": "^3.4.1",
-    "electrum-require-components": "^0.2.1",
+    "electrum-require-components": "^1.0.1",
     "electrum-store": "^1.0.0",
     "electrum-theme": "^0.9.0",
     "jsdom": "^7.0.2",

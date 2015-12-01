@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-import {E} from '../index.js';
+import E from '../index.js';
 import {Store} from 'electrum-store';
 import {Content} from '../all-components.js';
 
