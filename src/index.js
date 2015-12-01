@@ -1,6 +1,8 @@
 'use strict';
 
+import React from 'react';
 import Middleware from './middleware.js';
+import shallowCompare from 'react-addons-shallow-compare';
 
 /*****************************************************************************/
 
@@ -38,10 +40,35 @@ Electrum.middleware = middleware;
 export default Electrum;
 export const E = new Electrum ();
 
-function wrapComponent (name, component) {
-  return E.createClass (name, component);
+function link (props, id) {
+  return middleware.link (props, id);
 }
 
-E.wrapComponent = wrapComponent;
+function configStatelessFunctionComponent (name, render) {
+  return React.createClass ({
+    shouldComponentUpdate: function (nextProps, nextState) {
+      return shallowCompare (this, nextProps, nextState);
+    },
+    render: function () {
+      return render (this.props);
+    },
+    displayName: name
+  });
+}
+
+function config (name, component) {
+  if (typeof component === 'function') {
+    if (component.length === 1) {
+      return configStatelessFunctionComponent (name, component);
+    } else {
+      throw new Error ('Invalid stateless function component; function should take one parameter');
+    }
+  }
+  return component;
+}
+
+E.wrapComponent = config;
+E.link = link;
+E.shallowCompare = shallowCompare;
 
 /*****************************************************************************/

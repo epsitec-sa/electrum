@@ -30,7 +30,7 @@ export default function createClass (...args) {
   if (component) {
     return React.createClass (wrap (this.connectors, component));
   } else {
-    throw new Error ('Invalid arguments provided to Electrum.createClass().');
+    throw new Error ('Invalid arguments provided to Electrum.createClass()');
   }
 }
 

@@ -43,7 +43,9 @@ export default class Middleware {
         }
       }
       if (middleware) {
-        prop = middleware (id, prop);
+        if (prop !== undefined) {
+          prop = middleware (id, prop);
+        }
       }
       if (prop !== undefined) {
         copy[name] = prop;

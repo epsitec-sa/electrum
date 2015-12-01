@@ -1,7 +1,7 @@
 'use strict';
 
 import {expect} from 'mai-chai';
-import * as check from '../check.js';
+import * as check from '../utils/check.js';
 
 /*****************************************************************************/
 

@@ -37,17 +37,14 @@
 
   "disallowSpaceAfterPrefixUnaryOperators":   true,
   "disallowSpaceBeforePostfixUnaryOperators": true,
-
-  "disallowSpacesInsideArrayBrackets":        "all",
-  "disallowSpacesInsideObjectBrackets":       "all",
-
   "disallowSpaceAfterObjectKeys":             true,
+
+  "disallowSpacesInsideArrayBrackets":        { "allExcept": [ "}", "]" ]},
+  "disallowSpacesInsideObjectBrackets":       { "allExcept": [ "}", "]" ]},
 
   "disallowYodaConditions":                   true,
 
   "safeContextKeyword":                       ["self"],
-
-  "validateIndentation":                      2,
 
   "jsDoc": {
     "checkParamNames":                        true,
@@ -55,12 +52,17 @@
     "requireParamTypes":                      true
   },
 
+  "validateIndentation":                      2,
   "validateParameterSeparator":               ", ",
   "validateQuoteMarks":                       "'",
+  "validateLineBreaks":                       "LF",
 
   "maximumLineLength": {
     "value":                                  120,
     "allowUrlComments":                       true,
     "allowRegex":                             true
-  }
+  },
+
+  "esnext":                                   true,
+  "requireSemicolons":                        true
 }
