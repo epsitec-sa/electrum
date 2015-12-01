@@ -3,7 +3,9 @@
 import {expect} from 'mai-chai';
 import {Store} from 'electrum-store';
 import {Theme} from 'electrum-theme';
-import Middleware from '../middleware.js';
+
+import Electrum from '../index.js';
+
 
 describe ('Store', () => {
   describe ('Store.link()', () => {
@@ -52,8 +54,7 @@ describe ('Store', () => {
   describe ('Store.link() using Middleware', () => {
     it ('produces properties linked to child state', () => {
       const store = Store.create ('x');
-      const middleware = new Middleware ();
-      middleware.register ('state', (id, prop) => prop.select (id));
+      const middleware = Electrum.middleware;
       store.select ('a.b.c');
       const props1 = {state: store.find ('a')};
       const props2 = middleware.link (props1, 'b');
@@ -63,8 +64,7 @@ describe ('Store', () => {
 
     it ('produces properties without unrelated stuff', () => {
       const store = Store.create ('x');
-      const middleware = new Middleware ();
-      middleware.register ('state', (id, prop) => prop.select (id));
+      const middleware = Electrum.middleware;
       store.select ('a.b.c');
       const props1 = {state: store.find ('a'), foo: 'bar'};
       const props2 = middleware.link (props1, 'b');
@@ -76,9 +76,7 @@ describe ('Store', () => {
 
     it ('produces properties which propagate the theme', () => {
       const store = Store.create ('x');
-      const middleware = new Middleware ();
-      middleware.register ('state', (id, prop) => prop.select (id));
-      middleware.register ('theme');
+      const middleware = Electrum.middleware;
       const theme = Theme.create ('default');
       store.select ('a.b.c');
       const props1 = {state: store.find ('a'), theme: theme};
@@ -89,9 +87,7 @@ describe ('Store', () => {
 
     it ('allows for the theme to be overridden', () => {
       const store = Store.create ('x');
-      const middleware = new Middleware ();
-      middleware.register ('state', (id, prop) => prop.select (id));
-      middleware.register ('theme');
+      const middleware = Electrum.middleware;
       const theme1 = Theme.create ('default');
       const theme2 = Theme.create ('default');
       store.select ('a.b.c');

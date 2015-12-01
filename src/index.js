@@ -27,6 +27,12 @@ import createClass from './create-class.js';
 Electrum.prototype.use = use;
 Electrum.prototype.createClass = createClass;
 
+const middleware = new Middleware ();
+middleware.register ('state', (id, prop) => prop.select (id));
+middleware.register ('theme', (id, prop) => prop);
+
+Electrum.middleware = middleware;
+
 /*****************************************************************************/
 
 export default Electrum;
@@ -36,7 +42,6 @@ function wrapComponent (name, component) {
   return E.createClass (name, component);
 }
 
-E.middleware = new Middleware ();
 E.wrapComponent = wrapComponent;
 
 /*****************************************************************************/
