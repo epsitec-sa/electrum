@@ -30,4 +30,10 @@ Electrum.prototype.createClass = createClass;
 export default Electrum;
 export const E = new Electrum ();
 
+function wrapComponent (name, component) {
+  return E.createClass (name, component);
+}
+
+E.wrapComponent = wrapComponent;
+
 /*****************************************************************************/

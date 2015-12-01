@@ -13,17 +13,17 @@ var wrap = function (wrappers, obj) {
 
 /*****************************************************************************/
 
-export default function () {
+export default function createClass (...args) {
   var component;
-  switch (arguments.length) {
+  switch (args.length) {
     case 1:
-      component = arguments[0];
+      component = args[0];
       break;
     case 2:
-      if ((typeof arguments[0] === 'string') &&
-          (typeof arguments[1] === 'object')) {
-        component = arguments[1];
-        component.displayName = arguments[0];
+      if ((typeof args[0] === 'string') &&
+          (typeof args[1] === 'object')) {
+        component = args[1];
+        component.displayName = args[0];
       }
       break;
   }
