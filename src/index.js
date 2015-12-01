@@ -1,5 +1,7 @@
 'use strict';
 
+import Middleware from './middleware.js';
+
 /*****************************************************************************/
 
 function Electrum () {
@@ -34,6 +36,7 @@ function wrapComponent (name, component) {
   return E.createClass (name, component);
 }
 
+E.middleware = new Middleware ();
 E.wrapComponent = wrapComponent;
 
 /*****************************************************************************/
