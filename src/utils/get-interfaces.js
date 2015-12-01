@@ -1,7 +1,6 @@
 'use strict';
 
-import { verifyMethod, verifyInterface, hasMethod }
-  from './check.js';
+import {verifyMethod, verifyInterface, hasMethod} from './checks.js';
 
 import IApi from '../interfaces/api.js';
 import IBus from '../interfaces/bus.js';
