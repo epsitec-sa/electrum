@@ -2,9 +2,12 @@
 
 import React from 'react';
 import Middleware from './middleware.js';
+import {isSimpleFunction} from './utils/checks.js';
 import {getApi, getBus, verifyWrap} from './utils/get-interfaces.js';
+import markComponentAsPure from './utils/mark-component-as-pure.js';
+import setComponentDisplayName from './utils/set-component-display-name.js';
+import transformStatelessFunctionComponent from './utils/transform-stateless-function-component.js';
 import wrap from './utils/wrap.js';
-import shallowCompare from 'react-addons-shallow-compare';
 
 /******************************************************************************/
 
@@ -14,28 +17,22 @@ middleware.register ('theme', (id, prop) => prop);
 
 /******************************************************************************/
 
-function configStatelessFunctionComponent (name, render) {
-  return React.createClass ({
-    shouldComponentUpdate: function (nextProps, nextState) {
-      return shallowCompare (this, nextProps, nextState);
-    },
-    render: function () {
-      return render (this.props);
-    },
-    displayName: name
-  });
-}
-
 function config (name, component) {
   if (typeof component === 'function') {
-    if (component.length === 1) {
-      return configStatelessFunctionComponent (name, component);
-    } else {
-      throw new Error ('Invalid stateless function component; function should take one parameter');
+    if (isSimpleFunction (component)) {
+      if (component.length === 1) {
+        component = transformStatelessFunctionComponent (component);
+      } else {
+        throw new Error (`Invalid stateless function component ${component.name}; it should take one parameter`);
+      }
     }
+    component = markComponentAsPure (component);
+    component = setComponentDisplayName (component, name);
   }
   if (typeof component === 'object') {
-    component.displayName = name;
+    component = React.createClass (component);
+    component = markComponentAsPure (component);
+    component = setComponentDisplayName (component, name);
   }
   return component;
 }

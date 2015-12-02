@@ -1,7 +1,14 @@
 'use strict';
 
 import {expect} from 'mai-chai';
-import {isClass, verifyInterface, hasMethod, hasInterface} from '../utils/checks.js';
+
+import {
+  isClass,
+  isSimpleFunction,
+  verifyInterface,
+  hasMethod,
+  hasInterface
+} from '../utils/checks.js';
 
 /*****************************************************************************/
 
@@ -51,6 +58,20 @@ describe ('Electrum utils/check', () => {
       };
       expect (hasInterface (obj, 'gork')).to.be.false ();
       expect (hasInterface (obj, 'foo', 'bar', 'z')).to.be.false ();
+    });
+  });
+
+  describe ('isSimpleFunction()', () => {
+    it ('identifies a function', () => {
+      expect (isSimpleFunction (() => 0)).to.be.true ();
+      expect (isSimpleFunction (function (a, b) {
+        return a || b;
+      })).to.be.true ();
+    });
+
+    it ('identifies a class to not be a function', () => {
+      expect (isClass (class Foo {})).to.be.true ();
+      expect (isSimpleFunction (class Foo {})).to.be.false ();
     });
   });
 

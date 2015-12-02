@@ -11,27 +11,28 @@ describe ('Electrum', () => {
     it ('wraps React components', () => {
       const wrapper = {wrap: c => (c.test = 42, c)};
       const e = new Electrum (wrapper);
-      const component = {
-        message: 'hello',
-        render: () => <div>{this.props.text}</div>
-      };
 
-      const wrapped = e.wrap ('comp', component);
+      class Component extends React.Component {
+        render () {
+          return <div>{this.props.text}</div>;
+        }
+    }
 
-      expect (wrapped).to.have.property ('displayName', 'comp');
-      expect (wrapped).to.have.property ('message', 'hello');
+      const wrapped = e.wrap ('comp', Component);
+
+      expect (wrapped.prototype).to.have.property ('displayName', 'comp');
       expect (wrapped).to.have.property ('test', 42);
     });
 
     it ('wraps stateless function components', () => {
       const wrapper = {wrap: c => (c.test = 42, c)};
       const e = new Electrum (wrapper);
-      const component = props => <div>{props.text}</div>;
-      const wrapped = e.wrap ('comp', component);
+      const Component = props => <div>{props.text}</div>;
+      const wrapped = e.wrap ('comp', Component);
 
-      expect (wrapped).to.have.property ('displayName', 'comp');
-      expect (wrapped).to.have.property ('test', 42);
+      expect (wrapped.prototype).to.have.property ('displayName', 'comp');
       expect (wrapped.prototype).to.have.property ('render');
+      expect (wrapped).to.have.property ('test', 42);
     });
   });
 });

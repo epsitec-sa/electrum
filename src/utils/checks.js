@@ -16,10 +16,19 @@ export function isClass (obj) {
   if (dump.startsWith ('class ')) { // that sould be expected from an ES6-compilant engine
     return true;
   }
-  if (dump.includes (', _classCallCheck(')) { // this is what Babel 6.x produces
+  if (dump.includes ('_classCallCheck(')) { // this is what Babel 6.x produces
     return true;
   }
   return false;
+}
+
+export function isSimpleFunction (obj) {
+  if (typeof obj !== 'function') {
+    return false;
+  }
+  const props = Object.getOwnPropertyNames (obj.prototype);
+  // A simple function has only a constructor
+  return props.length === 1 && props[0] === 'constructor' && !isClass (obj);
 }
 
 /******************************************************************************/
