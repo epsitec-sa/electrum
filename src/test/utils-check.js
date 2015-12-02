@@ -10,7 +10,7 @@ import {
   hasInterface
 } from '../utils/checks.js';
 
-/*****************************************************************************/
+/******************************************************************************/
 
 describe ('Electrum utils/check', () => {
   describe ('hasMethod()', () => {
@@ -38,6 +38,8 @@ describe ('Electrum utils/check', () => {
     });
   });
 
+  /****************************************************************************/
+
   describe ('hasInterface()', () => {
     it ('identifies presence of interface', () => {
       const obj = {
@@ -61,6 +63,8 @@ describe ('Electrum utils/check', () => {
     });
   });
 
+  /****************************************************************************/
+
   describe ('isSimpleFunction()', () => {
     it ('identifies a function', () => {
       expect (isSimpleFunction (() => 0)).to.be.true ();
@@ -75,6 +79,8 @@ describe ('Electrum utils/check', () => {
     });
   });
 
+  /****************************************************************************/
+
   describe ('isClass()', () => {
     it ('identifies a class as a class', () => {
       class Obj {}
@@ -86,6 +92,8 @@ describe ('Electrum utils/check', () => {
       expect (isClass (Func)).to.be.false ();
     });
   });
+
+  /****************************************************************************/
 
   describe ('verifyInterface()', () => {
     it ('succeeds if interface matches', () => {
@@ -189,4 +197,4 @@ describe ('Electrum utils/check', () => {
   });
 });
 
-/*****************************************************************************/
+/******************************************************************************/

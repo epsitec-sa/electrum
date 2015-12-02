@@ -1,6 +1,6 @@
 'use strict';
 
 export default function setComponentDisplayName (component, name) {
-  component.prototype.displayName = name;
+  component.displayName = name;
   return component;
 }

@@ -1,5 +1,7 @@
 'use strict';
 
+/*****************************************************************************/
+
 export default class Middleware {
   constructor () {
     this._middlewares = [];
@@ -54,3 +56,5 @@ export default class Middleware {
     return copy;
   }
 }
+
+/*****************************************************************************/

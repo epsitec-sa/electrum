@@ -1,14 +1,17 @@
 'use strict';
 
+import {expect} from 'mai-chai';
+import {Store} from 'electrum-store';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
 
 import E from '../index.js';
-import {Store} from 'electrum-store';
 import {Content} from '../all-components.js';
 
-console.log ('%O', E.link ({theme: 1}));
-console.log ('Component name: <' + Content.displayName + '>');
+/******************************************************************************/
+
+expect (Content.displayName).to.equal ('Content');
 
 Store.read = function read (props, id) {
   const {state} = props;
@@ -17,7 +20,7 @@ Store.read = function read (props, id) {
 
 let log = '';
 
-class Author extends React.Component {
+const Author = E.wrap ('Author', class extends React.Component {
   render () {
     log = log + '/Author';
     return <div>
@@ -25,9 +28,9 @@ class Author extends React.Component {
       <span>{Store.read (this.props, 'displayName')}</span>
     </div>;
   }
-}
+});
 
-class Post extends React.Component {
+const Post = E.wrap ('Post', class extends React.Component {
   render () {
     log = log + '/Post';
     return <div>
@@ -35,7 +38,7 @@ class Post extends React.Component {
       <Author {...E.link (this.props, 'author')} />
     </div>;
   }
-}
+});
 
 const store = Store.create ();
 store.select ('blog.post-1.content').set ('text', 'Hello, world...');
@@ -46,3 +49,17 @@ const html = ReactDOMServer.renderToStaticMarkup (post);
 
 console.log (html);
 console.log (log);
+
+const mountNode = document.getElementById ('root');
+log = '';
+ReactDOM.render (<Post state={store.select ('blog.post-1')} />, mountNode);
+console.log ('Rendered: ' + log);
+log = '';
+ReactDOM.render (<Post state={store.select ('blog.post-1')} />, mountNode);
+console.log ('Rendered: ' + log);
+
+store.select ('blog.post-1.content').set ('text', 'Bye');
+
+log = '';
+ReactDOM.render (<Post state={store.select ('blog.post-1')} />, mountNode);
+console.log ('Rendered: ' + log);

@@ -2,11 +2,11 @@
 
 /******************************************************************************/
 
-export default function wrap (wrappers, obj) {
-  wrappers.forEach (function (wrapper) {
-    obj = wrapper.wrap (obj);
-  });
-  return obj;
+export default function wrap (wrappers, component) {
+  for (let wrapper of wrappers) {
+    component = wrapper.wrap (component);
+  }
+  return component;
 }
 
 /******************************************************************************/
