@@ -12,8 +12,8 @@ export default class Electrum {
     this._connectors = [];
     this._bus = {};
     this._middleware = new Middleware ();
-    this._middleware.register ('state', (id, prop) => prop.select (id));
-    this._middleware.register ('theme', (id, prop) => prop);
+    this._middleware.register ('state', (id, state) => state.select (id));
+    this._middleware.register ('theme', (id, theme) => theme);
     wrappers.forEach (x => this.use (x));
   }
 
