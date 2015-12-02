@@ -55,7 +55,7 @@
   "validateIndentation":                      2,
   "validateParameterSeparator":               ", ",
   "validateQuoteMarks":                       "'",
-  "validateLineBreaks":                       "LF",
+  "validateLineBreaks":                       "CRLF",
 
   "maximumLineLength": {
     "value":                                  120,
