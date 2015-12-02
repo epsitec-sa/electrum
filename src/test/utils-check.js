@@ -1,18 +1,17 @@
 'use strict';
 
 import {expect} from 'mai-chai';
-import {verifyInterface, hasMethod, hasInterface} from '../utils/checks.js';
+import {isClass, verifyInterface, hasMethod, hasInterface} from '../utils/checks.js';
 
 /*****************************************************************************/
 
 describe ('Electrum utils/check', () => {
   describe ('hasMethod()', () => {
-
     it ('identifies existing method', () => {
-      var obj1 = {
+      const obj1 = {
         foo: () => 'foo'
       };
-      var obj2 = {
+      const obj2 = {
         x: 1,
         y: ['a', 'b'],
         foo: () => 'foo',
@@ -24,8 +23,8 @@ describe ('Electrum utils/check', () => {
     });
 
     it ('identifies missing method', () => {
-      var obj1 = {};
-      var obj2 = {foo: 42};
+      const obj1 = {};
+      const obj2 = {foo: 42};
 
       expect (hasMethod (obj1, 'foo')).to.be.false ();
       expect (hasMethod (obj2, 'foo')).to.be.false ();
@@ -34,7 +33,7 @@ describe ('Electrum utils/check', () => {
 
   describe ('hasInterface()', () => {
     it ('identifies presence of interface', () => {
-      var obj = {
+      const obj = {
         foo: () => 'foo',
         bar: x => x * 2,
         z: 42
@@ -45,7 +44,7 @@ describe ('Electrum utils/check', () => {
     });
 
     it ('identifies absence of interface', () => {
-      var obj = {
+      const obj = {
         foo: () => 'foo',
         bar: x => x * 2,
         z: 42
@@ -55,13 +54,25 @@ describe ('Electrum utils/check', () => {
     });
   });
 
+  describe ('isClass()', () => {
+    it ('identifies a class as a class', () => {
+      class Obj {}
+      expect (isClass (Obj)).to.be.true ();
+    });
+
+    it ('identifies a function as not a class', () => {
+      function Func () {}
+      expect (isClass (Func)).to.be.false ();
+    });
+  });
+
   describe ('verifyInterface()', () => {
     it ('succeeds if interface matches', () => {
-      var obj = {
+      const obj = {
         foo: () => 'foo',
-        bar: x => x * 2,
         z: 42
       };
+      obj.bar = x => x * 2;
       var interface1 = {foo: () => {}};
       var interface2 = {bar: () => {}};
       var interface3 = {bar: () => {}, foo: () => {}};
@@ -71,8 +82,61 @@ describe ('Electrum utils/check', () => {
       expect (() => verifyInterface (obj, interface1, interface2)).to.not.throw ();
     });
 
-    it ('fails if no interface is specified', () => {
-      var obj = {
+    it ('succeeds if interface matches on class instance methods', () => {
+      class Obj {
+        foo () {}
+        bar (x) {
+          return x * 2;
+        }
+        get z () {
+          return 42;
+        }
+      }
+      var interface1 = {foo: () => {}};
+      var interface2 = {bar: () => {}};
+      var interface3 = {bar: () => {}, foo: () => {}};
+      const obj = new Obj ();
+      expect (() => verifyInterface (obj, interface1)).to.not.throw ();
+      expect (() => verifyInterface (obj, interface2)).to.not.throw ();
+      expect (() => verifyInterface (obj, interface3)).to.not.throw ();
+      expect (() => verifyInterface (obj, interface1, interface2)).to.not.throw ();
+    });
+
+    it ('succeeds if interface matches on static class methods', () => {
+      class Obj {
+        static foo () {}
+        static bar (x) {
+          return x * 2;
+        }
+      }
+      var interface1 = {foo: () => {}};
+      var interface2 = {bar: () => {}};
+      var interface3 = {bar: () => {}, foo: () => {}};
+      expect (() => verifyInterface (Obj, interface1)).to.not.throw ();
+      expect (() => verifyInterface (Obj, interface2)).to.not.throw ();
+      expect (() => verifyInterface (Obj, interface3)).to.not.throw ();
+      expect (() => verifyInterface (Obj, interface1, interface2)).to.not.throw ();
+    });
+
+    it ('throws if interface does not match on class', () => {
+      class Obj {
+        foo () {}
+        bar (x) {
+          return x * 2;
+        }
+      }
+      var interface1 = {foo: () => {}};
+      var interface2 = {bar: () => {}};
+      var interface3 = {bar: () => {}, foo: () => {}};
+      // class Obj cannot be matched agains interfaces; new Obj() would be ok
+      expect (() => verifyInterface (Obj, interface1)).to.throw ();
+      expect (() => verifyInterface (Obj, interface2)).to.throw ();
+      expect (() => verifyInterface (Obj, interface3)).to.throw ();
+      expect (() => verifyInterface (Obj, interface1, interface2)).to.throw ();
+    });
+
+    it ('throws if no interface is specified', () => {
+      const obj = {
         foo: () => 'foo',
         bar: x => x * 2,
         z: 42
@@ -80,24 +144,24 @@ describe ('Electrum utils/check', () => {
       expect (() => verifyInterface (obj)).to.throw (Error);
     });
 
-    it ('fails if interface does not match', () => {
-      var obj = {
+    it ('throws if interface does not match', () => {
+      const obj = {
         foo: () => 'foo',
         bar: x => x * 2,
         z: 42
       };
-      var interface1 = {gork: () => {}};
+      const interface1 = {gork: () => {}};
       expect (() => verifyInterface (obj, interface1)).to.throw (Error);
     });
 
-    it ('fails if interface specification is incorrect', () => {
-      var obj = {
+    it ('throws if interface specification is incorrect', () => {
+      const obj = {
         foo: () => 'foo',
         bar: x => x * 2,
         z: 42
       };
-      var interface1 = {};
-      var interface2 = {z: 42};
+      const interface1 = {};
+      const interface2 = {z: 42};
       expect (() => verifyInterface (obj, interface1)).to.throw (Error);
       expect (() => verifyInterface (obj, interface2)).to.throw (Error);
     });
