@@ -40,6 +40,11 @@ export default class Electrum {
     return this._middleware.link (props, id, override);
   }
 
+  read (props, id) {
+    const {state} = props;
+    return state.get (id);
+  }
+
   get middleware () {
     return this._middleware;
   }

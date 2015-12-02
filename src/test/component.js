@@ -11,55 +11,78 @@ import {Content} from '../all-components.js';
 
 /******************************************************************************/
 
-expect (Content.displayName).to.equal ('Content');
-
-Store.read = function read (props, id) {
-  const {state} = props;
-  return state.get (id);
-};
-
 let log = '';
+
+/******************************************************************************/
 
 const Author = E.wrap ('Author', class extends React.Component {
   render () {
     log = log + '/Author';
     return <div>
-      <img src={Store.read (this.props, 'imageUrl')} />
-      <span>{Store.read (this.props, 'displayName')}</span>
+      <img src={this.read ('imageUrl')} />
+      <span>{this.read ('displayName')}</span>
     </div>;
   }
 });
+
+/******************************************************************************/
 
 const Post = E.wrap ('Post', class extends React.Component {
   render () {
     log = log + '/Post';
     return <div>
-      <Content {...E.link (this.props, 'content')} />
-      <Author {...E.link (this.props, 'author')} />
+      <Content {...this.link ('content')} />
+      <Author {...this.link ('author')} />
     </div>;
   }
 });
+
+/******************************************************************************/
 
 const store = Store.create ();
 store.select ('blog.post-1.content').set ('text', 'Hello, world...');
 store.select ('blog.post-1.author').set ('imageUrl', 'http://ima.ge/', 'displayName', 'John');
 
-const post = <Post state={store.select ('blog.post-1')} />;
-const html = ReactDOMServer.renderToStaticMarkup (post);
 
-console.log (html);
-console.log (log);
+describe ('Component', () => {
+  describe ('Setup', () => {
+    it ('produces named components', () => {
+      expect (Content.displayName).to.equal ('Content');
+      expect (Author.displayName).to.equal ('Author');
+      expect (Post.displayName).to.equal ('Post');
+    });
+  });
 
-const mountNode = document.getElementById ('root');
-log = '';
-ReactDOM.render (<Post state={store.select ('blog.post-1')} />, mountNode);
-console.log ('Rendered: ' + log);
-log = '';
-ReactDOM.render (<Post state={store.select ('blog.post-1')} />, mountNode);
-console.log ('Rendered: ' + log);
+  describe ('Use', () => {
+    it ('produces expected HTML code', () => {
+      const post = <Post state={store.select ('blog.post-1')} />;
+      const html = ReactDOMServer.renderToStaticMarkup (post);
+      expect (html).to.equal (
+        '<div>' +
+        '<div>Hello, world...</div>' +
+        '<div><img src="http://ima.ge/"/><span>John</span></div>' +
+        '</div>');
+    });
 
-store.select ('blog.post-1.content').set ('text', 'Bye');
+    it ('re-renders only when store changes', () => {
+      const mountNode = document.getElementById ('root');
 
-log = '';
-ReactDOM.render (<Post state={store.select ('blog.post-1')} />, mountNode);
-console.log ('Rendered: ' + log);
+      log = '';
+      ReactDOM.render (<Post state={store.select ('blog.post-1')} />, mountNode);
+      expect (log).to.equal ('/Post/Author');
+
+      log = '';
+      ReactDOM.render (<Post state={store.select ('blog.post-1')} />, mountNode);
+      expect (log).to.equal ('');
+
+      // Mutate the store; this will re-render <Content>, but not <Author>
+      store.select ('blog.post-1.content').set ('text', 'Bye');
+
+      log = '';
+      ReactDOM.render (<Post state={store.select ('blog.post-1')} />, mountNode);
+      expect (log).to.equal ('/Post');
+    });
+  });
+});
+
+/******************************************************************************/

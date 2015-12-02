@@ -1,8 +1,12 @@
 'use strict';
 
 import React from 'react';
-import {Store} from 'electrum-store';
+import E from '../index.js';
+
+/******************************************************************************/
 
 export default function Content (props) {
-  return <div>{Store.read (props, 'text')}</div>;
+  return <div>{E.read (props, 'text')}</div>;
 }
+
+/******************************************************************************/
