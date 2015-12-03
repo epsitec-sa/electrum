@@ -25,7 +25,11 @@ export default function markComponentAsPure (component, stylesDef) {
     }
     get styles () {
       const styles = stylesResolver (this.theme);
-      return styles.get (this.props);
+      const list = styles.get (this.props);
+      list.with = function (...more) {
+        Styles.with (this.props, list, more);
+      };
+      return list;
     }
   };
 }
