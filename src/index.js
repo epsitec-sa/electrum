@@ -1,11 +1,19 @@
 'use strict';
 
-import {Store} from 'electrum-store';
+import radium from 'radium';
 
 import Middleware from './middleware.js';
 import Electrum from './electrum.js';
 
 /******************************************************************************/
 
-export default new Electrum ();
+class RadiumConnector {
+  static wrap (component) {
+    return radium (component);
+  }
+}
+
+/******************************************************************************/
+
+export default new Electrum (RadiumConnector);
 export {Electrum, Middleware};
