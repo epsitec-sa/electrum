@@ -25,10 +25,14 @@ export default function markComponentAsPure (component, stylesDef) {
     }
     get styles () {
       const styles = stylesResolver (this.theme);
-      const list = styles.get (this.props);
+      const props = this.props;
+      const list = styles.get (props);
+
       list.with = function (...more) {
-        Styles.with (this.props, list, more);
+        styles.with (props, list, more);
+        return list;
       };
+
       return list;
     }
   };
