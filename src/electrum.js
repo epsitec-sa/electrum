@@ -54,8 +54,8 @@ export default class Electrum {
   }
 
   wrap (name, component, more) {
-    const {stylesDef} = more || {};
-    return wrap (this._connectors, config (name, component, stylesDef));
+    const {styles} = more || {};
+    return wrap (this._connectors, config (name, component, styles));
   }
 }
 

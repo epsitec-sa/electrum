@@ -1,6 +1,6 @@
 {
   "name": "electrum",
-  "version": "2.2.0",
+  "version": "2.2.2",
   "description": "Electrum simplifies framework-agnostic declaration of React components.",
   "main": "lib/index.js",
   "scripts": {
@@ -36,7 +36,7 @@
     "chai": "^3.4.1",
     "electrum-require-components": "^1.2.0",
     "electrum-store": "^1.0.1",
-    "electrum-theme": "^1.0.0",
+    "electrum-theme": "^1.1.0",
     "jsdom": "^7.0.2",
     "mai-chai": "^1.1.2",
     "mocha": "^2.3.4",

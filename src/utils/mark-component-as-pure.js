@@ -24,7 +24,8 @@ export default function markComponentAsPure (component, stylesDef) {
       return theme;
     }
     get styles () {
-      return stylesResolver (this.theme);
+      const styles = stylesResolver (this.theme);
+      return styles.get (this.props);
     }
   };
 }
