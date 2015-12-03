@@ -7,7 +7,7 @@ import transformStatelessFunctionComponent from './transform-stateless-function-
 
 /******************************************************************************/
 
-export default function config (name, component) {
+export default function config (name, component, stylesDef) {
   if (typeof component !== 'function') {
     throw new Error (`Component ${name} is not defined as a function/class`);
   }
@@ -17,7 +17,7 @@ export default function config (name, component) {
   if (!component.render && !component.prototype.render) {
     throw new Error (`Component ${name} does not implement render()`);
   }
-  component = markComponentAsPure (component);
+  component = markComponentAsPure (component, stylesDef);
   component = setComponentDisplayName (component, name);
   return component;
 }

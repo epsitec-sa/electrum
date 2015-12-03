@@ -53,8 +53,9 @@ export default class Electrum {
     return this._connectors.slice ();
   }
 
-  wrap (name, component) {
-    return wrap (this._connectors, config (name, component));
+  wrap (name, component, more) {
+    const {stylesDef} = more || {};
+    return wrap (this._connectors, config (name, component, stylesDef));
   }
 }
 

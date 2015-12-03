@@ -1,12 +1,14 @@
 'use strict';
 
+import {Styles} from 'electrum-theme';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import E from '../index.js';
 
 /******************************************************************************/
 
-export default function markComponentAsPure (component) {
+export default function markComponentAsPure (component, stylesDef) {
+  const stylesResolver = Styles.build (stylesDef);
   return class extends component {
     shouldComponentUpdate (nextProps, nextState) {
       return shallowCompare (this, nextProps, nextState);
@@ -16,6 +18,13 @@ export default function markComponentAsPure (component) {
     }
     read (id) {
       return E.read (this.props, id);
+    }
+    get theme () {
+      const {theme} = this.props;
+      return theme;
+    }
+    get styles () {
+      return stylesResolver (this.theme);
     }
   };
 }
