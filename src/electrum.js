@@ -2,7 +2,7 @@
 
 import Middleware from './middleware.js';
 import {getApi, getBus, verifyWrap} from './utils/get-interfaces.js';
-import config from './utils/config.js';
+import extend from './utils/extend.js';
 import wrap from './utils/wrap.js';
 
 /******************************************************************************/
@@ -55,7 +55,7 @@ export default class Electrum {
 
   wrap (name, component, more) {
     const {styles} = more || {};
-    return wrap (this._connectors, config (name, component, styles));
+    return wrap (this._connectors, extend (name, component, styles));
   }
 }
 

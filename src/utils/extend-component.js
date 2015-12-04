@@ -7,7 +7,7 @@ import E from '../index.js';
 
 /******************************************************************************/
 
-export default function markComponentAsPure (component, stylesDef) {
+export default function extendComponent (component, stylesDef) {
   const stylesResolver = Styles.build (stylesDef);
   return class extends component {
     shouldComponentUpdate (nextProps, nextState) {

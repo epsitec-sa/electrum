@@ -1,13 +1,13 @@
 'use strict';
 
-import markComponentAsPure from './mark-component-as-pure.js';
-import setComponentDisplayName from './set-component-display-name.js';
+import extendComponent from './extend-component.js';
+import extendComponentDisplayName from './extend-component-display-name.js';
 import isStatelessFunctionComponent from './is-stateless-function-component.js';
 import transformStatelessFunctionComponent from './transform-stateless-function-component.js';
 
 /******************************************************************************/
 
-export default function config (name, component, stylesDef) {
+export default function extend (name, component, stylesDef) {
   if (typeof component !== 'function') {
     throw new Error (`Component ${name} is not defined as a function/class`);
   }
@@ -17,8 +17,8 @@ export default function config (name, component, stylesDef) {
   if (!component.render && !component.prototype.render) {
     throw new Error (`Component ${name} does not implement render()`);
   }
-  component = markComponentAsPure (component, stylesDef);
-  component = setComponentDisplayName (component, name);
+  component = extendComponent (component, stylesDef);
+  component = extendComponentDisplayName (component, name);
   return component;
 }
 

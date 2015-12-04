@@ -1,6 +1,6 @@
 {
   "name": "electrum",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "Electrum simplifies framework-agnostic declaration of React components.",
   "main": "lib/index.js",
   "scripts": {
@@ -26,25 +26,24 @@
     "react": "^0.14.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.2.0",
-    "babel-core": "^6.2.1",
-    "babel-plugin-transform-decorators": "^6.1.18",
-    "babel-plugin-transform-react-display-name": "^6.1.18",
-    "babel-preset-es2015": "^6.1.18",
-    "babel-preset-react": "^6.1.18",
-    "babel-preset-stage-0": "^6.1.18",
+    "babel-cli": "^6.2.4",
+    "babel-core": "^6.3.2",
+    "babel-plugin-transform-decorators": "^6.2.4",
+    "babel-plugin-transform-react-display-name": "^6.2.4",
+    "babel-preset-es2015": "^6.2.4",
+    "babel-preset-react": "^6.2.4",
+    "babel-preset-stage-0": "^6.2.4",
     "chai": "^3.4.1",
     "electrum-require-components": "^1.2.0",
-    "electrum-store": "^1.0.1",
-    "electrum-theme": "^1.1.2",
-    "jsdom": "^7.0.2",
+    "electrum-store": "^1.0.3",
+    "electrum-theme": "^1.1.3",
+    "jsdom": "^7.1.1",
     "mai-chai": "^1.1.2",
     "mocha": "^2.3.4",
     "path": "^0.12.7",
     "radium": "^0.15.3",
     "react": "^0.14.3",
     "react-addons-shallow-compare": "^0.14.3",
-    "react-addons-test-utils": "^0.14.3",
     "react-dom": "^0.14.3",
     "require-self": "^0.1.0"
   }
