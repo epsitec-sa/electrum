@@ -10,6 +10,10 @@ import E from '../index.js';
 export default function extendComponent (component, stylesDef) {
   const stylesResolver = Styles.build (stylesDef);
   return class extends component {
+    constructor (props) {
+      super (props);
+      E.inject (this, props);
+    }
     shouldComponentUpdate (nextProps, nextState) {
       return shallowCompare (this, nextProps, nextState);
     }

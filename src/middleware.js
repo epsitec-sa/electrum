@@ -13,7 +13,7 @@ export default class Middleware {
 
   register (name, middleware) {
     if (this._middlewares.findIndex (x => x.name === name) >= 0) {
-      throw new Error ('Middleware cannot be registered twice');
+      throw new Error (`Middleware ${name} cannot be registered twice`);
     }
     this._middlewares.push ({name, middleware});
   }
@@ -30,30 +30,6 @@ export default class Middleware {
     } else {
       return undefined;
     }
-  }
-
-  link (props, id, overrides) {
-    let copy = {};
-    for (let item of this._middlewares) {
-      const name = item.name;
-      const middleware = item.middleware;
-      let prop = props[name];
-      if (overrides) {
-        let override = overrides[name];
-        if (override) {
-          prop = override;
-        }
-      }
-      if (middleware) {
-        if (prop !== undefined) {
-          prop = middleware (id, prop);
-        }
-      }
-      if (prop !== undefined) {
-        copy[name] = prop;
-      }
-    }
-    return copy;
   }
 }
 
