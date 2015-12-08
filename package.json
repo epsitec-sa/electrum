@@ -1,6 +1,6 @@
 {
   "name": "electrum",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Electrum simplifies framework-agnostic declaration of React components.",
   "main": "lib/index.js",
   "scripts": {
