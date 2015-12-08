@@ -10,10 +10,13 @@ import wrap from './utils/wrap.js';
 
 /******************************************************************************/
 
+const emptyBus = {};
+
+/******************************************************************************/
+
 export default class Electrum {
   constructor (...wrappers) {
     this._wrappers = wrappers;
-    this._bus = {};
     this.reset ();
   }
 
@@ -23,7 +26,7 @@ export default class Electrum {
 
   reset () {
     this._connectors = [];
-    this._bus = {};
+    this._bus = emptyBus;
     this._linkingMiddleware = new LinkingMiddleware ();
     this._linkingMiddleware.register ('state', (id, state) => state.select (id));
     this._linkingMiddleware.register ('theme', (id, theme) => theme);
@@ -43,11 +46,15 @@ export default class Electrum {
     }
 
     if (bus) {
-      if (Object.keys (this._bus).length > 0) {
-        throw new Error ('Electrum does not support using multiple buses');
-      }
-      this._bus = bus;
+      this.useBus (bus);
     }
+  }
+
+  useBus (bus) {
+    if (this._bus !== emptyBus) {
+      throw new Error ('Electrum does not support using multiple buses');
+    }
+    this._bus = bus;
   }
 
   inject (obj, props) {

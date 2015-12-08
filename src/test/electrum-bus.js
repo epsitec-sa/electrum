@@ -3,9 +3,13 @@
 import {expect} from 'mai-chai';
 
 import React from 'react';
-import {Simulate, renderIntoDocument, findRenderedDOMComponentWithTag} from 'react-addons-test-utils';
 
-import IBus from '../interfaces/bus.js';
+import {
+  Simulate,
+  renderIntoDocument,
+  findRenderedDOMComponentWithTag
+} from 'react-addons-test-utils';
+
 import Electrum from '../index.js';
 
 /******************************************************************************/
@@ -33,7 +37,7 @@ class CustomBus {
 const bus = new CustomBus ();
 
 Electrum.reset ();
-Electrum.use ({getElectrumBus: () => bus});
+Electrum.useBus (bus);
 
 /******************************************************************************/
 
