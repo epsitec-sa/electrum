@@ -46,7 +46,7 @@ export function hasInterface (obj, ...methods) {
 
 export function verifyMethod (obj, method, what, n) {
   what = what || 'interface';
-  let target = obj[method];
+  let target = obj[method] || obj.prototype[method];
   if (target === undefined) {
     throw new Error (`The provided ${what} does not implement method ${method}`);
   }
@@ -66,12 +66,17 @@ function verifyMethodOrInterface (obj, match) {
     return verifyMethod (obj, match);
   }
   if (typeof match === 'object') {
-    var methods = Object.keys (match);
+    const methods = Object.keys (match);
     for (let method of methods) {
       if (typeof match[method] !== 'function') {
         throw new Error (`Invalid interface specified: ${method} is not a function`);
       }
     }
+    return verifyInterface (obj, ...methods);
+  }
+  if (isClass (match)) {
+    const methods = Object.getOwnPropertyNames (match.prototype)
+      .filter (method => method !== 'constructor');
     return verifyInterface (obj, ...methods);
   }
   throw new Error (`Invalid interface specified: no idea what to do with ${match}`);

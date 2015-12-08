@@ -10,6 +10,7 @@ describe ('Electrum', () => {
     it ('produces empty instance', () => {
       const e = new Electrum ();
       expect (e.connectors).to.deep.equal ([]);
+      expect (e.bus).to.exist ();
     });
 
     it ('uses arguments in correct order', () => {
@@ -19,12 +20,11 @@ describe ('Electrum', () => {
       expect (e.connectors).to.deep.equal ([b, a]);
     });
 
-    it ('throws if argument contains no wrapper', () => {
-      expect (() => new Electrum ({})).to.throw (Error);
+    it ('accepts working with no wrapper', () => {
+      expect (() => new Electrum ({})).to.not.throw (Error);
     });
 
-    it ('throws if wrap is not a wrapper function', () => {
-      expect (() => new Electrum ({wrap: 42})).to.throw (Error);
+    it ('throws if wrap is not the expected wrapper function', () => {
       expect (() => new Electrum ({wrap: () => null})).to.throw (Error);
       expect (() => new Electrum ({wrap: (a, b) => a || b})).to.throw (Error);
     });

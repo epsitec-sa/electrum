@@ -51,7 +51,7 @@ describe ('Store', () => {
     });
   });
 
-  describe ('Store.link() using Middleware', () => {
+  describe ('Store.link() using LinkingMiddleware', () => {
     it ('produces properties linked to child state', () => {
       const store = Store.create ('x');
       store.select ('a.b.c');

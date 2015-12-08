@@ -2,6 +2,8 @@
 
 import {expect} from 'mai-chai';
 
+import IBus from '../interfaces/bus.js';
+
 import {
   isClass,
   isSimpleFunction,
@@ -147,7 +149,7 @@ describe ('Electrum utils/check', () => {
       expect (() => verifyInterface (Obj, interface1, interface2)).to.not.throw ();
     });
 
-    it ('throws if interface does not match on class', () => {
+    it ('succeeds if interface matches on class methods', () => {
       class Obj {
         foo () {}
         bar (x) {
@@ -157,11 +159,18 @@ describe ('Electrum utils/check', () => {
       var interface1 = {foo: () => {}};
       var interface2 = {bar: () => {}};
       var interface3 = {bar: () => {}, foo: () => {}};
-      // class Obj cannot be matched agains interfaces; new Obj() would be ok
-      expect (() => verifyInterface (Obj, interface1)).to.throw ();
-      expect (() => verifyInterface (Obj, interface2)).to.throw ();
-      expect (() => verifyInterface (Obj, interface3)).to.throw ();
-      expect (() => verifyInterface (Obj, interface1, interface2)).to.throw ();
+      expect (() => verifyInterface (Obj, interface1)).to.not.throw ();
+      expect (() => verifyInterface (Obj, interface2)).to.not.throw ();
+      expect (() => verifyInterface (Obj, interface3)).to.not.throw ();
+      expect (() => verifyInterface (Obj, interface1, interface2)).to.not.throw ();
+    });
+
+    it ('succeeds with IBus interface', () => {
+      class Obj {
+        dispatch () {}
+        notify () {}
+      }
+      expect (() => verifyInterface (Obj, IBus)).to.not.throw ();
     });
 
     it ('throws if no interface is specified', () => {

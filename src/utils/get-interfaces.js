@@ -2,25 +2,23 @@
 
 import {verifyMethod, verifyInterface, hasMethod} from './checks.js';
 
-import IApi from '../interfaces/api.js';
 import IBus from '../interfaces/bus.js';
 
 /******************************************************************************/
-
-export function getApi (connector) {
-  if (hasMethod (connector, 'getElectrumApi')) {
-    const api = connector.getElectrumApi ();
-    verifyInterface (api, IApi);
-    return api;
-  }
-  return null;
-}
 
 export function getBus (connector) {
   if (hasMethod (connector, 'getElectrumBus')) {
     const bus = connector.getElectrumBus ();
     verifyInterface (bus, IBus);
     return bus;
+  }
+  return null;
+}
+
+export function getWrap (connector) {
+  if (hasMethod (connector, 'wrap')) {
+    verifyMethod (connector, 'wrap', 'connector', 1);
+    return connector.wrap;
   }
   return null;
 }

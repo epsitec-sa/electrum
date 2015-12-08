@@ -2,7 +2,9 @@
 
 /*****************************************************************************/
 /*jshint unused:false*/
-export function dispatch (props, message) {}
-export function notify (props, value, ...states) {}
+export default class IBus {
+  dispatch (props, message) {}
+  notify (props, value, ...states) {}
+}
 
 /*****************************************************************************/

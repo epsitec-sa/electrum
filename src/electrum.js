@@ -1,8 +1,10 @@
 'use strict';
 
+import {EventHandlers} from 'electrum-events';
+
 import LinkingMiddleware from './linking-middleware.js';
 import InjectingMiddleware from './injecting-middleware.js';
-import {getApi, getBus, verifyWrap} from './utils/get-interfaces.js';
+import {getBus, getWrap} from './utils/get-interfaces.js';
 import extend from './utils/extend.js';
 import wrap from './utils/wrap.js';
 
@@ -10,32 +12,41 @@ import wrap from './utils/wrap.js';
 
 export default class Electrum {
   constructor (...wrappers) {
+    this._wrappers = wrappers;
+    this._bus = {};
+    this.reset ();
+  }
+
+  get bus () {
+    return this._bus;
+  }
+
+  reset () {
     this._connectors = [];
     this._bus = {};
     this._linkingMiddleware = new LinkingMiddleware ();
     this._linkingMiddleware.register ('state', (id, state) => state.select (id));
     this._linkingMiddleware.register ('theme', (id, theme) => theme);
     this._injectingMiddleware = new InjectingMiddleware ();
-    this._injectingMiddleware.register ('events', (obj, props) => {});
-    wrappers.forEach (x => this.use (x));
+    this._injectingMiddleware.register ('bus', (obj, props) => {
+      obj.eventHandlers = new EventHandlers (props, () => this.bus);
+    });
+    this._wrappers.forEach (x => this.use (x));
   }
 
   use (connector) {
-    verifyWrap (connector);
+    const wrap = getWrap (connector);
+    const bus  = getBus (connector);
 
-    const api = getApi (connector);
-    const bus = getBus (connector);
-
-    // Everything was successfully verified; we can now proceed and alter
-    // the Electrum instance:
-    this._connectors.unshift (connector);
-
-    if (api) {
-      Object.keys (api).forEach (key => this[key] = api[key]);
+    if (wrap) {
+      this._connectors.unshift (connector);
     }
 
     if (bus) {
-      Object.keys (bus).forEach (key => this._bus[key] = bus[key]);
+      if (Object.keys (this._bus).length > 0) {
+        throw new Error ('Electrum does not support using multiple buses');
+      }
+      this._bus = bus;
     }
   }
 
@@ -52,7 +63,11 @@ export default class Electrum {
     return state.get (id);
   }
 
-  get middleware () {
+  get injectingMiddleware () {
+    return this._injectingMiddleware;
+  }
+
+  get linkingMiddleware () {
     return this._linkingMiddleware;
   }
 
