@@ -8,7 +8,7 @@ import {Simulate, renderIntoDocument, findRenderedDOMComponentWithTag} from 'rea
 import IBus from '../interfaces/bus.js';
 import Electrum from '../index.js';
 
-console.log (IBus);
+/******************************************************************************/
 
 class CustomBus {
   constructor () {
@@ -21,45 +21,70 @@ class CustomBus {
     return this._log;
   }
   dispatch (props, action) {
-    this._log += `/dispatch ${action}`;
+    this._log += `/dispatch id=${props.id} ${action}`;
   }
-  notify (props, value, ...states) {
-    this._log += `/notify value=${value}`;
+  notify (props, value) {
+    this._log += `/notify id=${props.id} value=${value}`;
   }
 }
+
+/******************************************************************************/
 
 const bus = new CustomBus ();
 
 Electrum.reset ();
 Electrum.use ({getElectrumBus: () => bus});
 
+/******************************************************************************/
+
 class _Foo extends React.Component {
   getValue (target) {
     return target.checked ? 'on' : 'off';
   }
   render () {
-    return <input id={this.props.id} type='checkbox' onChange={this.onChange}/>;
+    return <input id={this.props.id} type='checkbox' onChange={this.onChange} onFocus={this.onFocus}/>;
   }
 }
 
 const Foo = Electrum.wrap ('Foo', _Foo);
 
-describe ('Electrum bus', () => {
-  describe ('handleChange()', () => {
+/******************************************************************************/
+
+describe ('EventHandlers', () => {
+  describe ('onChange event', () => {
     it ('posts an event on the bus', () => {
-      const component = renderIntoDocument (<Foo id='1.1' />);
+      const component = renderIntoDocument (<Foo id='1' />);
       const input = findRenderedDOMComponentWithTag (component, 'input');
       expect (input).to.have.property ('type', 'checkbox');
 
       bus.clearLog ();
       input.checked = true;
       Simulate.change (input);
-      expect (bus.log).to.equal ('/notify value=on');
+      expect (bus.log).to.equal ('/notify id=1 value=on');
 
       bus.clearLog ();
       input.checked = false;
       Simulate.change (input);
-      expect (bus.log).to.equal ('/notify value=off');
+      expect (bus.log).to.equal ('/notify id=1 value=off');
+    });
+  });
+
+  describe ('onFocus event', () => {
+    it ('posts an event on the bus', () => {
+      const component = renderIntoDocument (<Foo id='1' />);
+      const input = findRenderedDOMComponentWithTag (component, 'input');
+      expect (input).to.have.property ('type', 'checkbox');
+
+      bus.clearLog ();
+      Simulate.focus (input, {
+        stopPropagation: function () {
+          console.log ('stop');
+        }, preventDefault: function () {
+          console.log ('prevent');
+        }});
+      expect (bus.log).to.equal ('/notify id=1 value=off/dispatch id=1 focus');
     });
   });
 });
+
+/******************************************************************************/
