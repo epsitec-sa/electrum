@@ -34,7 +34,7 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "chai": "^3.4.1",
-    "electrum-events": "^0.9.0",
+    "electrum-events": "^1.0.2",
     "electrum-field": "^1.0.1",
     "electrum-require-components": "^1.2.0",
     "electrum-store": "^1.0.3",

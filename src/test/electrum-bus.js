@@ -11,51 +11,38 @@ import Electrum from '../index.js';
 console.log (IBus);
 
 class CustomBus {
-  dispatch () {
-    console.log ('Dispatch called');
+  constructor () {
+    this.clearLog ();
+  }
+  clearLog () {
+    this._log = '';
+  }
+  get log () {
+    return this._log;
+  }
+  dispatch (props, action) {
+    this._log += `/dispatch ${action}`;
   }
   notify (props, value, ...states) {
-    console.log ('Notify called');
-    console.log (` props=${JSON.stringify (props)}`);
-    console.log (` value="${value}"`);
-    console.log (` states=${JSON.stringify (states)}`);
+    this._log += `/notify value=${value}`;
   }
 }
 
+const bus = new CustomBus ();
+
 Electrum.reset ();
-Electrum.use ({getElectrumBus: () => new CustomBus ()});
+Electrum.use ({getElectrumBus: () => bus});
 
 class _Foo extends React.Component {
-  onChange (ev) {
-    console.log ('onChange called: ', ev);
-    this.eventHandlers.handleChange (ev);
+  getValue (target) {
+    return target.checked ? 'on' : 'off';
   }
   render () {
     return <input id={this.props.id} type='checkbox' onChange={this.onChange}/>;
   }
 }
 
-class _FooX extends _Foo {
-  render () {
-    const result = super.render ();
-    console.log (this.onChange);
-    console.log ('%O', result);
-    console.log (result.props);
-    console.log ('%O', result.props.onChange);
-
-    const onChange = result.props.onChange;
-
-    console.log (onChange.name);
-    console.log (Object.keys (this));
-    console.log (onChange === this.onChange);
-
-    const onChangeNew = e => onChange.call (this, e);
-
-    return React.cloneElement (result, {onChange: onChangeNew});
-  }
-}
-
-const Foo = Electrum.wrap ('Foo', _FooX);
+const Foo = Electrum.wrap ('Foo', _Foo);
 
 describe ('Electrum bus', () => {
   describe ('handleChange()', () => {
@@ -63,7 +50,16 @@ describe ('Electrum bus', () => {
       const component = renderIntoDocument (<Foo id='1.1' />);
       const input = findRenderedDOMComponentWithTag (component, 'input');
       expect (input).to.have.property ('type', 'checkbox');
+
+      bus.clearLog ();
+      input.checked = true;
       Simulate.change (input);
+      expect (bus.log).to.equal ('/notify value=on');
+
+      bus.clearLog ();
+      input.checked = false;
+      Simulate.change (input);
+      expect (bus.log).to.equal ('/notify value=off');
     });
   });
 });
