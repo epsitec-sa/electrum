@@ -114,6 +114,62 @@ The component is also extended by [Radium](https://github.com/FormidableLabs/rad
 which will flatten `styles` arrays injected in child components, and handle the
 state required to handle browser states such as `:hover`.
 
+# Sending events to the bus
+
+Electrum can use a bus to dispatch messages/commands and notify changes.
+The bus interface looks like this:
+
+```javascript
+{
+  dispatch (props, message) {}
+  notify (props, value, ...states) {}
+}
+```
+
+## Bus configuration
+
+A bus can be attached with `Electrum.useBus(bus)`.
+
+## Event forwarding
+
+The default `Electrum` instance is configured to use `electrum-events`,
+which injects various event handlers into the wrapped components:
+
+* `onChange`
+* `onKeyDown`, `onKeyUp`, `onKeyPress`
+* `onFocus`
+
+> Note: if the component provides its own event handlers, they will be
+> called by the injected methods.
+
+Events will automatically be sent to the bus, if one has been configured
+(see `Electrum.use`). The `EventHandlers` class in `electrum-events` is
+in charge of the event forwarding. It will provide the _value_ and the
+_states_ associated with the underlying component, usually by reading
+the DOM:
+
+* `value` &larr; `event.target.value`
+* `states` &larr; `{begin:0, end:10}` for text fields
+
+## Custom value or states
+
+When the defaults are not meaningful (e.g. for a `checkbox`, where the
+_value_ does not exist per se), the component can provide the value
+(method `getValue()`) or the states (method `getStates()`):
+
+```javascript
+class MyCheckbox extends React.Component {
+  render () {
+    return <input type='checkbox' /* ... */ />;
+  }
+  getValue (target) {
+    // The value will be 'on' or 'off', depending on the checked state
+    // of the target DOM node:
+    return target.checked ? 'on' : 'off';
+  }
+}
+```
+
 # Automating component wrapping
 
 The easiest way to get all components of a module wrapped is to use the
