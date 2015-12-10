@@ -12,7 +12,7 @@ export default function extendComponent (component, stylesDef) {
   return class extends component {
     constructor (props) {
       super (props);
-      E.inject (this, props);
+      E.inject (this);
     }
     shouldComponentUpdate (nextProps, nextState) {
       return shallowCompare (this, nextProps, nextState);
