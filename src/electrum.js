@@ -32,7 +32,7 @@ export default class Electrum {
     this._linkingMiddleware.register ('theme', (id, theme) => theme);
     this._injectingMiddleware = new InjectingMiddleware ();
     this._injectingMiddleware.register ('events', obj => {
-      EventHandlers.inject (obj, () => this.bus);
+      obj._eventHandlers = EventHandlers.inject (obj, () => this.bus);
     });
     this._wrappers.forEach (x => this.use (x));
   }
@@ -57,8 +57,8 @@ export default class Electrum {
     this._bus = bus;
   }
 
-  inject (obj, props) {
-    this._injectingMiddleware.inject (obj, props);
+  inject (obj) {
+    this._injectingMiddleware.inject (obj);
   }
 
   link (props, id, override) {
