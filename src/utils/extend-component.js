@@ -7,7 +7,7 @@ import E from '../index.js';
 
 /******************************************************************************/
 
-export default function extendComponent (component, stylesDef) {
+export default function extendComponent (component, stylesDef, options) {
   const stylesResolver = Styles.build (stylesDef);
   return class extends component {
     constructor (props) {
@@ -15,7 +15,11 @@ export default function extendComponent (component, stylesDef) {
       E.inject (this);
     }
     shouldComponentUpdate (nextProps, nextState) {
-      return shallowCompare (this, nextProps, nextState);
+      const dirty = shallowCompare (this, nextProps, nextState);
+      if (options && options.log && options.log.shouldComponentUpdate) {
+        options.log.shouldComponentUpdate (this, nextProps, nextState, dirty);
+      }
+      return dirty;
     }
     link (id) {
       return E.link (this.props, id);

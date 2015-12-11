@@ -18,10 +18,12 @@ let log = '';
 const Author = E.wrap ('Author', class extends React.Component {
   render () {
     log = log + '/Author';
-    return <div>
-      <img src={this.read ('imageUrl')} />
-      <span>{this.read ('displayName')}</span>
-    </div>;
+    return (
+      <div>
+        <img src={this.read ('imageUrl')} />
+        <span>{this.read ('displayName')}</span>
+      </div>
+    );
   }
 });
 
@@ -30,10 +32,12 @@ const Author = E.wrap ('Author', class extends React.Component {
 const Post = E.wrap ('Post', class extends React.Component {
   render () {
     log = log + '/Post';
-    return <div>
-      <Content {...this.link ('content')} />
-      <Author {...this.link ('author')} />
-    </div>;
+    return (
+      <div>
+        <Content {...this.link ('content')} />
+        <Author {...this.link ('author')} />
+      </div>
+    );
   }
 });
 
@@ -66,21 +70,31 @@ describe ('Component', () => {
 
     it ('re-renders only when store changes', () => {
       const mountNode = document.getElementById ('root');
+      let spy;
+      E.configureLog ('shouldComponentUpdate', (o, p, s, dirty) => {
+        spy += `/${o.constructor.displayName}: ${dirty}`;
+      });
 
+      spy = '';
       log = '';
       ReactDOM.render (<Post state={store.select ('blog.post-1')} />, mountNode);
       expect (log).to.equal ('/Post/Author');
+      expect (spy).to.equal ('');
 
+      spy = '';
       log = '';
       ReactDOM.render (<Post state={store.select ('blog.post-1')} />, mountNode);
       expect (log).to.equal ('');
+      expect (spy).to.equal ('/Post: false');
 
       // Mutate the store; this will re-render <Content>, but not <Author>
       store.select ('blog.post-1.content').set ('text', 'Bye');
 
+      spy = '';
       log = '';
       ReactDOM.render (<Post state={store.select ('blog.post-1')} />, mountNode);
       expect (log).to.equal ('/Post');
+      expect (spy).to.equal ('/Post: true/Content: true/Author: false');
     });
   });
 });

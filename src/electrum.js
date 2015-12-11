@@ -35,6 +35,7 @@ export default class Electrum {
       obj._eventHandlers = EventHandlers.inject (obj, () => this.bus);
     });
     this._wrappers.forEach (x => this.use (x));
+    this._options = {};
   }
 
   use (connector) {
@@ -82,9 +83,23 @@ export default class Electrum {
     return this._connectors.slice ();
   }
 
+  configureLog (name, spy) {
+    if (spy) {
+      if (typeof spy !== 'function') {
+        throw new Error ('The spy must be a function');
+      }
+      if (!this._options.log) {
+        this._options.log = {};
+      }
+      this._options.log[name] = spy;
+    } else {
+      delete this._options.log[name];
+    }
+  }
+
   wrap (name, component, more) {
     const {styles} = more || {};
-    return wrap (this._connectors, extend (name, component, styles));
+    return wrap (this._connectors, extend (name, component, styles, this._options));
   }
 }
 

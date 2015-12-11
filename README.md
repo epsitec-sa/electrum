@@ -203,3 +203,26 @@ To export all components found in your module, use:
 ```javascript
 export * from './all.js';
 ```
+
+# Tracing
+
+Electrum includes basic tracing functionality, which might come in handy when
+live debugging wrapped components.
+
+## shouldComponentUpdate()
+
+Whenever React calls a wrapped component's `shouldComponentUpdate()`, Electrum
+will call the corresponding logging function:
+
+```javascript
+import E from 'electrum';
+E.configureLog ('shouldComponentUpdate', (component, nextProps, nextState, result) => { /* ... */ });
+```
+
+The arguments are:
+
+* `component` &rarr; component instance.
+* `nextProps` &rarr; next properties, as provided to `shouldComponentUpdate`.
+* `nextState` &rarr; next state, as provided to `shouldComponentUpdate`.
+* `result` &rarr; result of the call to `shouldComponentUpdate`, where `true`
+  means that the component should be rendered.
