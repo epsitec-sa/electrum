@@ -99,7 +99,7 @@ export default class Electrum {
 
   wrap (name, component, more) {
     const {styles} = more || {};
-    return wrap (this._connectors, extend (name, component, styles, this._options));
+    return wrap (this._connectors, extend (name, component, styles, () => this._options));
   }
 }
 

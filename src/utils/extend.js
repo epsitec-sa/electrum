@@ -7,7 +7,7 @@ import transformStatelessFunctionComponent from './transform-stateless-function-
 
 /******************************************************************************/
 
-export default function extend (name, component, stylesDef, options) {
+export default function extend (name, component, stylesDef, optionsGetter) {
   if (typeof component !== 'function') {
     throw new Error (`Component ${name} is not defined as a function/class`);
   }
@@ -17,7 +17,7 @@ export default function extend (name, component, stylesDef, options) {
   if (!component.render && !component.prototype.render) {
     throw new Error (`Component ${name} does not implement render()`);
   }
-  component = extendComponent (component, stylesDef, options);
+  component = extendComponent (component, stylesDef, optionsGetter);
   component = extendComponentDisplayName (component, name);
   return component;
 }

@@ -7,7 +7,7 @@ import E from '../index.js';
 
 /******************************************************************************/
 
-export default function extendComponent (component, stylesDef, options) {
+export default function extendComponent (component, stylesDef, optionsGetter) {
   const stylesResolver = Styles.build (stylesDef);
   return class extends component {
     constructor (props) {
@@ -16,6 +16,7 @@ export default function extendComponent (component, stylesDef, options) {
     }
     shouldComponentUpdate (nextProps, nextState) {
       const dirty = shallowCompare (this, nextProps, nextState);
+      const options = optionsGetter && optionsGetter ();
       if (options && options.log && options.log.shouldComponentUpdate) {
         options.log.shouldComponentUpdate (this, nextProps, nextState, dirty);
       }
