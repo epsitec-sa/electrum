@@ -203,17 +203,3 @@ To export all components found in your module, use:
 ```javascript
 export * from './all.js';
 ```
-
-> Note: as of December 4 2015, Babel 6 chokes on source files with only
-> a _wildcard export_. See [this issue](https://phabricator.babeljs.io/T2763).
-> The error message is:
->
-> _Invariant Violation: src/components.js: To get a node path the parent
-> needs to exist_
->
-> A workaround is to first import, then export:
->
-```javascript
-import * as all from './all.js';
-export * from './all.js';
-```
