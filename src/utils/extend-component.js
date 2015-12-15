@@ -8,7 +8,7 @@ import E from '../index.js';
 /******************************************************************************/
 
 export default function extendComponent (component, stylesDef, optionsGetter) {
-  const stylesResolver = Styles.build (stylesDef);
+  const stylesResolver = Styles.create (stylesDef);
   return class extends component {
     constructor (props) {
       super (props);
