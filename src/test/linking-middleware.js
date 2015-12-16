@@ -41,5 +41,26 @@ describe ('LinkingMiddleware', () => {
       expect (middleware.link ({x: 1, 'foo:x': 'X', 'foo:y': 'Y'}, 'i', {'foo:x': 'BAR'}))
         .to.deep.equal ({'foo:x': 'BAR/i', 'foo:y': 'Y/i'});
     });
+
+    it ('overrides missing properties', () => {
+      middleware.register ('foo', (id, prop) => prop + '/' + id);
+      expect (middleware.link ({x: 1, foo: 'bar'}, 'i')).to.deep.equal ({foo: 'bar/i'});
+      expect (middleware.link ({x: 1, foo: 'bar'}, 'i', {foo: 'foo'})).to.deep.equal ({foo: 'foo/i'});
+      expect (middleware.link ({x: 1, bar: 'bar'}, 'i', {foo: 'foo'})).to.deep.equal ({foo: 'foo/i'});
+    });
+
+    it ('overrides missing prefixed properties', () => {
+      middleware.register ('foo:', (id, prop) => prop + '/' + id);
+      expect (middleware.link ({x: 1, 'foo:x': 'bar'}, 'i')).to.deep.equal ({'foo:x': 'bar/i'});
+      expect (middleware.link ({x: 1, 'foo:x': 'bar'}, 'i', {'foo:x': 'foo'})).to.deep.equal ({'foo:x': 'foo/i'});
+      expect (middleware.link ({x: 1, 'foo:x': 'bar'}, 'i', {'foo:y': 'foo'}))
+        .to.deep.equal ({'foo:x': 'bar/i', 'foo:y': 'foo/i'});
+    });
+
+    it ('removes property when overrides specify an undefined value', () => {
+      middleware.register ('foo', (id, prop) => prop + '/' + id);
+      expect (middleware.link ({x: 1, foo: 'bar'}, 'i')).to.deep.equal ({foo: 'bar/i'});
+      expect (middleware.link ({x: 1, foo: 'bar'}, 'i', {foo: undefined})).to.deep.equal ({});
+    });
   });
 });
