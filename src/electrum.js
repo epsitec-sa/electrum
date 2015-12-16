@@ -30,6 +30,7 @@ export default class Electrum {
     this._linkingMiddleware = new LinkingMiddleware ();
     this._linkingMiddleware.register ('state', (id, state) => id === undefined ? state : state.select (id));
     this._linkingMiddleware.register ('theme', (id, theme) => theme);
+    this._linkingMiddleware.register ('inject:', (id, prop) => prop);
     this._injectingMiddleware = new InjectingMiddleware ();
     this._injectingMiddleware.register ('events', obj => {
       obj._eventHandlers = EventHandlers.inject (obj, () => this.bus);
