@@ -42,7 +42,7 @@ export default function extendComponent (component, stylesDef, optionsGetter) {
       const list = styles.get (props);
 
       list.with = function (...more) {
-        styles.with (props, list, more);
+        styles.with (list, more);
         return list;
       };
 
