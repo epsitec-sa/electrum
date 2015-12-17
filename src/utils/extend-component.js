@@ -32,6 +32,10 @@ export default function extendComponent (component, stylesDef, optionsGetter) {
       const {theme} = this.props;
       return theme;
     }
+    resolveStyle (name) {
+      const styles = stylesResolver (this.theme);
+      return styles.resolve (name);
+    }
     get styles () {
       const styles = stylesResolver (this.theme);
       const props = this.props;
