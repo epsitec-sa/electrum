@@ -226,3 +226,31 @@ The arguments are:
 * `nextState` &rarr; next state, as provided to `shouldComponentUpdate`.
 * `result` &rarr; result of the call to `shouldComponentUpdate`, where `true`
   means that the component should be rendered.
+
+# States and fingerprints
+
+Components may need to represent their internal state as a collection of simple
+state objects:
+
+```javascript
+const fieldSelection = { from: 12, to: 17 };     // 'from,to'
+const listSelection  = { first: 5, active: 8 };  // 'active,first'
+```
+
+These state objects have _fingerprints_ which are based on their sorted
+property names (`'from,to'`, `'active,first'`). It does not include the
+optional `id` property.
+
+## States class
+
+The `States` class provides following `static` methods:
+
+* `fingerprint (state)` &rarr; fingerprint of a state object.
+* `findState (array, fingerprint)` &rarr; finds the first state which
+  matches the specified fingerprint.
+* `replaceState (array, state)` &rarr; updates the array of states by adding
+  or replacing a state; matching is done based on the state's fingerprint.
+* `replaceStates (array, state1, state2, ...)` &rarr; updates the array of
+  states based on multiple states.
+* `replaceStates (array, [state1, state2, ...])` &rarr; updates the array of
+  states based on multiple states.

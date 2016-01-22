@@ -4,6 +4,7 @@ import radium from 'radium';
 
 import LinkingMiddleware from './linking-middleware.js';
 import Electrum from './electrum.js';
+import States from './states.js';
 
 /******************************************************************************/
 
@@ -16,4 +17,4 @@ class RadiumConnector {
 /******************************************************************************/
 
 export default new Electrum (RadiumConnector);
-export {Electrum, LinkingMiddleware};
+export {Electrum, LinkingMiddleware, States};
