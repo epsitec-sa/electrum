@@ -37,6 +37,9 @@ export default function extendComponent (component, stylesDef, optionsGetter) {
       return styles.resolve (name);
     }
     get styles () {
+      if (!this.theme) {
+        throw new Error (`Component ${component.name} not linked to Electrum`);
+      }
       const styles = stylesResolver (this.theme, this.props);
       const props = this.props;
       const list = styles.get (props);
