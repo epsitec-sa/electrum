@@ -76,5 +76,13 @@ describe ('FieldStates', () => {
       expect (result[2]).to.deep.equal (state3);
       expect (result[3]).to.have.property ('m', 30);
     });
+
+    it ('does not alter the original object', () => {
+      expect (states.get ()[0]).to.deep.equal (state1);
+      const result = states.add ({a: 10, b: 20});
+      expect (result).to.not.equal (states);
+      expect (states.get ()[0]).to.deep.equal (state1);
+      expect (result.get ()[0]).to.deep.equal ({a: 10, b: 20});
+    });
   });
 });

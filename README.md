@@ -241,16 +241,29 @@ These state objects have _fingerprints_ which are based on their sorted
 property names (`'from,to'`, `'active,first'`). It does not include the
 optional `id` property.
 
-## States class
+## FieldStates class
 
-The `States` class provides following `static` methods:
+The `FieldStates` class maintains an internal array of state objects.
+It is implemented in `electrum-field` and made available by `electrum`
+as a convenience.
 
-* `fingerprint (state)` &rarr; fingerprint of a state object.
-* `findState (array, fingerprint)` &rarr; finds the first state which
-  matches the specified fingerprint.
-* `replaceState (array, state)` &rarr; updates the array of states by adding
-  or replacing a state; matching is done based on the state's fingerprint.
-* `replaceStates (array, state1, state2, ...)` &rarr; updates the array of
-  states based on multiple states.
-* `replaceStates (array, [state1, state2, ...])` &rarr; updates the array of
-  states based on multiple states.
+### Query the field states
+
+* `FieldStates.fingerprint (state)` &rarr; the fingerprint of a state object.
+* `find (fingerprint)` &rarr; the first state object which matches the
+  specified fingerprint, or `undefined` if none can be found.
+* `get ()` &rarr; an immutable array of immutable state objects.
+
+### Update the field states
+
+The instances are immutable. All methods which modify the internal array
+of state objects will return a new instance (or the unchanged instance if
+the update was a no-op). The original instance is never modified.
+
+* `add (state)` &rarr; a new instance where the internal array of states has
+  been updated by adding or replacing a state; matching is done based on the
+  state's fingerprint.
+* `add (state1, state2, ...)` &rarr; same as `add()` called multiple times.
+* `remove (fingerprint)` &rarr; a new instance where the internal array of
+  states has been updated by removing the first state matching the specified
+  fingerprint.
