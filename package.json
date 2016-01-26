@@ -1,6 +1,6 @@
 {
   "name": "electrum",
-  "version": "2.8.2",
+  "version": "2.9.0",
   "description": "Electrum simplifies framework-agnostic declaration of React components.",
   "main": "lib/index.js",
   "scripts": {
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "electrum-events": "^1.1.2",
-    "electrum-field": "^1.0.1",
+    "electrum-field": "^1.1.0",
     "electrum-store": "^1.2.0",
     "electrum-theme": "^1.4.0",
     "electrum-utils": "^1.0.0"
