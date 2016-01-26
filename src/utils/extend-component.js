@@ -13,6 +13,7 @@ export default function extendComponent (component, stylesDef, optionsGetter) {
     constructor (props) {
       super (props);
       E.inject (this);
+      E.autoBindHandlers (this);
     }
     shouldComponentUpdate (nextProps, nextState) {
       const dirty = shallowCompare (this, nextProps, nextState);

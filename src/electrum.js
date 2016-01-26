@@ -1,16 +1,21 @@
 'use strict';
 
 import {EventHandlers} from 'electrum-events';
+import React from 'react';
 
 import LinkingMiddleware from './linking-middleware.js';
 import InjectingMiddleware from './injecting-middleware.js';
 import {getBus, getWrap} from './utils/get-interfaces.js';
 import extend from './utils/extend.js';
 import wrap from './utils/wrap.js';
+import {getInstanceMethodNames} from './utils/checks.js';
 
 /******************************************************************************/
 
 const emptyBus = {};
+
+const codeA = 'A'.charCodeAt (0);
+const codeZ = 'Z'.charCodeAt (0);
 
 /******************************************************************************/
 
@@ -61,6 +66,27 @@ export default class Electrum {
 
   inject (obj) {
     this._injectingMiddleware.inject (obj);
+  }
+
+  autoBindHandlers (obj) {
+    // Auto bind methods in the form of "onXyz" up the class hierarchy.
+    // Method render() may attach event handlers such as onClick directly
+    // to this.onClick, without having to manually bind the method to the
+    // instance using this.onClick.bind (this)
+
+    const names = getInstanceMethodNames (obj, React.Component.prototype);
+
+    names.forEach (name => {
+      if (name.length > 3 && name.startsWith ('on')) {
+        const code = name.charCodeAt (2);
+        if (code >= codeA && code <= codeZ) {
+          const prop = obj[name];
+          if (typeof prop === 'function') {
+            obj[name] = prop.bind (obj);
+          }
+        }
+      }
+    });
   }
 
   link (props, id, override) {

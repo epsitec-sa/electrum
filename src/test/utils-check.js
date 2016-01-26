@@ -1,6 +1,7 @@
 'use strict';
 
 import {expect} from 'mai-chai';
+import React from 'react';
 
 import IBus from '../interfaces/bus.js';
 
@@ -8,6 +9,8 @@ import {
   isClass,
   isSimpleFunction,
   verifyInterface,
+  getInstanceMethodNames,
+  hasGetter,
   hasMethod,
   hasInterface
 } from '../utils/checks.js';
@@ -15,6 +18,27 @@ import {
 /******************************************************************************/
 
 describe ('Electrum utils/check', () => {
+  describe ('getInstanceMethodNames()', () => {
+    const Base = class extends React.Component {
+      constructor () {
+        super ();
+      }
+      foo () {}
+      get theme () {
+        throw new Error ('theme not ready');
+      }
+    };
+
+    class Derived extends Base {
+      bar () {}
+    }
+
+    it ('returns the expected method names', () => {
+      expect (getInstanceMethodNames (new Base (), React.Component.prototype)).to.deep.equal (['foo']);
+      expect (getInstanceMethodNames (new Derived (), React.Component.prototype)).to.deep.equal (['bar', 'foo']);
+    });
+  });
+
   describe ('hasMethod()', () => {
     it ('identifies existing method', () => {
       const obj1 = {
@@ -34,9 +58,37 @@ describe ('Electrum utils/check', () => {
     it ('identifies missing method', () => {
       const obj1 = {};
       const obj2 = {foo: 42};
-
       expect (hasMethod (obj1, 'foo')).to.be.false ();
       expect (hasMethod (obj2, 'foo')).to.be.false ();
+    });
+
+    it ('does not identify getters as methods', () => {
+      const obj = {get foo () {}};
+      expect (hasMethod (obj, 'foo')).to.be.false ();
+    });
+
+    it ('is robust with respect to faulty getters', () => {
+      const obj = {get foo () {
+        throw new Error ('error');
+      }};
+      expect (hasMethod (obj, 'foo')).to.be.false ();
+    });
+  });
+
+  describe ('hasGetter()', () => {
+    it ('identifies a getter', () => {
+      const obj1 = {
+        get foo () {
+          return 'foo';
+        }
+      };
+      const obj2 = {
+        get foo () {
+          throw new Error ('error');
+        }
+      };
+      expect (hasGetter (obj1, 'foo')).to.be.true ();
+      expect (hasGetter (obj2, 'foo')).to.be.true ();
     });
   });
 

@@ -2,9 +2,36 @@
 
 /******************************************************************************/
 
-export function hasMethod (obj, method) {
-  return typeof obj[method] === 'function';
+export function getInstanceMethodNames (obj, stop) {
+  let array = [];
+  let proto = Object.getPrototypeOf (obj);
+  while (proto && proto !== stop) {
+    Object.getOwnPropertyNames (proto)
+      .forEach (name => {
+        if (name !== 'constructor') {
+          if (hasMethod (proto, name)) {
+            array.push (name);
+          }
+        }
+      });
+    proto = Object.getPrototypeOf (proto);
+  }
+  return array;
 }
+
+/******************************************************************************/
+
+export function hasGetter (obj, name) {
+  const desc = Object.getOwnPropertyDescriptor (obj, name);
+  return !!desc && typeof desc.get === 'function';
+}
+
+export function hasMethod (obj, name) {
+  const desc = Object.getOwnPropertyDescriptor (obj, name);
+  return !!desc && typeof desc.value === 'function';
+}
+
+/******************************************************************************/
 
 export function isClass (obj) {
   // See http://stackoverflow.com/questions/29093396/how-do-you-check-the-difference-between-an-ecmascript-6-class-and-function
