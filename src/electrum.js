@@ -17,6 +17,18 @@ const emptyBus = {};
 const codeA = 'A'.charCodeAt (0);
 const codeZ = 'Z'.charCodeAt (0);
 
+function shouldAutoBind (name) {
+  if (name.length > 2 && name.startsWith ('on')) {
+    const code = name.charCodeAt (2);
+    return (code >= codeA && code <= codeZ);
+  }
+  if (name.length > 6 && name.startsWith ('handle')) {
+    const code = name.charCodeAt (6);
+    return (code >= codeA && code <= codeZ);
+  }
+  return false;
+}
+
 /******************************************************************************/
 
 export default class Electrum {
@@ -69,7 +81,8 @@ export default class Electrum {
   }
 
   autoBindHandlers (obj) {
-    // Auto bind methods in the form of "onXyz" up the class hierarchy.
+    // Auto bind methods in the form of "onXyz" and "handleXyz" up the
+    // class hierarchy.
     // Method render() may attach event handlers such as onClick directly
     // to this.onClick, without having to manually bind the method to the
     // instance using this.onClick.bind (this)
@@ -77,14 +90,8 @@ export default class Electrum {
     const names = getInstanceMethodNames (obj, React.Component.prototype);
 
     names.forEach (name => {
-      if (name.length > 3 && name.startsWith ('on')) {
-        const code = name.charCodeAt (2);
-        if (code >= codeA && code <= codeZ) {
-          const prop = obj[name];
-          if (typeof prop === 'function') {
-            obj[name] = prop.bind (obj);
-          }
-        }
+      if (shouldAutoBind (name)) {
+        obj[name] = obj[name].bind (obj);
       }
     });
   }

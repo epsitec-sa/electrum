@@ -115,13 +115,13 @@ which will flatten `styles` arrays injected in child components, and handle the
 state required to handle browser states such as `:hover`.
 
 One more trick `Electrum.wrap()` does is that it ensures that event handler
-methods (e.g. `onChange` or `onClick`) get properly bound to the component
+methods (e.g. `onChange` or `handleClick`) get properly bound to the component
 instance. Therefore, event handlers can be passed to `React` in a natural
 way:
 
 ```javascript
 render () {
-  return <div onClick={this.onClick}>Click me</div>;
+  return <div onClick={this.handleClick}>Click me</div>;
 }
 ```
 
@@ -129,7 +129,7 @@ whereas normally, you would have to write this:
 
 ```javascript
 render () {
-  return <div onClick={this.onClick.bind (this)}>Click me</div>;
+  return <div onClick={this.handleClick.bind (this)}>Click me</div>;
 }
 ```
 
@@ -138,12 +138,16 @@ or do the binding manually in the constructor:
 ```javascript
 constructor () {
   super ();
-  this.onClick = this.onClick.bind (this);
+  this.handleClick = this.handleClick.bind (this);
 }
 render () {
-  return <div onClick={this.onClick}>Click me</div>;
+  return <div onClick={this.handleClick}>Click me</div>;
 }
 ```
+
+Electrum's autobinding looks for methods starting with `on` or `handle`
+and using _camel case_ (such as `onClick`); other methods won't be
+automatically bound to `this`.
 
 See also the explanation on [autobinding on the React blog](https://facebook.github.io/react/blog/2015/01/27/react-v0.13.0-beta-1.html#autobinding).
 
