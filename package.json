@@ -1,6 +1,6 @@
 {
   "name": "electrum",
-  "version": "2.11.2",
+  "version": "2.11.3",
   "description": "Electrum simplifies framework-agnostic declaration of React components.",
   "main": "lib/index.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "electrum-field": "^1.2.2",
     "electrum-store": "^1.4.0",
     "electrum-theme": "^1.5.0",
-    "electrum-utils": "^1.1.0"
+    "electrum-utils": "^1.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.4.5",

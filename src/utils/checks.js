@@ -1,23 +1,6 @@
 'use strict'; /*jshint latedef:false*/
 
-/******************************************************************************/
-
-export function getInstanceMethodNames (obj, stop) {
-  let array = [];
-  let proto = Object.getPrototypeOf (obj);
-  while (proto && proto !== stop) {
-    Object.getOwnPropertyNames (proto)
-      .forEach (name => {
-        if (name !== 'constructor') {
-          if (hasMethod (proto, name)) {
-            array.push (name);
-          }
-        }
-      });
-    proto = Object.getPrototypeOf (proto);
-  }
-  return array;
-}
+export {getInstanceMethodNames} from 'electrum-utils';
 
 /******************************************************************************/
 
