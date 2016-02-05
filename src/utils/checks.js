@@ -36,7 +36,12 @@ export function isSimpleFunction (obj) {
   if (typeof obj !== 'function') {
     return false;
   }
-  const props = Object.getOwnPropertyNames (obj.prototype);
+  const proto = obj.prototype;
+  // A pure function has no prototype
+  if (!proto) {
+    return true;
+  }
+  const props = Object.getOwnPropertyNames (proto);
   // A simple function has only a constructor
   return props.length === 1 && props[0] === 'constructor' && !isClass (obj);
 }
