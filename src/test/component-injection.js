@@ -57,7 +57,7 @@ describe ('Component', () => {
       }
       const Test = Electrum.wrap ('Test', _Test, {styles: _Test$styles});
       const html = ReactDOMServer.renderToStaticMarkup (<Test state={store.select ('x')} theme={theme} />);
-      const expectedHtml = '<div style="x:0;font:Roboto, sans-serif;y:2px;" class=" ">Hello</div>';
+      const expectedHtml = '<div style="x:0;font:Roboto, sans-serif;y:2px;">Hello</div>';
       expect (html).to.equal (expectedHtml);
     });
 
@@ -87,7 +87,7 @@ describe ('Component', () => {
       }
       const Test = Electrum.wrap ('Test', _Test, {styles: _Test$styles});
       const html = ReactDOMServer.renderToStaticMarkup (<Test state={store.select ('x')} theme={theme} kind='bar'/>);
-      const expectedHtml = '<div style="x:0;font:Roboto, sans-serif;y:2px;z:30px;" class=" ">Hello</div>';
+      const expectedHtml = '<div style="x:0;font:Roboto, sans-serif;y:2px;z:30px;">Hello</div>';
       expect (html).to.equal (expectedHtml);
     });
 

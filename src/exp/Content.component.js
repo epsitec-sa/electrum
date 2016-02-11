@@ -5,8 +5,10 @@ import E from '../index.js';
 
 /******************************************************************************/
 
+// Define component using a stateless function; this will be wrapped by
+// transformStatelessFunctionComponent() and converted to a plain class.
 export default function Content (props) {
-  return <div>{E.read (props, 'text')}</div>;
+  return <div id='text'>{E.read (props, 'text')}</div>;
 }
 
 /******************************************************************************/

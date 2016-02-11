@@ -63,7 +63,7 @@ describe ('Component', () => {
       const html = ReactDOMServer.renderToStaticMarkup (post);
       expect (html).to.equal (
         '<div>' +
-        '<div>Hello, world...</div>' +
+        '<div id="text">Hello, world...</div>' +
         '<div><img src="http://ima.ge/"/><span>John</span></div>' +
         '</div>');
     });
@@ -95,6 +95,8 @@ describe ('Component', () => {
       ReactDOM.render (<Post state={store.select ('blog.post-1')} />, mountNode);
       expect (log).to.equal ('/Post');
       expect (spy).to.equal ('/Post: true/Content: true/Author: false');
+
+      E.configureLog ('shouldComponentUpdate');
     });
   });
 });
