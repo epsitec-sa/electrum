@@ -8,7 +8,7 @@
     "regen": "electrum-require-components --wrap ./src exp .component.js all-components.js",
     "prepublish": "npm run compile",
     "postinstall": "require-self",
-    "test": "mocha src/test/**/*.js"
+    "test": "npm run compile && mocha --harmony lib/test/**/*.js"
   },
   "repository": {
     "type": "git",

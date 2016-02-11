@@ -1,3 +1,2 @@
 --compilers js:babel-core/register
 --require ./test/test-helper.js
---require ./test/test-require-patch.js
