@@ -1,4 +1,4 @@
 'use strict';
-import Electrum from './index.js';
-import Content from './exp/Content.component.js';
-module.exports.Content = Electrum.wrap ('Content', Content);
+import Electrum from 'electrum';
+import _Content from './exp/Content.component.js';
+export const Content = Electrum.wrap ('Content', _Content);
