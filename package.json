@@ -1,12 +1,13 @@
 {
   "name": "electrum",
-  "version": "2.18.0",
+  "version": "2.18.1",
   "description": "Electrum simplifies framework-agnostic declaration of React components.",
   "main": "lib/index.js",
   "scripts": {
     "compile": "babel -d lib/ src/",
-    "regen": "require-self && electrum-require-components --wrap ./src exp .component.js all-components.js",
+    "regen": "electrum-require-components --wrap ./src exp .component.js all-components.js",
     "prepublish": "npm run compile",
+    "postinstall": "require-self",
     "test": "mocha src/test/**/*.js"
   },
   "repository": {
