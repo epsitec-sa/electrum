@@ -6,6 +6,7 @@ var path = require ('path');
 
 var babelConfig = JSON.parse (fs.readFileSync (path.join (__dirname, '.babelrc')));
 babelConfig.babel = babel;
+
 module.exports = function (wallaby) {
   return {
     files: [
@@ -13,9 +14,7 @@ module.exports = function (wallaby) {
       {pattern: 'src/exp/**/*.js'},
       {pattern: 'src/interfaces/*.js'},
       {pattern: 'src/utils/**/*.js'},
-      {pattern: 'src/*.js'},
-      {pattern: 'node_modules/electrum.js'},
-      {pattern: 'package.json', instrument: false}
+      {pattern: 'src/*.js'}
     ],
     tests: [
       {pattern: 'src/test/**/*.js'},
@@ -28,10 +27,31 @@ module.exports = function (wallaby) {
       type: 'node',
       runner: 'node'
     },
-    bootstrap: function () {
+    bootstrap: function (wallaby) {
       // See http://wallabyjs.com/docs/config/bootstrap.html
+      var path = require ('path');
+      var sep = path.sep;
+
       console.log ('Setup wallaby');
-      var sep = require ('path').sep;
+
+      // Ensure that we can require self (just like what module 'require-self'
+      // does), but remapping by default the path to './src' rather than './lib'
+      // as specified by package "main".
+      // See https://github.com/wallabyjs/public/issues/453
+      var packageConfig = require (path.join (wallaby.localProjectDir, 'package.json'));
+      var packageName = packageConfig.name;
+      var modulePrototype = require ('module').Module.prototype;
+      if (!modulePrototype._originalRequire) {
+        modulePrototype._originalRequire = modulePrototype.require;
+        modulePrototype.require = function (filePath) {
+          if (filePath === packageName) {
+            return modulePrototype._originalRequire.call (this, path.join (wallaby.projectCacheDir, 'src'));
+          } else {
+            return modulePrototype._originalRequire.call (this, filePath);
+          }
+        };
+      }
+
       // Remove react from the require.cache, or else some code might not get
       // executed when editing the source code.
       // See https://github.com/wallabyjs/public/issues/321
@@ -41,6 +61,7 @@ module.exports = function (wallaby) {
             delete require.cache[k];
           }
         });
+
       // Include the test helper, which sets up the document and window objects
       // as globals:
       require ('./test/test-helper');
