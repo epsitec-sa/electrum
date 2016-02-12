@@ -1,8 +1,17 @@
 'use strict';
 
+function read (state, prop) {
+  if (state) {
+    const value = state.get ();
+    if (value) {
+      return value[prop];
+    }
+  }
+}
+
 export default class Action {
   static isEnabled (state) {
-    switch (state.get ().status) {
+    switch (read (state, 'status')) {
       case 'Enabled':
       case 'enabled':
         return true;
@@ -12,7 +21,7 @@ export default class Action {
   }
 
   static isDisabled (state) {
-    switch (state.get ().status) {
+    switch (read (state, 'status')) {
       case 'Disabled':
       case 'disabled':
         return true;
