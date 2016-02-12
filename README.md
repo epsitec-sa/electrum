@@ -305,3 +305,11 @@ the update was a no-op). The original instance is never modified.
 * `remove (fingerprint)` &rarr; a new instance where the internal array of
   states has been updated by removing the first state matching the specified
   fingerprint.
+
+# Actions
+
+Electrum prescribes how actions represent their specific state and
+provides the `Action` class to inspect it:
+
+* `Action.isEnabled (state)` &rarr; `true` if the state is enabled.
+* `Action.isDisabled (state)` &rarr; `true` if the state is disabled.
