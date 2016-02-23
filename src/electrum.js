@@ -102,7 +102,7 @@ export default class Electrum {
 
   read (props, id) {
     const {state} = props;
-    return state.get (id);
+    return state.get (id || props.id);
   }
 
   get injectingMiddleware () {
