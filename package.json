@@ -8,7 +8,7 @@
     "regen": "electrum-require-components --wrap --crlf ./src exp .component.js all-components.js",
     "prepublish": "require-self && npm run regen && npm run compile",
     "test": "npm run compile && mocha --harmony lib/test/**/*.js",
-    "watch": "chokidar 'src/**/*.js' -c 'npm run compile'"
+    "watch": "chokidar 'src/**/*.js' -i 'src/all-components.js' -c 'npm run compile'"
   },
   "repository": {
     "type": "git",
