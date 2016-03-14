@@ -4,10 +4,11 @@
   "description": "Electrum simplifies framework-agnostic declaration of React components.",
   "main": "lib/index.js",
   "scripts": {
-    "compile": "rimraf ./lib/* && babel --quiet --out-dir lib src",
+    "babel": "babel --quiet --out-dir lib src",
+    "compile": "rimraf ./lib && require-self && npm run regen && npm run babel",
     "rebuild": "npm run regen && npm run babel",
-    "regen": "electrum-require-components --wrap --crlf ./src exp .component.js all-components.js",
-    "prepublish": "require-self && npm run regen && npm run compile",
+    "prepublish": "npm run compile",
+    "regen": "electrum-require-components --crlf --wrap ./src exp .component.js all-components.js",
     "test": "npm run compile && mocha --harmony lib/test/**/*.js",
     "watch": "chokidar 'src/**/*.js' -i 'src/all-components.js' -c 'npm run rebuild'"
   },
