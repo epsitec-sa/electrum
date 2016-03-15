@@ -1,6 +1,10 @@
 'use strict';
 
 import radium from 'radium';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactDOMServer from 'react-dom/server';
+
 import {FieldStates} from 'electrum-field';
 import {Store, State} from 'electrum-store';
 
@@ -19,6 +23,7 @@ class RadiumConnector {
 /******************************************************************************/
 
 export default new Electrum (RadiumConnector);
-export {Action, Electrum, FieldStates, LinkingMiddleware, radium, Store, State};
+export {Action, Electrum, FieldStates, LinkingMiddleware, Store, State};
+export {radium, React, ReactDOM, ReactDOMServer};
 
 /******************************************************************************/
