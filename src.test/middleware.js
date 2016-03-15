@@ -1,7 +1,7 @@
 'use strict';
 
 import {expect} from 'mai-chai';
-import Middleware from '../middleware.js';
+import Middleware from '../src/middleware.js';
 
 describe ('Middleware', () => {
 

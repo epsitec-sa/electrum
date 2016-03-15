@@ -4,7 +4,7 @@ import {expect} from 'mai-chai';
 import {Store} from 'electrum-store';
 import {Theme} from 'electrum-theme';
 
-import Electrum from '../index.js';
+import Electrum from 'electrum';
 
 
 describe ('Store', () => {

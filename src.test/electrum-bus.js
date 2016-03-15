@@ -10,7 +10,7 @@ import {
   findRenderedDOMComponentWithTag
 } from 'react-addons-test-utils';
 
-import Electrum from '../index.js';
+import Electrum from 'electrum';
 
 /******************************************************************************/
 

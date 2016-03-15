@@ -1,7 +1,7 @@
 'use strict';
 
 import {expect} from 'mai-chai';
-import LinkingMiddleware from '../linking-middleware.js';
+import LinkingMiddleware from '../src/linking-middleware.js';
 
 describe ('LinkingMiddleware', () => {
 

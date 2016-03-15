@@ -6,8 +6,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
 
-import E from '../index.js';
-import {Content} from '../all-components.js';
+import E from 'electrum';
+
+import {Content} from '../src/all-components.js';
 
 /******************************************************************************/
 

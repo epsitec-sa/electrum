@@ -2,7 +2,7 @@
 
 import {expect} from 'mai-chai';
 import React from 'react';
-import E, {Electrum} from '../index.js';
+import E, {Electrum} from 'electrum';
 
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-addons-test-utils';

@@ -3,7 +3,7 @@
 import {expect} from 'mai-chai';
 import React from 'react';
 
-import IBus from '../interfaces/bus.js';
+import IBus from '../src/interfaces/bus.js';
 
 import {
   isClass,
@@ -13,7 +13,7 @@ import {
   hasGetter,
   hasMethod,
   hasInterface
-} from '../utils/checks.js';
+} from '../src/utils/checks.js';
 
 /******************************************************************************/
 

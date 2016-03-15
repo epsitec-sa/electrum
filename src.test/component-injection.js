@@ -5,7 +5,8 @@ import {expect} from 'mai-chai';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-import Electrum from '../index.js';
+import Electrum from 'electrum';
+
 import {Store} from 'electrum-store';
 import {Theme} from 'electrum-theme';
 

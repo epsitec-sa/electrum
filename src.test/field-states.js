@@ -1,7 +1,7 @@
 'use strict';
 
 import {expect} from 'mai-chai';
-import {FieldStates} from '../index.js';
+import {FieldStates} from 'electrum';
 
 describe ('FieldStates', () => {
   describe ('FieldStates.fingerprint()', () => {
