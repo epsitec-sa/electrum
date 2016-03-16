@@ -100,9 +100,9 @@ export default class Electrum {
     return this._linkingMiddleware.link (props, id, override);
   }
 
-  read (props, id) {
+  read (props, key) {
     const {state} = props;
-    return state.get (id || props.id);
+    return key === undefined ? state.get () : state.get (key);
   }
 
   get injectingMiddleware () {

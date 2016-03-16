@@ -66,15 +66,15 @@ function Article (props) {
 
 Components will very often need to read values from the store. To make life
 easier for the developer, `electrum` provides a `read()` method, which takes
-the `props` of the component and the `id` of the value to read:
+the `props` of the component and an optional `key` of the value to read:
 
 ```javascript
 import E from 'electrum';
 function Content (props) {
   return (
     <div>
-      <h1>{E.read (props, 'title')}</h1>
-      <p>{E.read (props, 'text')}</p>
+      <h1>{E.read (props)}</h1>
+      <p>{E.read (props, 'details')}</p>
     </div>
   );
 }
@@ -106,7 +106,7 @@ export const Button = Electrum.wrap ('Button', _Button, {styles: _Button$styles}
 It injects some additional functionality:
 
 * `link(id)` &rarr; shorthand for `Electrum.link(this.props, id)`.
-* `read(id)` &rarr; shorthand for `Electrum.read(this.props, id)`.
+* `read(key)` &rarr; shorthand for `Electrum.read(this.props, key)`.
 * `theme` &rarr; shorthand for `this.props.theme`.
 * `styles` &rarr; resolves the _styles_ based on rules implemented by `Style`.
 

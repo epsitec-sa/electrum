@@ -26,8 +26,8 @@ export default function extendComponent (component, stylesDef, optionsGetter) {
     link (id) {
       return E.link (this.props, id);
     }
-    read (id) {
-      return E.read (this.props, id);
+    read (key) {
+      return E.read (this.props, key);
     }
     get theme () {
       const {theme} = this.props;
