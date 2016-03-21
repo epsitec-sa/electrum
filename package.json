@@ -40,6 +40,7 @@
     "react-dom": "^0.14.7"
   },
   "devDependencies": {
+    "babel-cli": "^6.6.5",
     "babel-env": "^1.1.0",
     "chokidar-cli": "^1.2.0",
     "generic-js-env": "^1.2.0",
