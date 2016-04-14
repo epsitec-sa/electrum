@@ -21,8 +21,7 @@ module.exports = function (wallaby) {
     },
     debug: true,
     env: {
-      type: 'node',
-      runner: 'node'
+      type: 'node'
     },
     bootstrap: function (wallaby) {
       // See http://wallabyjs.com/docs/config/bootstrap.html
