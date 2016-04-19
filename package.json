@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/epsitec-sa/electrum",
   "dependencies": {
-    "electrum-events": "^1.4.0",
+    "electrum-events": "^1.5.0",
     "electrum-field": "^1.5.0",
     "electrum-require-components": "^1.6.2",
     "electrum-store": "^1.11.0",
