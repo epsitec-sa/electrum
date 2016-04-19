@@ -27,7 +27,7 @@ class CustomBus {
   dispatch (props, action) {
     this._log += `/dispatch id=${props.id} ${action}`;
   }
-  notify (props, value, ...states) {
+  notify (props, source, value, ...states) {
     this._log += `/notify id=${props.id} value="${value}" states=${JSON.stringify (states)}`;
   }
 }
