@@ -3,7 +3,7 @@
 /*****************************************************************************/
 /*jshint unused:false*/
 export default class IBus {
-  dispatch (props, message) {}
+  dispatch (props, source, message) {}
   notify (props, value, ...states) {}
 }
 
