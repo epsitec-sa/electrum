@@ -106,6 +106,8 @@ export const Button = Electrum.wrap ('Button', _Button, {styles: _Button$styles}
 It injects some additional functionality:
 
 * `link(id)` &rarr; shorthand for `Electrum.link(this.props, id)`.
+* `link(id, overrides)` &rarr; shorthand for `Electrum.link(this.props, id, overrides)`.
+* `read()` &rarr; shorthand for `Electrum.read(this.props, 'value')`.
 * `read(key)` &rarr; shorthand for `Electrum.read(this.props, key)`.
 * `theme` &rarr; shorthand for `this.props.theme`.
 * `styles` &rarr; resolves the _styles_ based on rules implemented by `Style`.

@@ -23,11 +23,11 @@ export default function extendComponent (component, stylesDef, optionsGetter) {
       }
       return dirty;
     }
-    link (id) {
-      return E.link (this.props, id);
+    link (id, overrides) {
+      return E.link (this.props, id, overrides);
     }
     read (key) {
-      return E.read (this.props, key);
+      return E.read (this.props, key || 'value');
     }
     get theme () {
       const {theme} = this.props;
