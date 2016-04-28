@@ -46,6 +46,9 @@ describe ('Component', () => {
           expect (this.styles).to.have.length (1);
           expect (this.styles[0]).to.have.property ('x', 1);
           expect (this.styles[0]).to.have.property ('font', 'Roboto, sans-serif');
+          expect (this.resolveStyle ()).to.deep.equal ({});
+          expect (this.resolveStyle ('foo')).to.deep.equal ({x: 0, y: 2});
+          expect (this.resolveStyle ('foo', 'bar')).to.deep.equal ({x: 0, y: 20, z: 30});
           const styles = this.styles.with ('foo');
           expect (styles).to.have.property ('with');
           expect (styles).to.have.length (2);
