@@ -7,7 +7,7 @@ import ReactDOMServer from 'react-dom/server';
 
 import {FieldStates} from 'electrum-field';
 import {Store, State} from 'electrum-store';
-import {Styles, Theme} from 'electrum-theme';
+import {Styles, Theme, ColorManipulator} from 'electrum-theme';
 
 import Action from './action.js';
 import LinkingMiddleware from './linking-middleware.js';
@@ -24,7 +24,8 @@ class RadiumConnector {
 /******************************************************************************/
 
 export default new Electrum (RadiumConnector);
-export {Action, Electrum, FieldStates, LinkingMiddleware, Store, State, Styles, Theme};
+export {Action, Electrum, FieldStates, LinkingMiddleware, Store, State};
+export {Styles, Theme, ColorManipulator};
 export {radium, React, ReactDOM, ReactDOMServer};
 
 /******************************************************************************/
