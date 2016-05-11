@@ -51,12 +51,8 @@ function createComponentClass (component, optionsGetter) {
 
 /******************************************************************************/
 
-export default function extendComponent (component, stylesDef, optionsGetter) {
-  if (typeof stylesDef === 'object') {
-    stylesDef = stylesDef.style1;
-  }
+function injectSingleStyles (componentClass, stylesDef) {
   const stylesResolver = Styles.create (stylesDef);
-  const componentClass = createComponentClass (component, optionsGetter);
 
   componentClass.prototype.resolveStyle = function (...names) {
       const styles = stylesResolver (this.theme, stylesResolver.styles.usesProps && (this.styleProps || this.props));
@@ -85,6 +81,56 @@ export default function extendComponent (component, stylesDef, optionsGetter) {
       return list;
     }
   });
+}
+
+/******************************************************************************/
+
+function injectMultipleStyles (componentClass, stylesDef) {
+  const styleKeys = Object.keys (stylesDef);
+  const styleResolvers = {};
+
+  styleKeys.forEach (key => styleResolvers[key] = Styles.create (stylesDef[key]));
+
+  componentClass.prototype.resolveStyle = function (key, ...names) {
+    const resolver = styleResolvers[key];
+    const styles   = resolver (this.theme, resolver.styles.usesProps && (this.styleProps || this.props));
+    return styles.resolve (...names);
+  };
+
+  componentClass.prototype.getStyles = function (key) {
+    const resolver = styleResolvers[key];
+    const styles   = resolver (this.theme, resolver.styles.usesProps && (this.styleProps || this.props));
+
+    let current = styles.resolve ('base', this.props.kind, this.props.styles, this.props.style);
+
+    // We would like to return the style object directly, but then, we
+    // could not extend it by attaching the with() function in an invisible
+    // manner. Since Radium also accepts array of style objects, we use this
+    // trick to provide the with() functionality without interfering with
+    // the style object itself.
+
+    const list = [current];
+
+    list.with = function (...names) {
+      current = styles.merge (current, ...names);
+      list[0] = current;
+      return list;
+    };
+
+    return list;
+  };
+}
+
+/******************************************************************************/
+
+export default function extendComponent (component, stylesDef, optionsGetter) {
+  const componentClass = createComponentClass (component, optionsGetter);
+
+  if (typeof stylesDef === 'object') {
+    injectMultipleStyles (componentClass, stylesDef);
+  } else {
+    injectSingleStyles (componentClass, stylesDef);
+  }
 
   return componentClass;
 }
