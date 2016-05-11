@@ -95,13 +95,15 @@ export const Button = Electrum.wrap ('Button', _Button, {styles: _Button$styles}
 ```
 
 See `electrum-theme` for an explanation of how style functions should be
-defined.
+defined. Style functions can have following signatures:
 
 * `() => ...` &rarr; a parameterless style function.
 * `(theme) => ...` &rarr; a style function, based on the theme.
 * `(theme, props) => ...` &rarr; a style function, based on the theme and on
   the component properties. The component should implement a _getter_ named
   `styleProps` which returns a hash with the meaningful properties.
+
+Multiple styles definitions can be exported as a _hash_ of style functions.  
 
 ## Component with a single style function
 
@@ -110,9 +112,25 @@ function will expose following method and property:
 
 * `styles` &rarr; a _styles object_ which can be set on DOM element `style`
   properties; the styles object is compatible with Radium. It exposes a
-  `with()` function which can be used to obtain an updated _styles object_
-  into which additional styles have been merged.
+  `with(s1, s2, ...)` function which can be used to obtain an updated
+  _styles object_ into which additional styles have been merged.
 * `mergeStyles(s1, s2, ...)` &rarr; a _hash_ containing the merged styles.   
+
+## Component with a multiple style functions
+
+A component linked with a style definition consisting of a multiple style
+functions will expose following methods:
+
+* `getStyles(key)` &rarr; a _styles object_ for the specified style definiton,
+  which can be set on DOM element `style` properties; the styles object is
+  compatible with Radium. It exposes a `with(s1, s2, ...)` function which
+  can be used to obtain an updated _styles object_ into which additional
+  styles have been merged.
+* `mergeStyles(key, s1, s2, ...)` &rarr; a _hash_ containing the merged
+  styles for the specified style definition.   
+
+Note that the signature of the methods are different from a component
+with a single style function.
 
 # Wrapping and automatic component extensions
 
