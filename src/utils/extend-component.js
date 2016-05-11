@@ -27,13 +27,22 @@ export default function extendComponent (component, stylesDef, optionsGetter) {
       return E.link (this.props, id, overrides);
     }
     read (key) {
-      return E.read (this.props, key || 'value');
+      if (key === undefined) {
+        key = 'value';
+      }
+      if (this.props.hasOwnProperty (key)) {
+        return this.props[key];
+      }
+      return E.read (this.props, key);
     }
     get theme () {
       const {theme} = this.props;
       return theme;
     }
     resolveStyle (...names) {
+      if (!this.theme) {
+        throw new Error (`Component ${component.name} not linked to Electrum`);
+      }
       const styles = stylesResolver (this.theme, this.props);
       return styles.resolve (...names);
     }
@@ -43,13 +52,15 @@ export default function extendComponent (component, stylesDef, optionsGetter) {
       }
       const styles = stylesResolver (this.theme, this.props);
       const props = this.props;
-      const list = styles.get (props);
-
-      list.with = function (...more) {
-        styles.with (list, more);
+      let current = styles.resolve ('base', props.kind, props.styles, props.style);
+      const list = [ current ];
+      
+      list.with = function (...names) {
+        current = styles.merge (current, ...names);
+        list[0] = current;
         return list;
       };
-
+      
       return list;
     }
   };

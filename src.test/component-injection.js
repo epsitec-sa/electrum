@@ -21,11 +21,11 @@ describe ('Component', () => {
         font: theme.typo.font
       },
       foo: {
-        x: 0,
+        x: 2,
         y: 2
       },
       bar: {
-        y: 20,
+        y: s => s.x * 20,
         z: 30
       }
     };
@@ -47,21 +47,20 @@ describe ('Component', () => {
           expect (this.styles[0]).to.have.property ('x', 1);
           expect (this.styles[0]).to.have.property ('font', 'Roboto, sans-serif');
           expect (this.resolveStyle ()).to.deep.equal ({});
-          expect (this.resolveStyle ('foo')).to.deep.equal ({x: 0, y: 2});
-          expect (this.resolveStyle ('foo', 'bar')).to.deep.equal ({x: 0, y: 20, z: 30});
+          expect (this.resolveStyle ('foo')).to.deep.equal ({x: 2, y: 2});
+          expect (this.resolveStyle ('foo', 'bar')).to.deep.equal ({x: 2, y: 40, z: 30});
           const styles = this.styles.with ('foo');
           expect (styles).to.have.property ('with');
-          expect (styles).to.have.length (2);
-          expect (styles[0]).to.have.property ('x', 1);
+          expect (styles).to.have.length (1);
+          expect (styles[0]).to.have.property ('x', 2);
           expect (styles[0]).to.have.property ('font', 'Roboto, sans-serif');
-          expect (styles[1]).to.have.property ('x', 0);
-          expect (styles[1]).to.have.property ('y', 2);
+          expect (styles[0]).to.have.property ('y', 2);
           return <div style={styles}>{state.get ('text')}</div>;
         }
       }
       const Test = Electrum.wrap ('Test', _Test, {styles: _Test$styles});
       const html = ReactDOMServer.renderToStaticMarkup (<Test state={store.select ('x')} theme={theme} />);
-      const expectedHtml = '<div style="x:0;font:Roboto, sans-serif;y:2px;">Hello</div>';
+      const expectedHtml = '<div style="x:2px;font:Roboto, sans-serif;y:2px;">Hello</div>';
       expect (html).to.equal (expectedHtml);
     });
 
@@ -72,26 +71,24 @@ describe ('Component', () => {
           expect (this.theme).to.exist ();
           expect (this.styles).to.exist ();
           expect (this.styles).to.have.property ('with');
-          expect (this.styles).to.have.length (2);
+          expect (this.styles).to.have.length (1);
           expect (this.styles[0]).to.have.property ('x', 1);
           expect (this.styles[0]).to.have.property ('font', 'Roboto, sans-serif');
-          expect (this.styles[1]).to.have.property ('y', 20);
-          expect (this.styles[1]).to.have.property ('z', 30);
+          expect (this.styles[0]).to.have.property ('y', 20);
+          expect (this.styles[0]).to.have.property ('z', 30);
           const styles = this.styles.with ('foo');
           expect (styles).to.have.property ('with');
-          expect (styles).to.have.length (3);
-          expect (styles[0]).to.have.property ('x', 1);
+          expect (styles).to.have.length (1);
+          expect (styles[0]).to.have.property ('x', 2);
           expect (styles[0]).to.have.property ('font', 'Roboto, sans-serif');
-          expect (styles[1]).to.have.property ('y', 20);
-          expect (styles[1]).to.have.property ('z', 30);
-          expect (styles[2]).to.have.property ('x', 0);
-          expect (styles[2]).to.have.property ('y', 2);
+          expect (styles[0]).to.have.property ('y', 2);
+          expect (styles[0]).to.have.property ('z', 30);
           return <div style={styles}>{state.get ('text')}</div>;
         }
       }
       const Test = Electrum.wrap ('Test', _Test, {styles: _Test$styles});
       const html = ReactDOMServer.renderToStaticMarkup (<Test state={store.select ('x')} theme={theme} kind='bar'/>);
-      const expectedHtml = '<div style="x:0;font:Roboto, sans-serif;y:2px;z:30px;">Hello</div>';
+      const expectedHtml = '<div style="x:2px;font:Roboto, sans-serif;y:2px;z:30px;">Hello</div>';
       expect (html).to.equal (expectedHtml);
     });
 
