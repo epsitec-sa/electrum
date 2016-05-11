@@ -48,9 +48,9 @@ describe ('Component with multiple styles', () => {
           expect (this.getStyles ('style1')[0]).to.have.property ('x', 1);
           expect (this.getStyles ('style1')[0]).to.have.property ('font', 'Roboto, sans-serif');
           expect (this.getStyles ('style2')[0]).to.have.property ('x', 2);
-          expect (this.resolveStyle ('style1')).to.deep.equal ({});
-          expect (this.resolveStyle ('style1', 'foo')).to.deep.equal ({x: 2, y: 2});
-          expect (this.resolveStyle ('style1', 'foo', 'bar')).to.deep.equal ({x: 2, y: 40, z: 30});
+          expect (this.mergeStyles ('style1')).to.deep.equal ({});
+          expect (this.mergeStyles ('style1', 'foo')).to.deep.equal ({x: 2, y: 2});
+          expect (this.mergeStyles ('style1', 'foo', 'bar')).to.deep.equal ({x: 2, y: 40, z: 30});
           const styles = this.getStyles ('style1').with ('foo');
           expect (styles).to.have.property ('with');
           expect (styles).to.have.length (1);

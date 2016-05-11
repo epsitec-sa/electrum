@@ -103,6 +103,17 @@ defined.
   the component properties. The component should implement a _getter_ named
   `styleProps` which returns a hash with the meaningful properties.
 
+## Component with a single style function
+
+A component linked with a style definition consisting of a single style
+function will expose following method and property:
+
+* `styles` &rarr; a _styles object_ which can be set on DOM element `style`
+  properties; the styles object is compatible with Radium. It exposes a
+  `with()` function which can be used to obtain an updated _styles object_
+  into which additional styles have been merged.
+* `mergeStyles(s1, s2, ...)` &rarr; a _hash_ containing the merged styles.   
+
 # Wrapping and automatic component extensions
 
 `Electrum.wrap()` returns a new component `class`, which will be treated as a

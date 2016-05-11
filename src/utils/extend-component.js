@@ -54,7 +54,7 @@ function createComponentClass (component, optionsGetter) {
 function injectSingleStyles (componentClass, stylesDef) {
   const stylesResolver = Styles.create (stylesDef);
 
-  componentClass.prototype.resolveStyle = function (...names) {
+  componentClass.prototype.mergeStyles = function (...names) {
       const styles = stylesResolver (this.theme, stylesResolver.styles.usesProps && (this.styleProps || this.props));
       return styles.resolve (...names);
     };
@@ -91,7 +91,7 @@ function injectMultipleStyles (componentClass, stylesDef) {
 
   styleKeys.forEach (key => styleResolvers[key] = Styles.create (stylesDef[key]));
 
-  componentClass.prototype.resolveStyle = function (key, ...names) {
+  componentClass.prototype.mergeStyles = function (key, ...names) {
     const resolver = styleResolvers[key];
     const styles   = resolver (this.theme, resolver.styles.usesProps && (this.styleProps || this.props));
     return styles.resolve (...names);
