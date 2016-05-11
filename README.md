@@ -94,6 +94,15 @@ import _Button$styles from './Button.styles.js';
 export const Button = Electrum.wrap ('Button', _Button, {styles: _Button$styles});
 ```
 
+See `electrum-theme` for an explanation of how style functions should be
+defined.
+
+* `() => ...` &rarr; a parameterless style function.
+* `(theme) => ...` &rarr; a style function, based on the theme.
+* `(theme, props) => ...` &rarr; a style function, based on the theme and on
+  the component properties. The component should implement a _getter_ named
+  `styleProps` which returns a hash with the meaningful properties.
+
 # Wrapping and automatic component extensions
 
 `Electrum.wrap()` returns a new component `class`, which will be treated as a
@@ -107,10 +116,11 @@ It injects some additional functionality:
 
 * `link(id)` &rarr; shorthand for `Electrum.link(this.props, id)`.
 * `link(id, overrides)` &rarr; shorthand for `Electrum.link(this.props, id, overrides)`.
-* `read()` &rarr; shorthand for `Electrum.read(this.props, 'value')`.
-* `read(key)` &rarr; shorthand for `Electrum.read(this.props, key)`.
+* `read()` &rarr; shorthand for `this.read('value')`.
+* `read(key)` &rarr; returns named property if it exists on `this.props`, otherwise
+  calls `Electrum.read(this.props, key)` and reads the value from the state.
 * `theme` &rarr; shorthand for `this.props.theme`.
-* `styles` &rarr; resolves the _styles_ based on rules implemented by `Style`.
+* `styles` &rarr; resolves the _styles_ based on rules implemented by `Styles`.
 
 The component is also extended by [Radium](https://github.com/FormidableLabs/radium)
 which will flatten `styles` arrays injected in child components, and handle the
