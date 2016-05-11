@@ -201,7 +201,7 @@ The bus interface looks like this:
 ```javascript
 {
   dispatch (props, message) {}
-  notify (props, value, ...states) {}
+  notify (props, source, value, ...states) {}
 }
 ```
 
@@ -214,9 +214,11 @@ A bus can be attached with `Electrum.useBus(bus)`.
 The default `Electrum` instance is configured to use `electrum-events`,
 which injects various event handlers into the wrapped components:
 
-* `onChange`
-* `onKeyDown`, `onKeyUp`, `onKeyPress`
-* `onFocus`
+* `onChange` &rarr; fires notification of type _change_
+* `onKeyDown`, `onKeyUp`, `onKeyPress` &rarr;  fire notifications of
+  type _key-down_, _key-up_, _key-press_
+* `onFocus` &rarr;  fires notification of type _focus_
+* `onSelect` &rarr;  fires notification of type _select_
 
 > Note: if the component provides its own event handlers, they will be
 > called by the injected methods.
@@ -227,6 +229,7 @@ in charge of the event forwarding. It will provide the _value_ and the
 _states_ associated with the underlying component, usually by reading
 the DOM:
 
+* `source` &larr; `{type, event}` where _type_ is the event name
 * `value` &larr; `event.target.value`
 * `states` &larr; `{begin:0, end:10}` for text fields
 
