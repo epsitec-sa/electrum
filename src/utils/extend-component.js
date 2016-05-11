@@ -7,15 +7,14 @@ import E from '../index.js';
 
 /******************************************************************************/
 
-export default function extendComponent (component, stylesDef, optionsGetter) {
-  const stylesResolver = Styles.create (stylesDef);
-  return class extends component {
+function createComponentClass (component, optionsGetter) {
+  const componentClass = class extends component {
     constructor (props) {
       super (props);
       E.inject (this);
       E.autoBindHandlers (this);
     }
-    
+
     shouldComponentUpdate (nextProps, nextState) {
       const dirty = shallowCompare (this, nextProps, nextState);
       const options = optionsGetter && optionsGetter ();
@@ -24,11 +23,11 @@ export default function extendComponent (component, stylesDef, optionsGetter) {
       }
       return dirty;
     }
-    
+
     link (id, overrides) {
       return E.link (this.props, id, overrides);
     }
-    
+
     read (key) {
       if (key === undefined) {
         key = 'value';
@@ -38,7 +37,7 @@ export default function extendComponent (component, stylesDef, optionsGetter) {
       }
       return E.read (this.props, key);
     }
-    
+
     get theme () {
       const {theme} = this.props;
       if (!theme) {
@@ -46,33 +45,48 @@ export default function extendComponent (component, stylesDef, optionsGetter) {
       }
       return theme;
     }
-    
-    resolveStyle (...names) {
+  };
+  return componentClass;
+}
+
+/******************************************************************************/
+
+export default function extendComponent (component, stylesDef, optionsGetter) {
+  if (typeof stylesDef === 'object') {
+    stylesDef = stylesDef.style1;
+  }
+  const stylesResolver = Styles.create (stylesDef);
+  const componentClass = createComponentClass (component, optionsGetter);
+
+  componentClass.prototype.resolveStyle = function (...names) {
       const styles = stylesResolver (this.theme, stylesResolver.styles.usesProps && (this.styleProps || this.props));
       return styles.resolve (...names);
-    }
-    
-    get styles () {
+    };
+
+  Object.defineProperty (componentClass.prototype, 'styles', {
+    get: function styles () {
       const styles = stylesResolver (this.theme, stylesResolver.styles.usesProps && (this.styleProps || this.props));
       let current = styles.resolve ('base', this.props.kind, this.props.styles, this.props.style);
-      
+
       // We would like to return the style object directly, but then, we
       // could not extend it by attaching the with() function in an invisible
       // manner. Since Radium also accepts array of style objects, we use this
       // trick to provide the with() functionality without interfering with
-      // the style object itself. 
-      
-      const list = [ current ];
-      
+      // the style object itself.
+
+      const list = [current];
+
       list.with = function (...names) {
         current = styles.merge (current, ...names);
         list[0] = current;
         return list;
       };
-      
+
       return list;
     }
-  };
+  });
+
+  return componentClass;
 }
 
 /******************************************************************************/
