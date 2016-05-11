@@ -126,10 +126,12 @@ function injectMultipleStyles (componentClass, stylesDef) {
 export default function extendComponent (component, stylesDef, optionsGetter) {
   const componentClass = createComponentClass (component, optionsGetter);
 
-  if (typeof stylesDef === 'object') {
-    injectMultipleStyles (componentClass, stylesDef);
-  } else {
-    injectSingleStyles (componentClass, stylesDef);
+  if (stylesDef) {
+    if (typeof stylesDef === 'object') {
+      injectMultipleStyles (componentClass, stylesDef);
+    } else {
+      injectSingleStyles (componentClass, stylesDef);
+    }
   }
 
   return componentClass;
