@@ -54,12 +54,11 @@
 
   "validateIndentation":                      2,
   "validateParameterSeparator":               ", ",
-  "validateQuoteMarks":                       "'",
+  "validateQuoteMarks":                       { "mark": "'", "escape": false, "ignoreJSX": true },
 
   "maximumLineLength": {
-    "value":                                  120,
-    "allowUrlComments":                       true,
-    "allowRegex":                             true
+    "value":                                  200,
+    "allExcept":                              ["comments", "functionSignature", "regex", "require", "urlComments"]
   },
 
   "requireSemicolons":                        true

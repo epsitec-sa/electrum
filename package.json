@@ -42,7 +42,7 @@
   "devDependencies": {
     "babel-env": "^1.3.0",
     "chokidar-cli": "^1.2.0",
-    "generic-js-env": "^1.5.0",
+    "generic-js-env": "^1.6.1",
     "mai-chai": "^2.6.0"
   }
 }
