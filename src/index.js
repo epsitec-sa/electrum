@@ -13,6 +13,8 @@ import Action from './action.js';
 import LinkingMiddleware from './linking-middleware.js';
 import Electrum from './electrum.js';
 
+import {captureMouseEvents} from 'electrum-events';
+
 /******************************************************************************/
 
 class RadiumConnector {
@@ -27,5 +29,6 @@ export default new Electrum (RadiumConnector);
 export {Action, Electrum, FieldStates, LinkingMiddleware, Store, State};
 export {Styles, Theme, ColorManipulator};
 export {radium, React, ReactDOM, ReactDOMServer};
+export {captureMouseEvents};
 
 /******************************************************************************/
