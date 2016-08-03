@@ -11,7 +11,8 @@
     "prepublish": "npm run compile",
     "regen": "electrum-require-components --wrap ./src exp .component.js all-components.js",
     "test": "npm run compile && mocha --harmony lib.test/**/*.js",
-    "watch": "chokidar \"src/**/*.js\" -i \"src/all-components.js\" -c \"npm run rebuild\""
+    "watch": "chokidar \"src/**/*.js\" -i \"src/all-components.js\" -c \"npm run rebuild\"",
+    "startcraft": "npm run clean && npm run regen && npm run babel"
   },
   "repository": {
     "type": "git",
