@@ -65,7 +65,7 @@ describe ('Component', () => {
       expect (html).to.equal (
         '<div>' +
         '<div id="text">Hello, world...</div>' +
-        '<div><img src="http://ima.ge/"/><span>John</span></div>' +
+        '<div data-radium="true"><img src="http://ima.ge/"/><span>John</span></div>' +
         '</div>');
     });
 
