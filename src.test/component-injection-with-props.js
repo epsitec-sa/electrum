@@ -63,7 +63,7 @@ describe ('Component with props', () => {
       }
       const Test = Electrum.wrap ('Test', _Test, {styles: _Test$styles});
       const html = ReactDOMServer.renderToStaticMarkup (<Test state={store.select ('x')} theme={theme} />);
-      const expectedHtml = '<div style="x:2px;font:Roboto, sans-serif;y:2px;">Hello</div>';
+      const expectedHtml = '<div style="x:2px;font:Roboto, sans-serif;y:2px;" data-radium="true">Hello</div>';
       expect (html).to.equal (expectedHtml);
     });
 

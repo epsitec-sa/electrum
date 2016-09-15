@@ -62,7 +62,7 @@ describe ('Component with multiple styles', () => {
       }
       const Test = Electrum.wrap ('Test', _Test, {styles: {style1: _Test$styles1, style2: _Test$styles2}});
       const html = ReactDOMServer.renderToStaticMarkup (<Test state={store.select ('x')} theme={theme} />);
-      const expectedHtml = '<div style="x:2px;font:Roboto, sans-serif;y:2px;">Hello</div>';
+      const expectedHtml = '<div style="x:2px;font:Roboto, sans-serif;y:2px;" data-radium="true">Hello</div>';
       expect (html).to.equal (expectedHtml);
     });
 
