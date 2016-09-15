@@ -63,7 +63,7 @@ describe ('Component', () => {
       const post = <Post state={store.select ('blog.post-1')} />;
       const html = ReactDOMServer.renderToStaticMarkup (post);
       expect (html).to.equal (
-        '<div>' +
+        '<div data-radium="true">' +
         '<div id="text">Hello, world...</div>' +
         '<div data-radium="true"><img src="http://ima.ge/"/><span>John</span></div>' +
         '</div>');
