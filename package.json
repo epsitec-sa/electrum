@@ -32,7 +32,7 @@
     "electrum-field": "^1.6.1",
     "electrum-require-components": "^1.7.0",
     "electrum-store": "^3.2.0",
-    "electrum-theme": "^4.2.0",
+    "electrum-theme": "^4.4.0",
     "electrum-utils": "^1.6.0",
     "radium": "^0.18.1",
     "react": "^15.1.0",
