@@ -46,7 +46,7 @@ describe ('Component with multiple styles', () => {
           expect (this.getStyles ('style1')).to.have.property ('with');
           expect (this.getStyles ('style1')).to.have.length (1);
           expect (this.getStyles ('style1')[0]).to.have.property ('x', 1);
-          expect (this.getStyles ('style1')[0]).to.have.property ('font', 'Roboto, sans-serif');
+          expect (this.getStyles ('style1')[0]).to.have.property ('font', 'Lato, sans-serif');
           expect (this.getStyles ('style2')[0]).to.have.property ('x', 2);
           expect (this.mergeStyles ('style1')).to.deep.equal ({});
           expect (this.mergeStyles ('style1', 'foo')).to.deep.equal ({x: 2, y: 2});
@@ -55,14 +55,14 @@ describe ('Component with multiple styles', () => {
           expect (styles).to.have.property ('with');
           expect (styles).to.have.length (1);
           expect (styles[0]).to.have.property ('x', 2);
-          expect (styles[0]).to.have.property ('font', 'Roboto, sans-serif');
+          expect (styles[0]).to.have.property ('font', 'Lato, sans-serif');
           expect (styles[0]).to.have.property ('y', 2);
           return <div style={styles}>{state.get ('text')}</div>;
         }
       }
       const Test = Electrum.wrap ('Test', _Test, {styles: {style1: _Test$styles1, style2: _Test$styles2}});
       const html = ReactDOMServer.renderToStaticMarkup (<Test state={store.select ('x')} theme={theme} />);
-      const expectedHtml = '<div style="x:2px;font:Roboto, sans-serif;y:2px;" data-radium="true">Hello</div>';
+      const expectedHtml = '<div style="x:2px;font:Lato, sans-serif;y:2px;" data-radium="true">Hello</div>';
       expect (html).to.equal (expectedHtml);
     });
 
@@ -75,7 +75,7 @@ describe ('Component with multiple styles', () => {
           expect (this.getStyles ('style1')).to.have.property ('with');
           expect (this.getStyles ('style1')).to.have.length (1);
           expect (this.getStyles ('style1')[0]).to.have.property ('x', 1);
-          expect (this.getStyles ('style1')[0]).to.have.property ('font', 'Roboto, sans-serif');
+          expect (this.getStyles ('style1')[0]).to.have.property ('font', 'Lato, sans-serif');
           expect (this.getStyles ('style1')[0]).to.have.property ('y', 20);
           expect (this.getStyles ('style1')[0]).to.have.property ('z', 30);
           expect (this.getStyles ('style2')[0]).to.have.property ('x', 2);
@@ -83,7 +83,7 @@ describe ('Component with multiple styles', () => {
           expect (styles).to.have.property ('with');
           expect (styles).to.have.length (1);
           expect (styles[0]).to.have.property ('x', 2);
-          expect (styles[0]).to.have.property ('font', 'Roboto, sans-serif');
+          expect (styles[0]).to.have.property ('font', 'Lato, sans-serif');
           expect (styles[0]).to.have.property ('y', 2);
           expect (styles[0]).to.have.property ('z', 30);
           return <div style={styles}>{state.get ('text')}</div>;
@@ -91,7 +91,7 @@ describe ('Component with multiple styles', () => {
       }
       const Test = Electrum.wrap ('Test', _Test, {styles: {style1: _Test$styles1, style2: _Test$styles2}});
       const html = ReactDOMServer.renderToStaticMarkup (<Test state={store.select ('x')} theme={theme} kind='bar'/>);
-      const expectedHtml = '<div style="x:2px;font:Roboto, sans-serif;y:2px;z:30px;" data-radium="true">Hello</div>';
+      const expectedHtml = '<div style="x:2px;font:Lato, sans-serif;y:2px;z:30px;" data-radium="true">Hello</div>';
       expect (html).to.equal (expectedHtml);
     });
 

@@ -45,7 +45,7 @@ describe ('Component with props', () => {
           expect (this.styles).to.have.property ('with');
           expect (this.styles).to.have.length (1);
           expect (this.styles[0]).to.have.property ('x', 1);
-          expect (this.styles[0]).to.have.property ('font', 'Roboto, sans-serif');
+          expect (this.styles[0]).to.have.property ('font', 'Lato, sans-serif');
           expect (this.mergeStyles ()).to.deep.equal ({});
           expect (this.mergeStyles ('foo')).to.deep.equal ({x: 2, y: 2});
           expect (this.mergeStyles ('foo', 'bar')).to.deep.equal ({x: 2, y: 40, z: 30});
@@ -53,7 +53,7 @@ describe ('Component with props', () => {
           expect (styles).to.have.property ('with');
           expect (styles).to.have.length (1);
           expect (styles[0]).to.have.property ('x', 2);
-          expect (styles[0]).to.have.property ('font', 'Roboto, sans-serif');
+          expect (styles[0]).to.have.property ('font', 'Lato, sans-serif');
           expect (styles[0]).to.have.property ('y', 2);
           return <div style={styles}>{state.get ('text')}</div>;
         }
@@ -63,7 +63,7 @@ describe ('Component with props', () => {
       }
       const Test = Electrum.wrap ('Test', _Test, {styles: _Test$styles});
       const html = ReactDOMServer.renderToStaticMarkup (<Test state={store.select ('x')} theme={theme} />);
-      const expectedHtml = '<div style="x:2px;font:Roboto, sans-serif;y:2px;" data-radium="true">Hello</div>';
+      const expectedHtml = '<div style="x:2px;font:Lato, sans-serif;y:2px;" data-radium="true">Hello</div>';
       expect (html).to.equal (expectedHtml);
     });
 
