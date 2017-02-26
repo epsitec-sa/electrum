@@ -1,6 +1,6 @@
 {
   "name": "electrum",
-  "version": "4.15.0",
+  "version": "4.15.1",
   "description": "Electrum simplifies framework-agnostic declaration of React components.",
   "main": "lib/index.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "electrum-events": "^2.2.1",
     "electrum-field": "^1.6.2",
     "electrum-require-components": "^1.7.2",
-    "electrum-store": "^3.6.0",
+    "electrum-store": "^3.6.1",
     "electrum-theme": "^4.4.1",
     "electrum-utils": "^1.6.0",
     "radium": "^0.18.1",
