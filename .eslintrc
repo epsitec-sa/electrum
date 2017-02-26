@@ -1,0 +1,14 @@
+{
+  "root": true,
+  "plugins": ["react"],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {"jsx": true}
+  },
+  "rules": {
+    "semi": 2,
+    "react/prop-types": [0]
+  }
+}
