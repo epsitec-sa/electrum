@@ -200,7 +200,7 @@ The bus interface looks like this:
 
 ```javascript
 {
-  dispatch (props, message) {}
+  dispatch (props, message, payload) {}
   notify (props, source, value, ...states) {}
 }
 ```
