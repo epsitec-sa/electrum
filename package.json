@@ -30,7 +30,7 @@
   "dependencies": {
     "electrum-events": "^2.2.1",
     "electrum-field": "^1.6.3",
-    "electrum-require-components": "^1.7.3",
+    "electrum-require-components": "^1.8.0",
     "electrum-store": "^3.7.0",
     "electrum-theme": "^4.5.0",
     "electrum-utils": "^1.6.1",
