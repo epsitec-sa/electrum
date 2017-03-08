@@ -1,3 +1,9 @@
 language: node_js
+
 node_js:
   - "5.10"
+
+before_install:
+  - wget -qO- https://raw.githubusercontent.com/xtuple/nvm/master/install.sh | sudo bash
+  - sudo nvm install 5.10
+  - sudo nvm use 5.10
