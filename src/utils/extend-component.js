@@ -61,8 +61,8 @@ function injectSingleStyles (componentClass, stylesDef) {
 
   Object.defineProperty (componentClass.prototype, 'styles', {
     get: function styles () {
-      const styles = stylesResolver (this.theme, stylesResolver.styles.usesProps && (this.styleProps || this.props));
-      let current = styles.resolve ('base', this.props.kind, this.props.styles, this.props.style);
+      const localStyles = stylesResolver (this.theme, stylesResolver.styles.usesProps && (this.styleProps || this.props));
+      let current = localStyles.resolve ('base', this.props.kind, this.props.styles, this.props.style);
 
       // We would like to return the style object directly, but then, we
       // could not extend it by attaching the with() function in an invisible
@@ -73,7 +73,7 @@ function injectSingleStyles (componentClass, stylesDef) {
       const list = [current];
 
       list.with = function (...names) {
-        current = styles.merge (current, ...names);
+        current = localStyles.merge (current, ...names);
         list[0] = current;
         return list;
       };
