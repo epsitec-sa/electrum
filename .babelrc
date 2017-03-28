@@ -1,7 +1,8 @@
 {
   "presets": [
     "stage-0",
-    "node5",
+    "latest",
+    "node6",
     "react"
   ],
   "plugins": [

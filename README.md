@@ -17,6 +17,21 @@ coinage.
 > The first metal coins ever made, were of Electrum and date back to the end
 > of the 7th century, beginning of the 6th century BC.
 
+# Exported sub-components
+
+In order to reduce dependency hell, `electrum` exports its own dependencies
+directly:
+
+* `React`, `ReactDOM` and `ReactDOMServer` from `react`, `react-dom` and
+  `react-dom/server`
+* `radium` from `radium`.
+* `captureMouseEvents` from `electrum-events`.
+* `FieldStates` from `electrum-field`.
+* `Store` and `State` from `electrum-state`.
+* `Styles`, `Theme` and `ColorManipulator` from `electrum-theme`.
+* `Trace` from `electrum-trace`.
+
+
 # THIS IS WORK IN PROGRESS
 
 The implementation of `electrum` is being modified radically.  
