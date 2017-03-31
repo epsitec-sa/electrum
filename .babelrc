@@ -6,9 +6,11 @@
     "react"
   ],
   "plugins": [
-    "transform-react-display-name",
-    "transform-decorators",
     "transform-class-properties",
-    "transform-es2015-classes"
+    "transform-decorators",
+    "transform-es2015-classes",
+    "transform-react-constant-elements",
+    "transform-react-display-name",
+    "transform-react-inline-elements"
   ]
 }

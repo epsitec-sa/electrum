@@ -1,6 +1,6 @@
 {
   "name": "electrum",
-  "version": "4.17.0",
+  "version": "4.18.0",
   "description": "Electrum simplifies framework-agnostic declaration of React components.",
   "main": "lib/index.js",
   "scripts": {
@@ -42,9 +42,9 @@
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
-    "babel-env": "^1.5.1",
+    "babel-env": "^1.6.0",
     "chokidar-cli": "^1.2.0",
-    "generic-js-env": "^1.9.1",
+    "generic-js-env": "^1.9.2",
     "mai-chai": "^3.3.2"
   }
 }
