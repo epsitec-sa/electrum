@@ -1,6 +1,8 @@
-'use strict';
+/******************************************************************************/
 
-export default function extendComponentDisplayName (component, name) {
+export function extendComponentDisplayName (component, name) {
   component.displayName = name;
   return component;
 }
+
+/******************************************************************************/

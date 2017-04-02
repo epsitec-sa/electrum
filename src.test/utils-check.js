@@ -3,7 +3,7 @@
 import {expect} from 'mai-chai';
 import React from 'react';
 
-import IBus from '../src/interfaces/bus.js';
+import {IBus} from '../src/interfaces/bus.js';
 
 import {
   isClass,
@@ -28,13 +28,15 @@ describe ('Electrum utils/check', () => {
         throw new Error ('theme not ready');
       }
     };
+    Base.displayName = 'Base';
 
     class Derived extends Base {
       bar () {}
     }
+    Derived.displayName = 'Derived';
 
     it ('returns the expected method names', () => {
-      expect (getInstanceMethodNames (new Base (), React.Component.prototype)).to.deep.equal (['foo']);
+      expect (getInstanceMethodNames (new Base (), React.Component.prototype)).to.deep.equal ([ 'foo' ]);
       expect (getInstanceMethodNames (new Derived (), React.Component.prototype)).to.deep.equal (['bar', 'foo']);
     });
   });
@@ -63,14 +65,14 @@ describe ('Electrum utils/check', () => {
     });
 
     it ('does not identify getters as methods', () => {
-      const obj = {get foo() {}};
+      const obj = {get foo () {}};
       expect (hasMethod (obj, 'foo')).to.be.false ();
     });
 
     it ('is robust with respect to faulty getters', () => {
-      const obj = {get foo() {
-          throw new Error ('error');
-        }};
+      const obj = {get foo () {
+        throw new Error ('error');
+      }};
       expect (hasMethod (obj, 'foo')).to.be.false ();
     });
   });
@@ -78,12 +80,12 @@ describe ('Electrum utils/check', () => {
   describe ('hasGetter()', () => {
     it ('identifies a getter', () => {
       const obj1 = {
-        get foo() {
+        get foo () {
           return 'foo';
         }
       };
       const obj2 = {
-        get foo() {
+        get foo () {
           throw new Error ('error');
         }
       };

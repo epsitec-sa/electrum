@@ -8,9 +8,9 @@ import {Store, State} from 'electrum-store';
 import {Styles, Theme, ColorManipulator} from 'electrum-theme';
 import {Trace} from 'electrum-trace';
 
-import Action from './action.js';
-import LinkingMiddleware from './linking-middleware.js';
-import Electrum from './electrum.js';
+import {Action} from './action.js';
+import {LinkingMiddleware} from './linking-middleware.js';
+import {Electrum} from './electrum.js';
 
 import {captureMouseEvents} from 'electrum-events';
 

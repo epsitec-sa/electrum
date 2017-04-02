@@ -62,8 +62,8 @@ describe ('FieldStates', () => {
     });
 
     it ('adds new state on empty states', () => {
-      const states = FieldStates.create ();
-      const result = states.add ({m: 10, n: 20}).get ();
+      const emptyStates = FieldStates.create ();
+      const result = emptyStates.add ({m: 10, n: 20}).get ();
       expect (result[0]).to.have.property ('m', 10);
       expect (result[0]).to.have.property ('n', 20);
     });

@@ -1,7 +1,9 @@
-/* global describe it */
+/* global describe it beforeEach */
 
 import {expect} from 'mai-chai';
-import LinkingMiddleware from '../src/linking-middleware.js';
+import {LinkingMiddleware} from '../src/linking-middleware.js';
+
+/******************************************************************************/
 
 describe ('LinkingMiddleware', () => {
 
@@ -26,19 +28,19 @@ describe ('LinkingMiddleware', () => {
 
     it ('applies default middleware logic to prefixed properties', () => {
       middleware.register ('foo:');
-      expect (middleware.link ({x: 1, 'foo:x': 'bar'}, 'i')).to.deep.equal ({'foo:x': 'bar'});
-      expect (middleware.link ({x: 1, 'foo:x': 'bar'}, 'i', {x: 2})).to.deep.equal ({'foo:x': 'bar'});
-      expect (middleware.link ({x: 1, 'foo:x': 'bar'}, 'i', {'foo:x': 'BAR'})).to.deep.equal ({'foo:x': 'BAR'});
-      expect (middleware.link ({x: 1, 'foo:x': 'X', 'foo:y': 'Y'}, 'i', {'foo:x': 'BAR'}))
+      expect (middleware.link ({'x': 1, 'foo:x': 'bar'}, 'i')).to.deep.equal ({'foo:x': 'bar'});
+      expect (middleware.link ({'x': 1, 'foo:x': 'bar'}, 'i', {x: 2})).to.deep.equal ({'foo:x': 'bar'});
+      expect (middleware.link ({'x': 1, 'foo:x': 'bar'}, 'i', {'foo:x': 'BAR'})).to.deep.equal ({'foo:x': 'BAR'});
+      expect (middleware.link ({'x': 1, 'foo:x': 'X', 'foo:y': 'Y'}, 'i', {'foo:x': 'BAR'}))
         .to.deep.equal ({'foo:x': 'BAR', 'foo:y': 'Y'});
     });
 
     it ('applies custom middleware logic to prefixed properties', () => {
       middleware.register ('foo:', (id, prop) => prop + '/' + id);
-      expect (middleware.link ({x: 1, 'foo:x': 'bar'}, 'i')).to.deep.equal ({'foo:x': 'bar/i'});
-      expect (middleware.link ({x: 1, 'foo:x': 'bar'}, 'i', {x: 2})).to.deep.equal ({'foo:x': 'bar/i'});
-      expect (middleware.link ({x: 1, 'foo:x': 'bar'}, 'i', {'foo:x': 'BAR'})).to.deep.equal ({'foo:x': 'BAR/i'});
-      expect (middleware.link ({x: 1, 'foo:x': 'X', 'foo:y': 'Y'}, 'i', {'foo:x': 'BAR'}))
+      expect (middleware.link ({'x': 1, 'foo:x': 'bar'}, 'i')).to.deep.equal ({'foo:x': 'bar/i'});
+      expect (middleware.link ({'x': 1, 'foo:x': 'bar'}, 'i', {x: 2})).to.deep.equal ({'foo:x': 'bar/i'});
+      expect (middleware.link ({'x': 1, 'foo:x': 'bar'}, 'i', {'foo:x': 'BAR'})).to.deep.equal ({'foo:x': 'BAR/i'});
+      expect (middleware.link ({'x': 1, 'foo:x': 'X', 'foo:y': 'Y'}, 'i', {'foo:x': 'BAR'}))
         .to.deep.equal ({'foo:x': 'BAR/i', 'foo:y': 'Y/i'});
     });
 
@@ -51,9 +53,9 @@ describe ('LinkingMiddleware', () => {
 
     it ('overrides missing prefixed properties', () => {
       middleware.register ('foo:', (id, prop) => prop + '/' + id);
-      expect (middleware.link ({x: 1, 'foo:x': 'bar'}, 'i')).to.deep.equal ({'foo:x': 'bar/i'});
-      expect (middleware.link ({x: 1, 'foo:x': 'bar'}, 'i', {'foo:x': 'foo'})).to.deep.equal ({'foo:x': 'foo/i'});
-      expect (middleware.link ({x: 1, 'foo:x': 'bar'}, 'i', {'foo:y': 'foo'}))
+      expect (middleware.link ({'x': 1, 'foo:x': 'bar'}, 'i')).to.deep.equal ({'foo:x': 'bar/i'});
+      expect (middleware.link ({'x': 1, 'foo:x': 'bar'}, 'i', {'foo:x': 'foo'})).to.deep.equal ({'foo:x': 'foo/i'});
+      expect (middleware.link ({'x': 1, 'foo:x': 'bar'}, 'i', {'foo:y': 'foo'}))
         .to.deep.equal ({'foo:x': 'bar/i', 'foo:y': 'foo/i'});
     });
 
@@ -64,3 +66,5 @@ describe ('LinkingMiddleware', () => {
     });
   });
 });
+
+/******************************************************************************/

@@ -1,4 +1,4 @@
-'use strict';
+/******************************************************************************/
 
 import {Styles} from 'electrum-theme';
 import shallowCompare from 'react-addons-shallow-compare';
@@ -55,13 +55,14 @@ function injectSingleStyles (componentClass, stylesDef) {
   const stylesResolver = Styles.create (stylesDef);
 
   componentClass.prototype.mergeStyles = function (...names) {
-      const styles = stylesResolver (this.theme, stylesResolver.styles.usesProps && (this.styleProps || this.props));
-      return styles.resolve (...names);
-    };
+    const styles = stylesResolver (this.theme, stylesResolver.styles.usesProps && (this.styleProps || this.props));
+    return styles.resolve (...names);
+  };
 
   Object.defineProperty (componentClass.prototype, 'styles', {
     get: function styles () {
-      const localStyles = stylesResolver (this.theme, stylesResolver.styles.usesProps && (this.styleProps || this.props));
+      const props = stylesResolver.styles.usesProps && (this.styleProps || this.props);
+      const localStyles = stylesResolver (this.theme, props);
       let current = localStyles.resolve ('base', this.props.kind, this.props.styles, this.props.style);
 
       // We would like to return the style object directly, but then, we
@@ -70,7 +71,7 @@ function injectSingleStyles (componentClass, stylesDef) {
       // trick to provide the with() functionality without interfering with
       // the style object itself.
 
-      const list = [current];
+      const list = [ current ];
 
       list.with = function (...names) {
         current = localStyles.merge (current, ...names);
@@ -109,7 +110,7 @@ function injectMultipleStyles (componentClass, stylesDef) {
     // trick to provide the with() functionality without interfering with
     // the style object itself.
 
-    const list = [current];
+    const list = [ current ];
 
     list.with = function (...names) {
       current = styles.merge (current, ...names);
@@ -123,7 +124,7 @@ function injectMultipleStyles (componentClass, stylesDef) {
 
 /******************************************************************************/
 
-export default function extendComponent (component, stylesDef, optionsGetter) {
+export function extendComponent (component, stylesDef, optionsGetter) {
   const componentClass = createComponentClass (component, optionsGetter);
 
   if (stylesDef) {

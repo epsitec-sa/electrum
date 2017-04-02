@@ -1,4 +1,4 @@
-/* global describe it */
+/* global describe it document */
 
 import {expect} from 'mai-chai';
 import {Store} from 'electrum-store';
@@ -6,7 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
 
-import E from 'electrum';
+import Electrum from 'electrum';
 
 import {Content} from '../src/all-components.js';
 
@@ -15,8 +15,9 @@ import {Content} from '../src/all-components.js';
 let log = '';
 
 /******************************************************************************/
+/* eslint react/display-name: 0 */
 
-const Author = E.wrap ('Author', class extends React.Component {
+const Author = Electrum.wrap ('Author', class extends React.Component {
   render () {
     log = log + '/Author';
     return (
@@ -30,7 +31,7 @@ const Author = E.wrap ('Author', class extends React.Component {
 
 /******************************************************************************/
 
-const Post = E.wrap ('Post', class extends React.Component {
+const Post = Electrum.wrap ('Post', class extends React.Component {
   render () {
     log = log + '/Post';
     return (
@@ -72,7 +73,7 @@ describe ('Component', () => {
     it ('re-renders only when store changes', () => {
       const mountNode = document.getElementById ('root');
       let spy;
-      E.configureLog ('shouldComponentUpdate', (o, p, s, dirty) => {
+      Electrum.configureLog ('shouldComponentUpdate', (o, p, s, dirty) => {
         spy += `/${o.constructor.displayName}: ${dirty}`;
       });
 
@@ -97,7 +98,7 @@ describe ('Component', () => {
       expect (log).to.equal ('/Post');
       expect (spy).to.equal ('/Post: true/Content: true/Author: false');
 
-      E.configureLog ('shouldComponentUpdate');
+      Electrum.configureLog ('shouldComponentUpdate');
     });
   });
 });

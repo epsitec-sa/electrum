@@ -1,4 +1,4 @@
-'use strict'; /*jshint latedef:false*/
+/******************************************************************************/
 
 export {getInstanceMethodNames} from 'electrum-utils';
 
@@ -17,6 +17,7 @@ export function hasMethod (obj, name) {
 /******************************************************************************/
 
 export function isClass (obj) {
+  /* eslint max-len: 0 */
   // See http://stackoverflow.com/questions/29093396/how-do-you-check-the-difference-between-an-ecmascript-6-class-and-function
   // For now, there is no way to identify a class for sure.
   if (typeof obj !== 'function') {
@@ -101,7 +102,7 @@ function verifyMethodOrInterface (obj, match) {
 
 export function verifyInterface (obj, ...methods) {
   if (methods.length === 0) {
-    throw new Error (`Empty interface specified`);
+    throw new Error ('Empty interface specified');
   }
   for (let method of methods) {
     verifyMethodOrInterface (obj, method);

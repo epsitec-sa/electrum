@@ -3,8 +3,8 @@
 import {expect} from 'mai-chai';
 import React from 'react';
 
-import isComponent from '../src/utils/is-component.js';
-import isStatelessFunctionComponent from '../src/utils/is-stateless-function-component.js';
+import {isComponent} from '../src/utils/is-component.js';
+import {isStatelessFunctionComponent} from '../src/utils/is-stateless-function-component.js';
 
 /******************************************************************************/
 
@@ -15,6 +15,7 @@ describe ('Electrum utils/is...', () => {
         return <div>Foo</div>;
       }
     };
+    Foo.displayName = 'Foo';
     const StatelessFoo = props => <div>{props.text}</div>;
 
     it ('identifies full component', () => {

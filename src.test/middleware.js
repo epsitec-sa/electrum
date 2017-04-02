@@ -1,7 +1,9 @@
-/* global describe it */
+/* global describe it beforeEach */
 
 import {expect} from 'mai-chai';
-import Middleware from '../src/middleware.js';
+import {Middleware} from '../src/middleware.js';
+
+/******************************************************************************/
 
 describe ('Middleware', () => {
 
@@ -12,7 +14,7 @@ describe ('Middleware', () => {
   describe ('register()', () => {
     it ('registers a named middleware', () => {
       middleware.register ('foo');
-      expect (middleware.list ()).to.deep.equal (['foo']);
+      expect (middleware.list ()).to.deep.equal ([ 'foo' ]);
     });
 
     it ('throws if a middleware is registered twice', () => {
@@ -35,3 +37,5 @@ describe ('Middleware', () => {
     });
   });
 });
+
+/******************************************************************************/

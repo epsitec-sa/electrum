@@ -1,4 +1,4 @@
-'use strict';
+/******************************************************************************/
 
 function read (state, prop) {
   if (state) {
@@ -9,7 +9,9 @@ function read (state, prop) {
   }
 }
 
-export default class Action {
+/******************************************************************************/
+
+export class Action {
   static isEnabled (state) {
     switch (read (state, 'status')) {
       case 'Enabled':
@@ -30,3 +32,5 @@ export default class Action {
     }
   }
 }
+
+/******************************************************************************/

@@ -1,4 +1,6 @@
-/* global describe it */
+/* global describe it document */
+/* eslint react/no-find-dom-node: 0 */
+/* eslint react/no-render-return-value: 0 */
 
 import {expect} from 'mai-chai';
 import React from 'react';
@@ -8,6 +10,7 @@ import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-addons-test-utils';
 
 /******************************************************************************/
+/* eslint react/display-name: 0 */
 
 let Link = E.wrap ('Link', class extends React.Component {
 

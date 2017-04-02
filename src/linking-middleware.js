@@ -1,6 +1,6 @@
-'use strict';
+/* global Set */
 
-import Middleware from './middleware.js';
+import {Middleware} from './middleware.js';
 
 /*****************************************************************************/
 
@@ -23,7 +23,7 @@ function linkProperty (copy, props, overrides, middleware, id, name) {
 
 /*****************************************************************************/
 
-export default class LinkingMiddleware extends Middleware {
+export class LinkingMiddleware extends Middleware {
   link (props, id, overrides = {}) {
     let copy = {};
     for (let item of this._middlewares) {
@@ -33,7 +33,7 @@ export default class LinkingMiddleware extends Middleware {
         const n1 = Object.getOwnPropertyNames (props).filter (x => x.startsWith (name));
         const n2 = Object.getOwnPropertyNames (overrides).filter (x => x.startsWith (name));
         const names = new Set (n1.concat (n2));
-        names.forEach (name => linkProperty (copy, props, overrides, middleware, id, name));
+        names.forEach (n => linkProperty (copy, props, overrides, middleware, id, n));
       } else {
         linkProperty (copy, props, overrides, middleware, id, name);
       }

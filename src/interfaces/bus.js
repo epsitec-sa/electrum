@@ -1,10 +1,8 @@
-'use strict';
-
 /*****************************************************************************/
-/*jshint unused:false*/
-export default class IBus {
-  dispatch (props, message) {}
-  notify (props, source, value, ...states) {}
+
+export class IBus {
+  dispatch (_props, _message) {}
+  notify (_props, _source, _value, ..._states) {}
 }
 
 /*****************************************************************************/

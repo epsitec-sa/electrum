@@ -6,6 +6,7 @@ import {Theme} from 'electrum-theme';
 
 import Electrum from 'electrum';
 
+/******************************************************************************/
 
 describe ('Store', () => {
   describe ('Store.link()', () => {
@@ -97,7 +98,7 @@ describe ('Store', () => {
       const store = Store.create ('x');
       const theme = Theme.create ('default');
       store.select ('a.b.c');
-      const props1 = {state: store.find ('a'), theme: theme, 'inject:x': 'X', 'inject:y': 'Y'};
+      const props1 = {'state': store.find ('a'), 'theme': theme, 'inject:x': 'X', 'inject:y': 'Y'};
       const props2 = Electrum.link (props1, 'b', {'inject:x': '?'});
       expect (props1.theme).to.equal (theme);
       expect (props2.theme).to.equal (theme);
@@ -106,3 +107,5 @@ describe ('Store', () => {
     });
   });
 });
+
+/******************************************************************************/

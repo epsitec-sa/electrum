@@ -1,13 +1,13 @@
-'use strict';
+/******************************************************************************/
 
 import {EventHandlers} from 'electrum-events';
 import React from 'react';
 
-import LinkingMiddleware from './linking-middleware.js';
-import InjectingMiddleware from './injecting-middleware.js';
+import {LinkingMiddleware} from './linking-middleware.js';
+import {InjectingMiddleware} from './injecting-middleware.js';
 import {getBus, getWrap} from './utils/get-interfaces.js';
-import extend from './utils/extend.js';
-import wrap from './utils/wrap.js';
+import {extend} from './utils/extend.js';
+import {wrap as utilsWrap} from './utils/wrap.js';
 import {getInstanceMethodNames} from './utils/checks.js';
 
 /******************************************************************************/
@@ -31,7 +31,7 @@ function shouldAutoBind (name) {
 
 /******************************************************************************/
 
-export default class Electrum {
+export class Electrum {
   constructor (...wrappers) {
     this._wrappers = wrappers;
     this.reset ();
@@ -57,10 +57,10 @@ export default class Electrum {
   }
 
   use (connector) {
-    const wrap = getWrap (connector);
+    const wrapFunc = getWrap (connector);
     const bus  = getBus (connector);
 
-    if (wrap) {
+    if (wrapFunc) {
       this._connectors.unshift (connector);
     }
 
@@ -133,7 +133,7 @@ export default class Electrum {
 
   wrap (name, component, more) {
     const {styles} = more || {};
-    return wrap (this._connectors, extend (name, component, styles, () => this._options));
+    return utilsWrap (this._connectors, extend (name, component, styles, () => this._options));
   }
 }
 

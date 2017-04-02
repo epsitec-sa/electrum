@@ -37,7 +37,7 @@ describe ('Action', () => {
     });
 
     it ('returns false when no state is provided', () => {
-      const store = Store.create ();
+      Store.create ();
       expect (Action.isDisabled ()).to.be.false ();
     });
   });

@@ -68,7 +68,6 @@ describe ('Component with props', () => {
     });
 
     describe ('styles', () => {
-      let expectedCounter = 1;
       class _Test extends React.Component {
         render () {
           styleGetCounter = 0;

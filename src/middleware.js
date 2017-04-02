@@ -1,8 +1,8 @@
-'use strict';
+
 
 /*****************************************************************************/
 
-export default class Middleware {
+export class Middleware {
   constructor () {
     this._middlewares = [];
   }

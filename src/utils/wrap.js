@@ -1,8 +1,6 @@
-'use strict';
-
 /******************************************************************************/
 
-export default function wrap (wrappers, component) {
+export function wrap (wrappers, component) {
   for (let wrapper of wrappers) {
     component = wrapper.wrap (component);
   }

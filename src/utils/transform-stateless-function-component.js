@@ -1,11 +1,17 @@
-'use strict';
+/******************************************************************************/
 
 import React from 'react';
 
-export default function transformStatelessFunctionComponent (render) {
-  return class extends React.Component {
+/******************************************************************************/
+
+export function transformStatelessFunctionComponent (render, name) {
+  const comp = class extends React.Component {
     render () {
       return render (this.props, this.context);
     }
   };
+  comp.displayName = name;
+  return comp;
 }
+
+/******************************************************************************/
