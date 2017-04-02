@@ -31,7 +31,7 @@
   "dependencies": {
     "electrum-events": "^2.3.2",
     "electrum-field": "^1.7.1",
-    "electrum-require-components": "^2.2.0",
+    "electrum-require-components": "^2.2.1",
     "electrum-store": "^3.9.2",
     "electrum-theme": "^4.6.0",
     "electrum-trace": "^1.1.2",
