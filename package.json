@@ -1,12 +1,13 @@
 {
   "name": "electrum",
-  "version": "4.18.0",
+  "version": "4.19.0",
   "description": "Electrum simplifies framework-agnostic declaration of React components.",
   "main": "lib/index.js",
   "scripts": {
     "babel": "babel --quiet --out-dir lib src && babel --quiet --out-dir lib.test src.test",
     "clean": "rimraf ./lib && rimraf ./lib.test",
-    "compile": "npm run clean && require-self && npm run regen && npm run babel",
+    "compile": "npm run clean && require-self && npm run eslint && npm run regen && npm run babel",
+    "eslint": "eslint src src.test",
     "rebuild": "npm run regen && npm run babel",
     "prepublish": "npm run compile",
     "regen": "electrum-require-components --wrap ./src exp .component.js all-components.js",
@@ -28,13 +29,13 @@
   },
   "homepage": "https://github.com/epsitec-sa/electrum",
   "dependencies": {
-    "electrum-events": "^2.2.1",
-    "electrum-field": "^1.6.3",
-    "electrum-require-components": "^1.8.0",
-    "electrum-store": "^3.8.0",
-    "electrum-theme": "^4.5.0",
-    "electrum-trace": "^1.1.0",
-    "electrum-utils": "^1.6.1",
+    "electrum-events": "^2.3.0",
+    "electrum-field": "^1.7.0",
+    "electrum-require-components": "^2.2.0",
+    "electrum-store": "^3.9.0",
+    "electrum-theme": "^4.6.0",
+    "electrum-trace": "^1.1.2",
+    "electrum-utils": "^1.6.3",
     "radium": "^0.18.2",
     "react": "^15.4.2",
     "react-addons-shallow-compare": "^15.4.2",
@@ -42,9 +43,9 @@
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
-    "babel-env": "^1.6.0",
+    "babel-env": "^2.3.1",
     "chokidar-cli": "^1.2.0",
-    "generic-js-env": "^1.9.2",
+    "generic-js-env": "^2.2.0",
     "mai-chai": "^3.3.2"
   }
 }
