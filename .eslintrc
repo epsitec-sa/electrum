@@ -10,6 +10,7 @@
   "rules": {
     "array-bracket-spacing": [2, "never", {"singleValue": true}],
     "block-scoped-var": 0,
+    "block-spacing": "error",
     "brace-style": [2, "1tbs", {"allowSingleLine": true}],
     "camelcase": [2, {"properties": "never"}],
     "comma-style": [2, "last"],
@@ -21,7 +22,13 @@
     "eqeqeq": "error",
     "guard-for-in": "error",
     "indent": [2, 2, { "SwitchCase": 1 }],
-    "key-spacing": [2, {"beforeColon": false, "afterColon": true}],
+    "key-spacing": ["error", {
+      "align": {
+        "beforeColon": false,
+        "afterColon": true,
+        "on": "value"
+      }
+    }],
     "keyword-spacing": [2, {}],
     "linebreak-style": [2, "unix"],
     "max-depth": 0,
@@ -55,6 +62,7 @@
     "no-unused-expressions": 0,
     "no-unused-vars": [2, {"varsIgnorePattern": "[iI]gnored", "argsIgnorePattern": "^_"}],
     "no-use-before-define": [2, {"functions": false }],
+    "object-curly-spacing": ["error", "never", { "objectsInObjects": false }],
     "operator-linebreak": [2, "after"],
     "padded-blocks": 0,
     "quote-props": ["error", "consistent-as-needed"],

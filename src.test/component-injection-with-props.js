@@ -17,7 +17,7 @@ describe ('Component with props', () => {
     styleGetCounter++;
     return {
       base: {
-        x: 1,
+        x:    1,
         font: theme.typo.font
       },
       foo: {

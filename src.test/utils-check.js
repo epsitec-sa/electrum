@@ -47,8 +47,8 @@ describe ('Electrum utils/check', () => {
         foo: () => 'foo'
       };
       const obj2 = {
-        x: 1,
-        y: ['a', 'b'],
+        x:   1,
+        y:   ['a', 'b'],
         foo: () => 'foo',
         bar: x => x * 2
       };
@@ -101,7 +101,7 @@ describe ('Electrum utils/check', () => {
       const obj = {
         foo: () => 'foo',
         bar: x => x * 2,
-        z: 42
+        z:   42
       };
       expect (hasInterface (obj, 'foo')).to.be.true ();
       expect (hasInterface (obj, 'bar')).to.be.true ();
@@ -112,7 +112,7 @@ describe ('Electrum utils/check', () => {
       const obj = {
         foo: () => 'foo',
         bar: x => x * 2,
-        z: 42
+        z:   42
       };
       expect (hasInterface (obj, 'gork')).to.be.false ();
       expect (hasInterface (obj, 'foo', 'bar', 'z')).to.be.false ();
@@ -155,7 +155,7 @@ describe ('Electrum utils/check', () => {
     it ('succeeds if interface matches', () => {
       const obj = {
         foo: () => 'foo',
-        z: 42
+        z:   42
       };
       obj.bar = x => x * 2;
       var interface1 = {foo: () => {}};
@@ -231,7 +231,7 @@ describe ('Electrum utils/check', () => {
       const obj = {
         foo: () => 'foo',
         bar: x => x * 2,
-        z: 42
+        z:   42
       };
       expect (() => verifyInterface (obj)).to.throw (Error);
     });
@@ -240,7 +240,7 @@ describe ('Electrum utils/check', () => {
       const obj = {
         foo: () => 'foo',
         bar: x => x * 2,
-        z: 42
+        z:   42
       };
       const interface1 = {gork: () => {}};
       expect (() => verifyInterface (obj, interface1)).to.throw (Error);
@@ -250,7 +250,7 @@ describe ('Electrum utils/check', () => {
       const obj = {
         foo: () => 'foo',
         bar: x => x * 2,
-        z: 42
+        z:   42
       };
       const interface1 = {};
       const interface2 = {z: 42};
