@@ -1,6 +1,4 @@
-/*globals __dirname */
-'use strict';
-
+/* globals __dirname */
 var path = require ('path');
 var root = path.join (__dirname, '..');
 var packageConfig = require (path.join (root, 'package.json'));
