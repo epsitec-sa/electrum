@@ -1,0 +1,14 @@
+{
+  // See https://code.visualstudio.com/docs/editor/tasks
+  // See https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+  "version": "0.1.0",
+  "tasks": [
+    {
+      "taskName": "lint",
+      "command": "${cwd}/node_modules/.bin/eslint.cmd",
+      "args": [ "${cwd}/src/**/*.js", "${cwd}/src.test/**/*.js" ],
+      "isShellCommand": true,
+      "problemMatcher": "$eslint-stylish"
+    }
+  ]
+}
