@@ -101,8 +101,8 @@ export class Electrum {
   }
 
   read (props, key) {
-    const {state} = props;
-    return key === undefined ? state.get () : state.get (key);
+    const state = props.state.find ();
+    return state && (key === undefined ? state.get () : state.get (key));
   }
 
   get injectingMiddleware () {
