@@ -1,6 +1,6 @@
 {
   "name": "electrum",
-  "version": "4.19.3",
+  "version": "4.20.0",
   "description": "Electrum simplifies framework-agnostic declaration of React components.",
   "main": "lib/index.js",
   "scripts": {
@@ -29,11 +29,11 @@
   },
   "homepage": "https://github.com/epsitec-sa/electrum",
   "dependencies": {
-    "electrum-events": "^2.3.2",
+    "electrum-events": "^2.3.3",
     "electrum-field": "^1.7.1",
     "electrum-require-components": "^2.2.2",
-    "electrum-store": "^3.9.2",
-    "electrum-theme": "^4.6.0",
+    "electrum-store": "^4.0.0",
+    "electrum-theme": "^4.6.1",
     "electrum-trace": "^1.1.2",
     "electrum-utils": "^1.6.7",
     "radium": "^0.18.2",
@@ -43,7 +43,7 @@
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
-    "babel-env": "^2.3.1",
+    "babel-env": "^2.4.0",
     "chokidar-cli": "^1.2.0",
     "generic-js-env": "^2.2.4",
     "mai-chai": "^3.3.2"
