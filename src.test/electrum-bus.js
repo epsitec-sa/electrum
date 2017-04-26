@@ -64,7 +64,7 @@ const Bar = Electrum.wrap ('Bar', _Bar);
 
 /******************************************************************************/
 
-describe ('EventHandlers', () => {
+describe ('EventHandlers, using global bus', () => {
   describe ('onChange event', () => {
     it ('Foo/checkbox posts an event on the bus', () => {
       const component = renderIntoDocument (<Foo id='1' />);

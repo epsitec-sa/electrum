@@ -1,4 +1,5 @@
-/* globals __dirname */
+/*globals __dirname */
+'use strict';
 var babel = require ('babel-core');
 var fs = require ('fs');
 var path = require ('path');
@@ -19,7 +20,7 @@ module.exports = function (wallaby) {
       '**/*.js*': wallaby.compilers.babel (babelConfig)
     },
     debug: true,
-    env:   {
+    env: {
       type: 'node'
     },
     bootstrap: function (wallaby) {
